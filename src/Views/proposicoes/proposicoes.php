@@ -41,11 +41,11 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                     <div class="card shadow-sm mb-2">
                         <div class="card-body p-2">
                             <form class="row g-2 form_custom mb-0" method="GET" enctype="application/x-www-form-urlencoded">
-                                <div class="col-md-1 col-10">
+                                <div class="col-md-1 col-2">
                                     <input type="hidden" name="secao" value="proposicoes" />
                                     <input type="text" class="form-control form-control-sm" name="ano" value="<?php echo $ano ?>">
                                 </div>
-                                <div class="col-md-1 col-6">
+                                <div class="col-md-1 col-4">
                                     <select class="form-select form-select-sm" name="tipo" required>
                                         <option value="pl" <?php echo $tipo == 'pl' ? 'selected' : ''; ?>>PL</option>
                                         <option value="req" <?php echo $tipo == 'req' ? 'selected' : ''; ?>>REQ</option>
