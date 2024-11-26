@@ -8,6 +8,6 @@ use GabineteDigital\Controllers\ProposicaoController;
 
 $proposicaoController = new ProposicaoController();
 
-print_r($proposicaoController->inserirProposicoesAutores(2024));
+//print_r($proposicaoController->inserirProposicoesAutores(2019));
 
 ?>

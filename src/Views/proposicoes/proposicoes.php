@@ -111,7 +111,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                 if ($busca['status'] == 'success') {
                                     foreach ($busca['dados'] as $proposicao) {
                                         echo '<tr>';
-                                        echo '<td style="white-space: nowrap;">' . $proposicao['proposicao_titulo'] . '</td>';
+                                        echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
                                         echo '<td>' . $proposicao['proposicao_ementa'] . '</td>';
                                         echo '</tr>';
                                     }
