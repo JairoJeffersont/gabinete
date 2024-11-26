@@ -33,7 +33,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-file-earmark-text-fill"></i> Proposições do gabinete</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-0">Proposições de autoria do gabinete | <b><?php echo $ano ?></b></p>
+                    <p class="card-text mb-0">Proposições de autoria do gabinete | <b><?php echo $ano ?></b> | <b><?php echo ($arquivada) ? 'Arquivadas' : 'Em tramitação'; ?></b></p>
                 </div>
             </div>
             <div class="row ">
