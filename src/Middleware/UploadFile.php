@@ -3,8 +3,6 @@
 namespace GabineteDigital\Middleware;
 
 class UploadFile {
-
-    
     public function salvarArquivo($pasta, $arquivo) {
         if (!file_exists($pasta)) {
             mkdir($pasta, 0755, true);

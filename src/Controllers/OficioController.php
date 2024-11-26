@@ -101,8 +101,7 @@ class OficioController {
 
         $result = $this->buscarOficio('oficio_id', $oficio_id);
 
-        unlink($result['dados'][0]['oficio_arquivo']);
-
+        
         if (isset($dados['arquivo']['tmp_name']) && !empty($dados['arquivo']['tmp_name'])) {
             $uploadResult = $this->uploadFile->salvarArquivo($this->pasta_oficios, $dados['arquivo']);
             if ($uploadResult['status'] == 'upload_ok') {
