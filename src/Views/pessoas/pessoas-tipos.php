@@ -1,6 +1,6 @@
 <?php
 
-include '../src/views/includes/verificaLogado.php';
+include '../src/Views/includes/verificaLogado.php';
 
 require_once '../autoloader.php';
 
