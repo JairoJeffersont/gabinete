@@ -5,7 +5,7 @@
 Para começar, clone este repositório Git executando o seguinte comando:
 
 ```
-git clone https://github.com/JairoTSantos/gabinete
+git clone https://github.com/JairoJeffersont/gabinete
 ```
 Coloque todos os arquivo na pasta da sua hospedagem. `meu_dominio.com.br/pasta_do_aplicativo`
 
