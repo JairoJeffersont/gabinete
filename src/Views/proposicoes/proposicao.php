@@ -101,7 +101,7 @@ if (empty($buscaProposicao['dados'])) {
                                         return $b['sequencia'] - $a['sequencia'];
                                     });
 
-                                    foreach (array_slice($buscaTramitacoes['dados'], 1, 10) as $tramitacoes) {
+                                    foreach (array_slice($buscaTramitacoes['dados'], 0, 10) as $tramitacoes) {
                                         echo '<tr>';
                                         echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
                                         echo '<td>' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . '</td>';
