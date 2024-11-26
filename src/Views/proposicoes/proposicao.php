@@ -71,6 +71,9 @@ if ($buscaProposicao['status'] != 'success') {
                             echo '<hr><p class="card-text mb-1" style="font-size:1em"><i class="bi bi-arrow-right-short"></i> Proposição principal: </p>';
                             echo '<p class="card-text mb-0 ms-4" style="font-size:1em"><i class="bi bi-dot"></i> <b>' . $buscaPrincipal['dados']['siglaTipo'] . ' ' . $buscaPrincipal['dados']['numero'] . '/' . $buscaPrincipal['dados']['ano'] . '</b></p>';
                             echo '<p class="card-text mb-2 ms-4"><i class="bi bi-dot"></i> <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $buscaPrincipal['dados']['id'] . '" target="_blank">Ver página da Câmara</a> </p>';
+                        }else{
+                            echo '<hr><p class="card-text mb-1" style="font-size:1em"><i class="bi bi-arrow-right-short"></i> Proposição principal: </p>';
+                            echo '<p class="card-text mb-0 ms-4" style="font-size:1em"><i class="bi bi-dot"></i> <b>Essa proposição não foi apensada</b></p>';
                         }
                     }
                     ?>
