@@ -69,12 +69,12 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                         <option value="50" <?php echo $itens == '50' ? 'selected' : ''; ?>>50 itens</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2 col-6">
+                                <!--<div class="col-md-2 col-6">
                                     <select class="form-select form-select-sm" name="ordem" required>
                                         <option value="asc" <?php echo $ordem == 'asc' ? 'selected' : ''; ?>>Crescente</option>
                                         <option value="desc" <?php echo $ordem == 'desc' ? 'selected' : ''; ?>>Decrescente</option>
                                     </select>
-                                </div>
+                                </div>-->
                                 <div class="col-md-2 col-6">
                                     <select class="form-select form-select-sm" name="arquivada" required>
                                         <option value="false" <?php echo $arquivada === false ? 'selected' : ''; ?>>Em tramitação</option>

@@ -7,8 +7,6 @@ use GabineteDigital\Models\Proposicao;
 use GabineteDigital\Middleware\GetJson;
 use PDOException;
 
-
-
 class ProposicaoController {
     private $proposicaoModel;
     private $logger;
@@ -37,7 +35,7 @@ class ProposicaoController {
                     'proposicao_ementa' => $proposicao['ementa'],
                     'proposicao_apresentacao' => $proposicao['dataApresentacao'],
                     'proposicao_arquivada' => ($proposicao['ultimoStatus']['idSituacao'] == 923 || $proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0,
-                    'proposicao_aprovada' =>($proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0,
+                    'proposicao_aprovada' => ($proposicao['ultimoStatus']['idSituacao'] == 1140) ? 1 : 0,
                 ];
             }
 
@@ -161,5 +159,4 @@ class ProposicaoController {
 
         return ['status' => 'success', 'dados' => $ultimoResultado];
     }
-   
 }
