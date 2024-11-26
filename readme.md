@@ -46,4 +46,4 @@ Acesse `meu_dominio.com.br/gabinete` e faça login com o usuário administrativo
 
 ## Novos usuários
 
-Para permitir que outros usuário criem suas contas, acesse `meu_dominio.com.br/pasta_do_aplicativo/?secao=cadastro` e peça para que eles preencham os campos. Cada novo usuário estará desativado necessitando que um usuário administrativo ative sua conta.
+Para permitir que outros usuário criem suas contas, acesse `meu_dominio.com.br/gabinete/?secao=cadastro` e peça para que eles preencham os campos. Cada novo usuário estará desativado necessitando que um usuário administrativo ative sua conta.
