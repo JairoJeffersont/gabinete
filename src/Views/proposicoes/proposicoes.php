@@ -30,11 +30,10 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                 </div>
             </div>
-
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-file-earmark-text-fill"></i> Proposições do gabinete</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-0">Proposições de autoria do gabinete</p>
+                    <p class="card-text mb-0">Proposições de autoria do gabinete | <b><?php echo $ano ?></b></p>
                 </div>
             </div>
             <div class="row ">
@@ -128,13 +127,11 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
 
                     if ($totalPagina > 1) {
                         echo '<ul class="pagination custom-pagination mt-2 mb-0">';
-
                         for ($i = 1; $i <= $totalPagina; $i++) {
                             echo '<li class="page-item ' . ($pagina == $i ? 'active' : '') . '">';
                             echo '<a class="page-link" href="?secao=proposicoes&itens=' . $itens . '&pagina=' . $i . '&ano=' . $ano . '&tipo=' . $tipo . '&arquivada=' . $arquivada . '">' . $i . '</a>';
                             echo '</li>';
                         }
-
                         echo '</ul>';
                     }
                     ?>
