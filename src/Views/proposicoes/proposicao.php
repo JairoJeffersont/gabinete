@@ -85,7 +85,7 @@ if (empty($buscaProposicao['dados'])) {
 
                 <div class="card-body p-2">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-striped mb-0 ">
+                        <table class="table table-hover table-bordered table-striped mb-1 ">
                             <thead>
                                 <tr>
                                     <th scope="col">Data</th>
@@ -107,7 +107,7 @@ if (empty($buscaProposicao['dados'])) {
                                         echo '<tr>';
                                         echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
                                         echo '<td>' . (!empty($tramitacoes['url'])
-                                            ? '<a href="' . $tramitacoes['url'] . '" target="_blank">' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . '</a>'
+                                            ? '<a href="' . $tramitacoes['url'] . '" target="_blank">' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . ' <i class="bi bi-box-arrow-up-right"></i></a>'
                                             : $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho']) . '</td>';
                                         echo '</tr>';
                                     }
@@ -118,7 +118,7 @@ if (empty($buscaProposicao['dados'])) {
                                 ?>
                             </tbody>
                         </table>
-                        <!--* Essas informações são extraídas da base de dados da CD.-->
+                        <small>* Essas informações são extraídas da base de dados da CD.</small>
                     </div>
 
 
