@@ -19,7 +19,6 @@ if ($buscaProposicao['status'] != 'success') {
     header('Location: ?secao=proposicoes');
 }
 
-
 ?>
 
 <div class="d-flex" id="wrapper">
@@ -51,15 +50,15 @@ if ($buscaProposicao['status'] != 'success') {
                         <hr>
                     </p>
 
-                    <p class="card-text mb-0" style="font-size:1em"><i class="bi bi-calendar3"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaProposicao['dados'][0]['proposicao_apresentacao'])) ?></p>
-                    <p class="card-text mb-2" style="font-size:1em"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank">Ver página da Câmara</a></p>
+                    <p class="card-text mb-0" style="font-size:1em"><i class="bi bi-dot"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaProposicao['dados'][0]['proposicao_apresentacao'])) ?></p>
+                    <p class="card-text mb-2" style="font-size:1em"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank"><i class="bi bi-dot"></i> Ver página da Câmara</a></p>
 
                     <?php
 
                     if (count($buscarAutores['dados']) > 1) {
-                        echo '<hr>';
+                        echo '<hr><b><i class="bi bi-people-fill"></i> Autores</b>';
                         foreach ($buscarAutores['dados'] as $autor) {
-                            echo '<p class="card-text mb-0" style="font-size:1em"><i class="bi bi-person-fill"></i> ' . $autor['proposicao_autor_nome'] . ' ' . $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] . '</p>';
+                            echo '<p class="card-text mb-0" style="font-size:1em"> <i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' ' . $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] . '</p>';
                         }
                     }
 
