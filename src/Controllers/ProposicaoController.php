@@ -128,47 +128,13 @@ class ProposicaoController {
 
     public function buscarUltimaProposicao($id) {
         $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id;
-        $primeiroResultado = null;
-        $ultimoResultado = null;
-        $segundaIteracao = false; // Para controlar a segunda iteração
-    
-        do {
+        $resposta = $this->getjson->getJson($url);
+
+        while (isset($resposta['dados']['uriPropPrincipal']) && $resposta['dados']['uriPropPrincipal'] !== null) {
+            $url = $resposta['dados']['uriPropPrincipal'];
             $resposta = $this->getjson->getJson($url);
-    
-            if (isset($resposta['dados'])) {
-                $dados = $resposta['dados'];
-    
-                if ($segundaIteracao && !$primeiroResultado) {
-                    // Armazena o primeiro resultado da segunda iteração
-                    $primeiroResultado = $dados;
-                }
-    
-                $ultimoResultado = $dados; // Atualiza o último resultado
-    
-                if (!empty($dados['uriPropPrincipal'])) {
-                    $url = $dados['uriPropPrincipal'];
-                } else {
-                    $url = null;
-                }
-    
-                $segundaIteracao = true; // Marca que a segunda iteração já começou
-            } else {
-                break;
-            }
-        } while ($url);
-    
-        // Verifica se houve algum erro (se não houve iteração)
-        if ($ultimoResultado === $primeiroResultado) {
-            return ['status' => 'empty', 'dados' => []];
         }
-    
-        // Retorna o primeiro e o último resultado conforme solicitado
-        return [
-            'status' => 'success',
-            'primeiroResultado' => $primeiroResultado,
-            'ultimoResultado' => $ultimoResultado
-        ];
+
+        return ['status' => 'success', 'dados' => $resposta['dados']];
     }
-    
-    
 }
