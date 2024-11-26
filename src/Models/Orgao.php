@@ -14,7 +14,7 @@ class Orgao {
     public function __construct() {
         $db = new Database();
         $this->conn = $db->getConnection();
-        $this->config = require '../src/configs/config.php';
+        $this->config = require '../src/Configs/config.php';
     }
 
     public function criar($dados) {
