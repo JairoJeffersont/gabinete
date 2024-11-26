@@ -70,7 +70,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                         <option value="50" <?php echo $itens == '50' ? 'selected' : ''; ?>>50 itens</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2 col-6">
+                                <div class="col-md-2 col-12">
                                     <select class="form-select form-select-sm" name="arquivada" required>
                                         <option value="false" <?php echo $arquivada === false ? 'selected' : ''; ?>>Em tramitação</option>
                                         <option value="true" <?php echo $arquivada === true ? 'selected' : ''; ?>>Arquivada</option>
