@@ -3,6 +3,7 @@
 include '../src/Views/includes/verificaLogado.php';
 
 require_once '../autoloader.php';
+$config = require '../src/Configs/config.php';
 
 use GabineteDigital\Controllers\ProposicaoController;
 
@@ -41,11 +42,21 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                     <div class="card shadow-sm mb-2">
                         <div class="card-body p-2">
                             <form class="row g-2 form_custom mb-0" method="GET" enctype="application/x-www-form-urlencoded">
-                                <div class="col-md-1 col-2">
+                                <div class="col-md-1 col-3">
                                     <input type="hidden" name="secao" value="proposicoes" />
-                                    <input type="text" class="form-control form-control-sm" name="ano" value="<?php echo $ano ?>">
+                                    <select class="form-select form-select-sm" name="ano" required>
+                                        <?php
+                                        for ($anoSelect = $config['deputado']['ano_primeiro_mandato']; $anoSelect <= 2024; $anoSelect++) {
+                                            if ($anoSelect == $ano) {
+                                                echo '<option value="' . $anoSelect . '" selected>' . $anoSelect . '</option>';
+                                            } else {
+                                                echo '<option value="' . $anoSelect . '">' . $anoSelect . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
-                                <div class="col-md-1 col-4">
+                                <div class="col-md-1 col-3">
                                     <select class="form-select form-select-sm" name="tipo" required>
                                         <option value="pl" <?php echo $tipo == 'pl' ? 'selected' : ''; ?>>PL</option>
                                         <option value="req" <?php echo $tipo == 'req' ? 'selected' : ''; ?>>REQ</option>
@@ -113,11 +124,8 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                         </table>
                     </div>
                     <?php
-                    if (isset($busca['total_paginas'])) {
-                        $totalPagina = $busca['total_paginas'];
-                    } else {
-                        $totalPagina = 0;
-                    }
+
+                    $totalPagina = $busca['total_paginas'] ?? 0;
 
                     if ($totalPagina > 1) {
                         echo '<ul class="pagination custom-pagination mt-2 mb-0">';

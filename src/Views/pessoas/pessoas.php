@@ -312,20 +312,15 @@ $filtro = isset($_GET['filtro']) ? ($_GET['filtro'] == '1' ? true : false) : fal
                     </div>
 
                     <?php
-                    if (isset($busca['total_paginas'])) {
-                        $totalPagina = $busca['total_paginas'];
-                    } else {
-                        $totalPagina = 0;
-                    }
+                    $totalPagina = $busca['total_paginas'] ?? 0;
+
 
                     if ($totalPagina > 0 && $totalPagina != 1) {
-                       
+
                         for ($i = 1; $i < $totalPagina - 1; $i++) {
                             $pageNumber = $i + 1;
                             echo '<li class="page-item ' . ($pagina == $pageNumber ? 'active' : '') . '"><a class="page-link" href="?secao=pessoas&itens=' . $itens . '&pagina=' . $pageNumber . '&ordenarPor=' . $ordenarPor . '&ordem=' . $ordem . (isset($termo) ? '&termo=' . $termo : '') . '">' . $pageNumber . '</a></li>';
                         }
-
-                       
                     }
                     ?>
 
