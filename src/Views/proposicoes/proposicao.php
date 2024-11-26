@@ -95,6 +95,8 @@ if (empty($buscaProposicao['dados'])) {
                             <tbody>
                                 <?php
 
+                                //print_r($buscaTramitacoes);
+
                                 if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
 
                                     usort($buscaTramitacoes['dados'], function ($a, $b) {
@@ -104,7 +106,9 @@ if (empty($buscaProposicao['dados'])) {
                                     foreach (array_slice($buscaTramitacoes['dados'], 0, 10) as $tramitacoes) {
                                         echo '<tr>';
                                         echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
-                                        echo '<td>' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . '</td>';
+                                        echo '<td>' . (!empty($tramitacoes['url'])
+                                            ? '<a href="' . $tramitacoes['url'] . '" target="_blank">' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . '</a>'
+                                            : $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho']) . '</td>';
                                         echo '</tr>';
                                     }
                                 } else {
