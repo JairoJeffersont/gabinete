@@ -7,7 +7,7 @@ Para começar, clone este repositório Git executando o seguinte comando:
 ```
 git clone https://github.com/JairoJeffersont/gabinete
 ```
-Coloque todos os arquivo na pasta da sua hospedagem. `meu_dominio.com.br/pasta_do_aplicativo`
+Coloque todos os arquivo na pasta da sua hospedagem. `meu_dominio.com.br/gabinete`
 
 
 ## Configurar as Variáveis de Ambiente
@@ -42,8 +42,8 @@ Importe o sript sql no seu banco de dados. `/mysql/db.sql`
 
 ## Primero acesso
 
-Acesse `meu_dominio.com.br/pasta_do_aplicativo` e faça login com o usuário administrativo e crie sua nova conta.
+Acesse `meu_dominio.com.br/gabinete` e faça login com o usuário administrativo e crie sua nova conta.
 
 ## Novos usuários
 
-Para permitir que outros usuário criem suas contas, acesse `meu_dominio.com.br/pasta_do_aplicativo/?secao=cadastro` e peça para que eles preencham os campos. Cada novo usuário estará desativado necessitando que um usuário administrativo ative sua conta.
+Para permitir que outros usuário criem suas contas, acesse `meu_dominio.com.br/gabinete/?secao=cadastro` e peça para que eles preencham os campos. Cada novo usuário estará desativado necessitando que um usuário administrativo ative sua conta.
