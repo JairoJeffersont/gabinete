@@ -46,7 +46,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                     <input type="hidden" name="secao" value="proposicoes" />
                                     <select class="form-select form-select-sm" name="ano" required>
                                         <?php
-                                        for ($anoSelect = $config['deputado']['ano_primeiro_mandato']; $anoSelect <= 2024; $anoSelect++) {
+                                        for ($anoSelect = $config['deputado']['ano_primeiro_mandato']; $anoSelect <= date('Y'); $anoSelect++) {
                                             if ($anoSelect == $ano) {
                                                 echo '<option value="' . $anoSelect . '" selected>' . $anoSelect . '</option>';
                                             } else {
@@ -108,7 +108,6 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                             <tbody>
                                 <?php
                                 $busca = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada);
-
                                 if ($busca['status'] == 'success') {
                                     foreach ($busca['dados'] as $proposicao) {
                                         echo '<tr>';
