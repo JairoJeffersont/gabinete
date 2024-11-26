@@ -26,6 +26,7 @@ $rotas = [
     'oficios' => '../src/Views/oficios/oficios.php',
     'oficio' => '../src/Views/oficios/editar-oficio.php',
     'proposicoes' => '../src/Views/proposicoes/proposicoes.php',
+    'atualizar-proposicoes' => '../src/Views/proposicoes/atualizar-proposicoes.php',
     'imprimir-proposicoes' => '../src/Views/proposicoes/imprimir-proposicoes.php'
 
 ];
