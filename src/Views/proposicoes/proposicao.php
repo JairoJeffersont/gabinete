@@ -30,7 +30,7 @@ if (empty($buscaProposicao['dados'])) {
             <div class="card mb-2 ">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
-                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=proposicoes" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="#" onclick="history.back(-1)" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
                     <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicoes&id=<?php echo $id ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
                 </div>
             </div>
@@ -57,8 +57,8 @@ if (empty($buscaProposicao['dados'])) {
 
                     <?php
 
-                    if (count($buscarAutores['dados']) > 1) {
-                        echo '<hr><b><i class="bi bi-people-fill"></i> Autores</b>';
+                    if ($buscarAutores['status'] == 'success') {
+                        echo '<hr><b><i class="bi bi-people-fill"></i> Autor (es)</b>';
                         foreach ($buscarAutores['dados'] as $autor) {
                             echo '<p class="card-text mb-0" style="font-size:1em"> <i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' ' . $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] . '</p>';
                         }
@@ -72,10 +72,8 @@ if (empty($buscaProposicao['dados'])) {
                             echo '<hr><p class="card-text mb-1" style="font-size:1em"><i class="bi bi-arrow-right-short"></i> Proposição principal: </p>';
                             echo '<p class="card-text mb-0 ms-3" style="font-size:1em"><i class="bi bi-dot"></i> <b>' . $buscaPrincipal['dados']['siglaTipo'] . ' ' . $buscaPrincipal['dados']['numero'] . '/' . $buscaPrincipal['dados']['ano'] . '</b></p>';
                             echo '<p class="card-text mb-0 ms-3"><i class="bi bi-dot"></i> <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $buscaPrincipal['dados']['id'] . '" target="_blank">Ver página da Câmara</a> </p>';
-                            echo '<p class="card-text mb-2 ms-3" style="font-size:1em"><a href="' . $buscaPrincipal['dados']['urlInteiroTeor'] . '" target="_blank"><i class="bi bi-dot"></i> Ver inteiro teor</a></p>';
-                        } else {
-                            echo '<hr><p class="card-text mb-1" style="font-size:1em"><i class="bi bi-arrow-right-short"></i> Proposição principal: </p>';
-                            echo '<p class="card-text mb-0 ms-3" style="font-size:1em"><i class="bi bi-dot"></i> <b>Essa proposição não foi apensada</b></p>';
+                            echo '<p class="card-text mb-0 ms-3" style="font-size:1em"><a href="' . $buscaPrincipal['dados']['urlInteiroTeor'] . '" target="_blank"><i class="bi bi-dot"></i> Ver inteiro teor</a></p>';
+                            //echo '<p class="card-text mb-2 ms-3" style="font-size:1em"><a href="?secao=proposicao&id=' . $buscaPrincipal['dados']['id'] . '"><i class="bi bi-dot"></i> Ficha de tramitação</a></p>';
                         }
                     }
                     ?>
@@ -97,7 +95,7 @@ if (empty($buscaProposicao['dados'])) {
                             <tbody>
                                 <?php
 
-                                if (!empty($buscaTramitacoes['dados'])) {
+                                if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
 
                                     usort($buscaTramitacoes['dados'], function ($a, $b) {
                                         return $b['sequencia'] - $a['sequencia'];
@@ -116,6 +114,7 @@ if (empty($buscaProposicao['dados'])) {
                                 ?>
                             </tbody>
                         </table>
+                        <!--* Essas informações são extraídas da base de dados da CD.-->
                     </div>
 
 
