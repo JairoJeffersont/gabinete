@@ -44,7 +44,7 @@ if (empty($buscaProposicao['dados'])) {
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1">Detalhes</div>
                 <div class="card-body p-3">
-                    <h5 class="card-title mb-0"><?php echo $buscaProposicao['dados']['siglaTipo'] . ' ' . $buscaProposicao['dados']['numero'] . '/' . $buscaProposicao['dados']['ano'] ?><?php echo ($buscaProposicao['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <small>Arquivado</small>' : '' ?>
+                    <h5 class="card-title mb-0"><?php echo $buscaProposicao['dados']['siglaTipo'] . ' ' . $buscaProposicao['dados']['numero'] . '/' . $buscaProposicao['dados']['ano'] ?><?php echo ($buscaProposicao['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?>
                         <hr class="mt-2">
                     </h5>
                     <p class="card-text mb-2" style="font-size:1em"><?php echo $buscaProposicao['dados']['ementa']  ?>
@@ -98,14 +98,15 @@ if (empty($buscaProposicao['dados'])) {
                                 <?php
 
                                 if (!empty($buscaTramitacoes['dados'])) {
+
                                     usort($buscaTramitacoes['dados'], function ($a, $b) {
-                                        return $b['sequencia'] - $a['sequencia']; // Comparação decrescente
+                                        return $b['sequencia'] - $a['sequencia'];
                                     });
 
-                                    foreach (array_slice($buscaTramitacoes['dados'], 1, 5) as $tramitacoes) {
+                                    foreach (array_slice($buscaTramitacoes['dados'], 1, 10) as $tramitacoes) {
                                         echo '<tr>';
                                         echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
-                                        echo '<td>' . $tramitacoes['despacho'] . '</td>';
+                                        echo '<td>' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . '</td>';
                                         echo '</tr>';
                                     }
                                 } else {
