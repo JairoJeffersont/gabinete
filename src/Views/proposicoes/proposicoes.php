@@ -129,6 +129,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                         }
                         echo '</ul>';
                     }
+
                     ?>
 
                 </div>
