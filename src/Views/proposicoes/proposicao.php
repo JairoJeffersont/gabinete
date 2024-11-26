@@ -95,8 +95,6 @@ if (empty($buscaProposicao['dados'])) {
                             <tbody>
                                 <?php
 
-                                //print_r($buscaTramitacoes);
-
                                 if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
 
                                     usort($buscaTramitacoes['dados'], function ($a, $b) {
@@ -120,8 +118,6 @@ if (empty($buscaProposicao['dados'])) {
                         </table>
                         <small>* Essas informações são extraídas da base de dados da CD.</small>
                     </div>
-
-
                 </div>
             </div>
         </div>
