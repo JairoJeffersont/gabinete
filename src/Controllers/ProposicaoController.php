@@ -111,7 +111,7 @@ class ProposicaoController {
         }
     }
 
-    public function buscarProposicao($id) {
+    /*public function buscarProposicao($id) {
         try {
             $autores = $this->proposicaoModel->buscarProposicao($id);
 
@@ -124,6 +124,13 @@ class ProposicaoController {
             $this->logger->novoLog('proposicao_error', $e->getMessage());
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
+    }*/
+
+    public function buscarProposicao($id) {
+        $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id;
+        $resposta = $this->getjson->getJson($url);
+
+        return ['status' => 'success', 'dados' => $resposta['dados']];
     }
 
     public function buscarUltimaProposicao($id) {
@@ -134,6 +141,13 @@ class ProposicaoController {
             $url = $resposta['dados']['uriPropPrincipal'];
             $resposta = $this->getjson->getJson($url);
         }
+
+        return ['status' => 'success', 'dados' => $resposta['dados']];
+    }
+
+    public function buscarTramitacoes($id) {
+        $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id .'/tramitacoes';
+        $resposta = $this->getjson->getJson($url);
 
         return ['status' => 'success', 'dados' => $resposta['dados']];
     }
