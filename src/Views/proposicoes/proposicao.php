@@ -85,7 +85,7 @@ if (empty($buscaProposicao['dados'])) {
 
                 <div class="card-body p-2">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-striped mb-1 ">
+                        <table class="table table-hover table-bordered table-striped mb-2 ">
                             <thead>
                                 <tr>
                                     <th scope="col">Data</th>
