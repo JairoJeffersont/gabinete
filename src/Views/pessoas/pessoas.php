@@ -3,7 +3,7 @@
 include '../src/Views/includes/verificaLogado.php';
 
 require_once '../autoloader.php';
-$config = require '../src/configs/config.php';
+$config = require '../src/Configs/config.php';
 
 use GabineteDigital\Controllers\OrgaoController;
 use GabineteDigital\Controllers\PessoaTipoController;
