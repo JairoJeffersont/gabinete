@@ -37,7 +37,7 @@ Antes de executar a aplicação, é necessário configurar as variáveis de conf
 
 ```
 ## Sincronizar as tabelas do banco
-Importe o sript sql no seu banco de dados. mysql/db.sql
+Importe o sript sql no seu banco de dados. /mysql/db.sql
 
 
 ## Primero acesso
