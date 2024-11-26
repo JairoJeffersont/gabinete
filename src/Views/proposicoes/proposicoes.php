@@ -28,12 +28,13 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
             <div class="card mb-2 ">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-proposicoes&pagina=1&ano=<?php echo $ano ?>&tipo=<?php echo $tipo ?>&arquivada=<?php echo $arquivada ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
                 </div>
             </div>
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-file-earmark-text-fill"></i> Proposições do gabinete</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-0">Proposições de autoria do gabinete | <b><?php echo $ano ?></b> | <b><?php echo ($arquivada) ? 'Arquivadas' : 'Em tramitação'; ?></b></p>
+                    <p class="card-text mb-0">Proposições de autoria do gabinete | <b><?php echo $ano ?></b> | <b><?php echo $tipo ?></b> | <b><?php echo ($arquivada) ? 'Arquivadas' : 'Em tramitação'; ?></b></p>
                 </div>
             </div>
             <div class="row ">
@@ -57,8 +58,8 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                 </div>
                                 <div class="col-md-1 col-3">
                                     <select class="form-select form-select-sm" name="tipo" required>
-                                        <option value="pl" <?php echo $tipo == 'pl' ? 'selected' : ''; ?>>PL</option>
-                                        <option value="req" <?php echo $tipo == 'req' ? 'selected' : ''; ?>>REQ</option>
+                                        <option value="PL" <?php echo $tipo == 'PL' ? 'selected' : ''; ?>>PL</option>
+                                        <option value="REQ" <?php echo $tipo == 'REQ' ? 'selected' : ''; ?>>REQ</option>
                                     </select>
                                 </div>
                                 <div class="col-md-1 col-6">
@@ -69,12 +70,6 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                         <option value="50" <?php echo $itens == '50' ? 'selected' : ''; ?>>50 itens</option>
                                     </select>
                                 </div>
-                                <!--<div class="col-md-2 col-6">
-                                    <select class="form-select form-select-sm" name="ordem" required>
-                                        <option value="asc" <?php echo $ordem == 'asc' ? 'selected' : ''; ?>>Crescente</option>
-                                        <option value="desc" <?php echo $ordem == 'desc' ? 'selected' : ''; ?>>Decrescente</option>
-                                    </select>
-                                </div>-->
                                 <div class="col-md-2 col-6">
                                     <select class="form-select form-select-sm" name="arquivada" required>
                                         <option value="false" <?php echo $arquivada === false ? 'selected' : ''; ?>>Em tramitação</option>
