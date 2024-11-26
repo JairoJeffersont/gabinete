@@ -19,9 +19,9 @@ $termo = (isset($_GET['termo'])) ? $_GET['termo'] : '';
 
 
 <div class="d-flex" id="wrapper">
-    <?php include '../src/views/includes/sider_bar.php'; ?>
+    <?php include '../src/Views/includes/sider_bar.php'; ?>
     <div id="page-content-wrapper">
-        <?php include '../src/views/includes/top_menu.php'; ?>
+        <?php include '../src/Views/includes/top_menu.php'; ?>
         <div class="container-fluid p-2">
             <div class="card mb-2">
                 <div class="card-body p-1">
