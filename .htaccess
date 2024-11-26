@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Redireciona todas as requisições para a pasta public
+RewriteCond %{REQUEST_URI} !^/gabinete/public/
+RewriteRule ^(.*)$ /gabinete/public/$1 [L,QSA]
+
+# Protege o arquivo autoloader.php
+RewriteCond %{REQUEST_URI} ^/autoloader\.php$
+RewriteRule ^ - [F,L]
