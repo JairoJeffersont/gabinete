@@ -82,9 +82,41 @@ if (empty($buscaProposicao['dados'])) {
 
                 </div>
             </div>
-            <div class="card mb-2 ">
-                <div class="card-header bg-success text-white px-2 py-1">Tramitações</div>
-                <div class="card-body p-1">
+            <div class="card shadow-sm mb-2 card-description">
+                <div class="card-header bg-secondary text-white px-2 py-1">Últimas tramitações</div>
+
+                <div class="card-body p-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped mb-0 ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Despacho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+
+                                if (!empty($buscaTramitacoes['dados'])) {
+                                    usort($buscaTramitacoes['dados'], function ($a, $b) {
+                                        return $b['sequencia'] - $a['sequencia']; // Comparação decrescente
+                                    });
+
+                                    foreach (array_slice($buscaTramitacoes['dados'], 1, 5) as $tramitacoes) {
+                                        echo '<tr>';
+                                        echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
+                                        echo '<td>' . $tramitacoes['despacho'] . '</td>';
+                                        echo '</tr>';
+                                    }
+                                } else {
+                                    echo '<tr><td colspan="6">Erro interno do servidor</td></tr>';
+                                }
+
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+
 
                 </div>
             </div>

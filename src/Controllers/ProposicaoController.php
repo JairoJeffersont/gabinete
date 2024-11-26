@@ -146,9 +146,12 @@ class ProposicaoController {
     }
 
     public function buscarTramitacoes($id) {
-        $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id .'/tramitacoes';
+        $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id . '/tramitacoes';
         $resposta = $this->getjson->getJson($url);
-
-        return ['status' => 'success', 'dados' => $resposta['dados']];
+        if (!empty($resposta['dados'])) {
+            return ['status' => 'success', 'dados' => $resposta['dados']];
+        } else {
+            return ['status' => 'success', 'dados' => []];
+        }
     }
 }
