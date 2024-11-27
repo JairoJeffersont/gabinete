@@ -32,7 +32,10 @@ $rotas = [
     'postagens-status' => '../src/Views/postagens/postagens-status.php',
     'postagem-status' => '../src/Views/postagens/editar-postagem-status.php',
     'postagens' => '../src/Views/postagens/postagens.php',
-    'postagem' => '../src/Views/postagens/postagem.php'
+    'postagem' => '../src/Views/postagens/postagem.php',
+    'clipping-tipos' => '../src/Views/clipping/clipping-tipos.php',
+    'clipping-tipo' => '../src/Views/clipping/editar-clipping-tipo.php'
+
 
 ];
 
