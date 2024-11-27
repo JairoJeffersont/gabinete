@@ -48,6 +48,9 @@ class ProposicaoController {
         }
     }
 
+
+    
+
     public function inserirProposicoesAutores($ano) {
 
         $proposicoesJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/arquivos/proposicoesAutores/json/proposicoesAutores-' . $ano . '.json');

@@ -28,7 +28,9 @@ $rotas = [
     'proposicoes' => '../src/Views/proposicoes/proposicoes.php',
     'proposicao' => '../src/Views/proposicoes/proposicao.php',
     'atualizar-proposicoes' => '../src/Views/proposicoes/atualizar-proposicoes.php',
-    'imprimir-proposicoes' => '../src/Views/proposicoes/imprimir-proposicoes.php'
+    'imprimir-proposicoes' => '../src/Views/proposicoes/imprimir-proposicoes.php',
+    'postagens-status' => '../src/Views/postagens/postagens-status.php',
+    'postagem-status' => '../src/Views/postagens/editar-postagem-status.php'
 
 ];
 
