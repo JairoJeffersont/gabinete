@@ -99,6 +99,23 @@ class PostagemController {
                 return ['status' => 'not_found', 'message' => 'Postagem não encontrada.'];
             }
 
+            $caminho = '../public/arquivos/postagens/' . $result['dados'][0]['postagem_pasta'];
+
+            $caminho = '../public/arquivos/postagens/' . $result['dados'][0]['postagem_pasta'];
+
+            if (is_dir($caminho)) {
+                $arquivos = glob($caminho . '/*'); 
+
+                foreach ($arquivos as $arquivo) {
+                    unlink($arquivo);
+                }
+                
+                rmdir($caminho);
+            } else {
+                unlink($caminho);
+            }
+
+
             $this->postagemModel->apagar($postagem_id);
             return ['status' => 'success', 'message' => 'Postagem apagada com sucesso.'];
         } catch (PDOException $e) {

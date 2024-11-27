@@ -61,7 +61,7 @@ $postagens = new PostagemController();
                         <div class="col-md-3 col-12">
                             <input type="text" class="form-control form-control-sm" name="postagem_midias" placeholder="Mídias (facebook, instagram, site...)" required>
                         </div>
-                        <div class="col-md-3 col-12">
+                        <div class="col-md-3 col-12"> 
                             <input type="date" class="form-control form-control-sm" name="postagem_data" value="<?php echo date('Y-m-d') ?>" required>
                         </div>
                         <div class="col-md-3 col-12">

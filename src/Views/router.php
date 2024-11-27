@@ -31,7 +31,8 @@ $rotas = [
     'imprimir-proposicoes' => '../src/Views/proposicoes/imprimir-proposicoes.php',
     'postagens-status' => '../src/Views/postagens/postagens-status.php',
     'postagem-status' => '../src/Views/postagens/editar-postagem-status.php',
-    'postagens' => '../src/Views/postagens/postagens.php'
+    'postagens' => '../src/Views/postagens/postagens.php',
+    'postagem' => '../src/Views/postagens/postagem.php'
 
 ];
 
