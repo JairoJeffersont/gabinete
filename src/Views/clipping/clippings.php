@@ -146,7 +146,6 @@ $orgaoController = new OrgaoController;
         </div>
     </div>
 </div>
-
 <script>
     $('#clipping_orgao').change(function() {
         if ($('#clipping_orgao').val() == '+') {
