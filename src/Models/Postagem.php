@@ -55,12 +55,45 @@ class Postagem {
         return $stmt->execute();
     }
 
-    public function listar() {
-        $query = "SELECT * FROM view_postagens ORDER BY postagem_titulo ASC";
+    public function listar($ano, $itens, $pagina, $ordem, $ordenarPor, $status, $termo) {
+
+        $pagina = (int)$pagina;
+        $itens = (int)$itens;
+        $offset = ($pagina - 1) * $itens;
+
+        if ($status == 0) {
+            if (empty($termo)) {
+                $query = "SELECT view_postagens.*, (SELECT COUNT(postagem_id) FROM view_postagens WHERE YEAR(postagem_criada_em) = :ano) as total FROM view_postagens WHERE YEAR(postagem_criada_em) = :ano ORDER BY {$ordenarPor} {$ordem} LIMIT :offset, :itens";
+            } else {
+                $query = "SELECT view_postagens.*, (SELECT COUNT(postagem_id) FROM view_postagens WHERE postagem_titulo LIKE :termo OR postagem_informacoes LIKE :termo) as total FROM view_postagens WHERE postagem_titulo LIKE :termo OR postagem_informacoes LIKE :termo ORDER BY {$ordenarPor} {$ordem} LIMIT :offset, :itens";
+            }
+        } else {
+            if (empty($termo)) {
+                $query = "SELECT view_postagens.*, (SELECT COUNT(postagem_id) FROM view_postagens WHERE YEAR(postagem_criada_em) = :ano AND postagem_status_id = :status) as total FROM view_postagens WHERE YEAR(postagem_criada_em) = :ano AND postagem_status_id = :status ORDER BY {$ordenarPor} {$ordem} LIMIT :offset, :itens";
+            } else {
+                $query = "SELECT view_postagens.*, (SELECT COUNT(postagem_id) FROM view_postagens WHERE (postagem_titulo LIKE :termo OR postagem_informacoes LIKE :termo) AND postagem_status_id = :status) as total FROM view_postagens WHERE (postagem_titulo LIKE :termo OR postagem_informacoes LIKE :termo) AND postagem_status_id = :status ORDER BY {$ordenarPor} {$ordem} LIMIT :offset, :itens";
+            }
+        }
 
         $stmt = $this->conn->prepare($query);
-        $stmt->execute();
 
+        if (!empty($ano)) {
+            $stmt->bindParam(':ano', $ano, PDO::PARAM_INT);
+        }
+
+        if (!empty($termo)) {
+            $termoComCuringa = "%{$termo}%";
+            $stmt->bindParam(':termo', $termoComCuringa, PDO::PARAM_STR);
+        }
+
+        if ($status != 0) {
+            $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+        }
+
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':itens', $itens, PDO::PARAM_INT);
+
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

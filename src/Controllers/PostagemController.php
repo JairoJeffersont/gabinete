@@ -44,15 +44,18 @@ class PostagemController {
         }
     }
 
-    public function listarPostagens() {
+    public function listarPostagens($ano, $itens, $pagina, $ordem, $ordenarPor, $status,  $termo) {
         try {
-            $postagens = $this->postagemModel->listar();
+            $postagens = $this->postagemModel->listar($ano, $itens, $pagina, $ordem, $ordenarPor, $status, $termo);
+
+            $total = (isset($postagens[0]['total'])) ? $postagens[0]['total'] : 0;
+            $totalPaginas = ceil($total / $itens);
 
             if (empty($postagens)) {
                 return ['status' => 'empty', 'message' => 'Nenhuma postagem registrada.'];
             }
 
-            return ['status' => 'success', 'dados' => $postagens];
+            return ['status' => 'success', 'dados' => $postagens, 'total_paginas' => $totalPaginas];
         } catch (PDOException $e) {
             $this->logger->novoLog('postagem_error', $e->getMessage());
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
