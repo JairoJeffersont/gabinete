@@ -56,7 +56,7 @@ class Postagem {
     }
 
     public function listar() {
-        $query = "SELECT * FROM postagens ORDER BY postagem_titulo ASC";
+        $query = "SELECT * FROM view_postagens ORDER BY postagem_titulo ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -65,7 +65,7 @@ class Postagem {
     }
 
     public function buscar($coluna, $valor) {
-        $query = "SELECT * FROM postagens WHERE $coluna = :valor";
+        $query = "SELECT * FROM view_postagens WHERE $coluna = :valor";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':valor', $valor, PDO::PARAM_STR);

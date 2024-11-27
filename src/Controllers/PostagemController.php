@@ -18,7 +18,7 @@ class PostagemController {
     }
 
     public function criarPostagem($dados) {
-        $camposObrigatorios = ['postagem_titulo', 'postagem_status'];
+        $camposObrigatorios = ['postagem_titulo', 'postagem_status', 'postagem_informacoes', 'postagem_midias', 'postagem_status'];
 
         foreach ($camposObrigatorios as $campo) {
             if (!isset($dados[$campo]) || empty($dados[$campo])) {
@@ -28,6 +28,9 @@ class PostagemController {
 
         try {
             $dados['postagem_criada_por'] = $this->usuario_id;
+            $dados['postagem_pasta'] = uniqid();
+
+            mkdir('arquivos/postagens/' . $dados['postagem_pasta'], 0775);
 
             $this->postagemModel->criar($dados);
             return ['status' => 'success', 'message' => 'Postagem criada com sucesso.'];
