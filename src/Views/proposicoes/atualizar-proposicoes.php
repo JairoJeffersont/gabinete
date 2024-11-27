@@ -12,6 +12,6 @@ use GabineteDigital\Controllers\ProposicaoController;
 
 $proposicaoController = new ProposicaoController();
 
-//print_r($proposicaoController->inserirProposicoesAutores(2019));
+print_r($proposicaoController->inserirProposicoes(2024));
 
 ?>
