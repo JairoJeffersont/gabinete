@@ -33,10 +33,10 @@ class Postagem {
     }
 
     public function atualizar($postagem_id, $dados) {
+        
         $query = "UPDATE postagens 
                   SET postagem_titulo = :postagem_titulo, 
                       postagem_data = :postagem_data, 
-                      postagem_pasta = :postagem_pasta, 
                       postagem_informacoes = :postagem_informacoes, 
                       postagem_midias = :postagem_midias, 
                       postagem_status = :postagem_status 
@@ -46,13 +46,12 @@ class Postagem {
 
         $stmt->bindParam(':postagem_titulo', $dados['postagem_titulo']);
         $stmt->bindParam(':postagem_data', $dados['postagem_data']);
-        $stmt->bindParam(':postagem_pasta', $dados['postagem_pasta']);
         $stmt->bindParam(':postagem_informacoes', $dados['postagem_informacoes']);
         $stmt->bindParam(':postagem_midias', $dados['postagem_midias']);
         $stmt->bindParam(':postagem_status', $dados['postagem_status'], PDO::PARAM_INT);
         $stmt->bindParam(':postagem_id', $postagem_id, PDO::PARAM_INT);
 
-        return $stmt->execute();
+         $stmt->execute();
     }
 
     public function listar($ano, $itens, $pagina, $ordem, $ordenarPor, $status, $termo) {

@@ -33,12 +33,40 @@ $pasta = '../public/arquivos/postagens/' . $buscaPostagem['dados'][0]['postagem_
             <div class="card mb-2 ">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
+
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=postagens" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
                 </div>
             </div>
 
             <div class="card shadow-sm mb-2">
                 <div class="card-body p-2">
                     <?php
+                    
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_atualizar'])) {
+                        
+                        $postagemDados = [
+                            'postagem_titulo' => $_POST['postagem_titulo'],
+                            'postagem_data' => $_POST['postagem_data'],
+                            'postagem_informacoes' => $_POST['postagem_informacoes'],
+                            'postagem_status' => (int)$_POST['postagem_status'],
+                            'postagem_midias' => $_POST['postagem_midias']
+                        ];
+                        
+
+                        $result = $postagens->atualizarPostagem($id,$postagemDados);
+
+                        if ($result['status'] == 'success') {
+                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                            echo '<script>
+                            setTimeout(function(){
+                                window.location.href = "?secao=postagem&id=' . $id . '";
+                            }, 1000);</script>';
+                        } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request') {
+                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        } else if ($result['status'] == 'error') {
+                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        }
+                    }
 
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_apagar'])) {
                         $resultado = $postagens->apagarPostagem($id);
@@ -57,7 +85,7 @@ $pasta = '../public/arquivos/postagens/' . $buscaPostagem['dados'][0]['postagem_
 
                     ?>
 
-                    <form class="row g-2 form_custom" id="form_novo" method="POST" enctype="multipart/form-data">
+                    <form class="row g-2 form_custom" id="form_novo" method="POST" enctype="application/x-www-form-urlencoded">
                         <div class="col-md-3 col-12">
                             <input type="text" class="form-control form-control-sm" name="postagem_titulo" placeholder="Título (Post dia das crianças, Aniversário do deputado...)" value="<?php echo $buscaPostagem['dados'][0]['postagem_titulo'] ?>" required>
                         </div>
@@ -73,7 +101,7 @@ $pasta = '../public/arquivos/postagens/' . $buscaPostagem['dados'][0]['postagem_
                                 $status_postagens = $postagensStatus->listarPostagemStatus();
                                 if ($status_postagens['status'] == 'success') {
                                     foreach ($status_postagens['dados'] as $status) {
-                                        if ($status['postagem_status_id'] == 1000) {
+                                        if ($status['postagem_status_id'] == $buscaPostagem['dados'][0]['postagem_status']) {
                                             echo '<option value="' . $status['postagem_status_id'] . '" selected>' . $status['postagem_status_nome'] . '</option>';
                                         } else {
                                             echo '<option value="' . $status['postagem_status_id'] . '">' . $status['postagem_status_nome'] . '</option>';
@@ -88,7 +116,7 @@ $pasta = '../public/arquivos/postagens/' . $buscaPostagem['dados'][0]['postagem_
                             <textarea class="form-control form-control-sm" name="postagem_informacoes" placeholder="Informações, texto da postagem, legendas...." rows="6" required><?php echo $buscaPostagem['dados'][0]['postagem_informacoes'] ?></textarea>
                         </div>
                         <div class="col-md-3 col-12">
-                            <button type="submit" class="btn btn-success btn-sm" name="btn_salvar"><i class="fa-regular fa-floppy-disk"></i> Salvar</button>
+                            <button type="submit" class="btn btn-success btn-sm" name="btn_atualizar"><i class="fa-regular fa-floppy-disk"></i> Salvar</button>
                             <button type="submit" class="btn btn-danger btn-sm" name="btn_apagar"><i class="fa-solid fa-trash"></i> Apagar</button>
 
                         </div>
