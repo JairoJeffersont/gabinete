@@ -26,6 +26,8 @@ class Database {
             $this->connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->connection->exec("SET NAMES 'utf8mb4'");
+
         } catch (PDOException $e) {
             $this->logger->novoLog('db_error', $e->getMessage());
             header('Location: ?secao=error');
