@@ -19,5 +19,5 @@ return [
         'nome' => 'Acácio Favacho',
         'estado' => 'AP',
         'ano_primeiro_mandato' => 2019
-    ],
+    ]
 ];
