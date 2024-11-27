@@ -22,6 +22,7 @@ $usuarioController = new UsuarioController();
             } elseif (strlen($_POST['usuario_senha']) < 6) {
                 echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">A senha tem menos de 6 caracteres</div>';
             } else {
+
                 $usuario = [
                     'usuario_nome' => htmlspecialchars($_POST['usuario_nome'], ENT_QUOTES, 'UTF-8'),
                     'usuario_email' => htmlspecialchars($_POST['usuario_email'], ENT_QUOTES, 'UTF-8'),
@@ -31,7 +32,6 @@ $usuarioController = new UsuarioController();
                     'usuario_nivel' => 2,
                     'usuario_senha' => htmlspecialchars($_POST['usuario_senha'], ENT_QUOTES, 'UTF-8')
                 ];
-
 
                 $result = $usuarioController->criarUsuario($usuario);
 
