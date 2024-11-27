@@ -74,7 +74,7 @@ if ($busca['status'] == 'not_found' || is_integer($id) || $busca['status'] == 'e
                         }
                     }
                     ?>
-                    
+
                     <form class="row g-2 form_custom" id="form_novo" method="POST" enctype="application/x-www-form-urlencoded">
                         <div class="col-md-12 col-12">
                             <input type="text" class="form-control form-control-sm" name="nome" placeholder="Nome do status" value="<?php echo $busca['dados'][0]['postagem_status_nome'] ?>" required>

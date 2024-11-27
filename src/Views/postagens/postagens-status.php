@@ -23,9 +23,9 @@ $postagensStatus = new PostagemStatusController();
             </div>
 
             <div class="card mb-2 card-description ">
-                <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-people-fill"></i> Adicionar usuários</div>
+                <div class="card-header bg-primary text-white px-2 py-1 card-background">Adicionar status de postagens</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-0">Todos os campos são obrigatórios (exceto a foto) <br> A foto deve ser em JPG ou PNG</p>
+                    <p class="card-text mb-0">Seção para gerenciamento de status de postagens   
                 </div>
             </div>
 
