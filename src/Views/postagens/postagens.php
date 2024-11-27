@@ -165,7 +165,7 @@ $ordem = isset($_GET['ordem']) ? strtolower(htmlspecialchars($_GET['ordem'])) : 
                             <tbody>
                                 <?php
 
-                                
+
 
                                 $busca = $postagens->listarPostagens($ano, $itens, $pagina, $ordem, $ordenarPor, $statusGet, $termo);
                                 //print_r($busca['total_paginas']);
@@ -189,7 +189,7 @@ $ordem = isset($_GET['ordem']) ? strtolower(htmlspecialchars($_GET['ordem'])) : 
                         </table>
                     </div>
                     <?php
-                     if (isset($busca['total_paginas'])) {
+                    if (isset($busca['total_paginas'])) {
                         $totalPagina = $busca['total_paginas'];
                     } else {
                         $totalPagina = 0;
