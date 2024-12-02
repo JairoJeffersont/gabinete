@@ -114,6 +114,21 @@ class ProposicaoController {
         }
     }
 
+    public function gerarRelatorio() {
+        try {
+            $autores = $this->proposicaoModel->gerarRelatorio();
+
+            if (empty($autores)) {
+                return ['status' => 'empty',  'message' => 'Nenhuma proposicao encontrado'];
+            }
+
+            return ['status' => 'success', 'dados' => $autores];
+        } catch (PDOException $e) {
+            $this->logger->novoLog('proposicao_error', $e->getMessage());
+            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+        }
+    }
+
     public function buscarProposicao($id) {
         try {
             $autores = $this->proposicaoModel->buscarProposicao($id);

@@ -121,6 +121,14 @@ class Proposicao {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function gerarRelatorio() {
+        $query = 'SELECT * FROM view_proposicoes_completa WHERE proposicao_autor_id = :proposicao_autor_id ORDER BY proposicao_id DESC';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':proposicao_autor_id', $this->config['deputado']['id'], PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function buscarAutores($id) {
         $query = 'SELECT * FROM proposicoes_autores WHERE proposicao_id = :id';
         $stmt = $this->conn->prepare($query);

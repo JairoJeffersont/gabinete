@@ -21,7 +21,6 @@ $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'PL';
 $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_VALIDATE_BOOLEAN) : false;
 
 
-
 ?>
 
 <div class="d-flex" id="wrapper">
@@ -33,6 +32,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-proposicoes&pagina=1&ano=<?php echo $ano ?>&tipo=<?php echo $tipo ?>&arquivada=<?php echo $arquivada ?>&termo=<?php echo $termo ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
+                    <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-relatorio" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir relatório</a>
                 </div>
             </div>
             <div class="card mb-2 card-description ">
