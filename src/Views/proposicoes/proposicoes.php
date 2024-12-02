@@ -31,8 +31,8 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
             <div class="card mb-2 ">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
-                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-proposicoes&pagina=1&ano=<?php echo $ano ?>&tipo=<?php echo $tipo ?>&arquivada=<?php echo $arquivada ?>&termo=<?php echo $termo ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
-                    <a class="btn btn-secondary btn-sm custom-nav card-description imprimir-relatorio" href="?secao=imprimir-relatorio" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir relatório</a>
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-proposicoes&pagina=1&ano=<?php echo $ano ?>&tipo=<?php echo $tipo ?>&arquivada=<?php echo $arquivada ?>&termo=<?php echo $termo ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir seleção</a>
+                    <a class="btn btn-secondary btn-sm custom-nav card-description imprimir-relatorio" href="?secao=imprimir-relatorio" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir todas</a>
                 </div>
             </div>
             <div class="card mb-2 card-description ">
