@@ -34,7 +34,7 @@ if (empty($buscaProposicao['dados'])) {
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=proposicoes" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
-                    <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicoes&id=<?php echo $id ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
+                    <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicao&id=<?php echo $id ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
                 </div>
             </div>
             <div class="card mb-2 card-description ">
@@ -53,7 +53,7 @@ if (empty($buscaProposicao['dados'])) {
 
                     <?php
                     if ($notas['status'] == 'success') {
-                        echo '<p class="card-text mb-0 mt-2" style="font-size:1.1em"><b>' . $notas['dados'][0]['nota_titulo'] . '</b></p>';
+                        echo '<p class="card-text mb-2 mt-3" style="font-size:1.1em"><b>' . $notas['dados'][0]['nota_titulo'] . '</b></p>';
                         echo '<p class="card-text mb-3" style="font-size:1em">' . $notas['dados'][0]['nota_resumo'] . '</p>';
                     }
                     ?>
@@ -68,7 +68,6 @@ if (empty($buscaProposicao['dados'])) {
             <div class="card mb-2 card-description ">
                 <ul class="list-group">
                     <li class="list-group-item"><i class="bi bi-calendar3"></i> Data de apresentação: <?php echo date('d/m/Y - H:i', strtotime($buscaProposicao['dados'][0]['proposicao_apresentacao']))  ?></li>
-                    <!--<li class="list-group-item"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank"><i class="bi bi-globe2"></i> Ir para página da Câmara</a></li>-->
                     <?php
 
                     if ($buscaProposicao['dados'][0]['proposicao_principal']) {
