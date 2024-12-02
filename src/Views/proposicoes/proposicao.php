@@ -19,7 +19,6 @@ $buscaTramitacoes = $proposicaoController->buscarTramitacoes($id);
 
 $notas = $notaController->buscarNotaTecnica('nota_proposicao', $id);
 
-
 if (empty($buscaProposicao['dados'])) {
     header('Location: ?secao=proposicoes');
 }
