@@ -68,6 +68,18 @@ Para permitir que novos usuários criem suas contas, compartilhe o link de cadas
 meu_dominio.com.br/gabinete/?secao=cadastro
 ```
 
+## Para carregar as proposições da CD no banco, edite o arquivo /python/.env com as configurações do banco de dado (as mesmas do aplicativo), e siga as instruções na tela.
+
+```
+DB_HOST=localhost
+DB_NAME=gabinete_digital
+DB_USER=root
+DB_PASS=root
+DB_PORT=3306
+```
+
+
+
 Peça para que os interessados preencham todos os campos. **Atenção**: as novas contas criadas ficarão desativadas e precisarão ser ativadas por um administrador.
 
 ---
