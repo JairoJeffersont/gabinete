@@ -59,7 +59,9 @@ if (empty($buscaProposicao['dados'])) {
                     }
                     ?>
 
-                    <em><p class="card-text mt-2" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?></em>
+                    <em>
+                        <p class="card-text mt-2" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?>
+                    </em>
 
                 </div>
             </div>
@@ -122,7 +124,50 @@ if (empty($buscaProposicao['dados'])) {
                     </div>
                 </div>
             </div>
-
+            <div class="card shadow-sm mb-2 card-description">
+                <div class="card-header bg-success text-white px-2 py-1">Criar nota técnica</div>
+                <div class="card-body p-2">
+                    <form class="row g-2 form_custom" method="POST">
+                        <div class="col-md-6 col-12">
+                            <input type="text" class="form-control" name="nota_titulo" placeholder="Título" value="<?php echo ($notas['dados'][0]['nota_titulo']) ? $notas['dados'][0]['nota_titulo'] : '' ?>" required>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <input type="text" class="form-control" name="nota_resumo" placeholder="Resumo" value="<?php echo ($notas['dados'][0]['nota_resumo']) ? $notas['dados'][0]['nota_resumo'] : '' ?>" required>
+                        </div>
+                        <div class="col-md-2 col-12">
+                            <input type="text" class="form-control" disabled value="<?php echo ($notas['dados'][0]['usuario_nome']) ? $notas['dados'][0]['usuario_nome'] : '' ?>" required>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <script>
+                                tinymce.init({
+                                    selector: 'textarea',
+                                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount fullscreen',
+                                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | alignleft aligncenter alignright alignjustify | numlist bullist indent outdent | emoticons charmap | removeformat | fullscreen',
+                                    height: 400,
+                                    language: 'pt_BR',
+                                    content_css: "public/css/tinymce.css",
+                                    setup: function(editor) {
+                                        editor.on('init', function() {
+                                            editor.getBody().style.fontSize = '10pt';
+                                        });
+                                    }
+                                });
+                            </script>
+                            <textarea class="form-control form-control-sm" name="nota_texto" placeholder="Texto" rows="10"><?php echo ($notas['dados'][0]['nota_texto']) ? $notas['dados'][0]['nota_texto'] : '' ?></textarea>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <?php
+                            if ($notas['status'] == 'not_found' || is_integer($id) || $notas['status'] == 'error') {
+                                echo '<button type="submit" class="btn btn-success btn-sm" name="btn_salvar"><i class="bi bi-floppy-fill"></i> Salvar</button>';
+                            } else {
+                                echo '<button type="submit" class="btn btn-success btn-sm" name="btn_atualizar"><i class="bi bi-floppy-fill"></i> Atualizar</button>&nbsp;';
+                                echo '<button type="submit" class="btn btn-danger btn-sm" name="btn_apagar"><i class="bi bi-floppy-fill"></i> Apagar</button>';
+                            }
+                            ?>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
