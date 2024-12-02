@@ -104,10 +104,25 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                 $busca = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada);
                                 if ($busca['status'] == 'success') {
                                     foreach ($busca['dados'] as $proposicao) {
-                                        echo '<tr>';
-                                        echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                        echo '<td>' . $proposicao['proposicao_ementa'] . '</td>';
-                                        echo '</tr>';
+                                        if ($proposicao['proposicao_tipo'] == 'PL') {
+                                            echo '<tr>';
+                                            echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
+                                            echo '<td>' . $proposicao['proposicao_ementa'];
+                                            if (!empty($proposicao['proposicao_principal_titulo'])) {
+                                                echo '<br><b><em><small>Esse projeto foi apensado ao: ' . $proposicao['proposicao_principal_titulo'] . '</small></em></b>';
+                                            }
+                                            echo '</td>';
+                                            echo '</tr>';
+                                        }else{
+                                            echo '<tr>';
+                                            echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
+                                            echo '<td>' . $proposicao['proposicao_ementa'];
+                                            if (!empty($proposicao['proposicao_principal_titulo'])) {
+                                                echo '<br><b><em><small>Proposição relacionada: ' . $proposicao['proposicao_principal_titulo'].'</small></em></b>';
+                                            }
+                                            echo '</td>';
+                                            echo '</tr>';
+                                        }
                                     }
                                 } else if ($busca['status'] == 'empty' || $busca['status'] == 'error') {
                                     echo '<tr><td colspan="6">' . $busca['message'] . '</td></tr>';

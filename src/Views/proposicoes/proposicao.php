@@ -12,9 +12,10 @@ $proposicaoController = new ProposicaoController();
 $id = $_GET['id'];
 
 $buscaProposicao = $proposicaoController->buscarProposicao($id);
-$buscarAutores = $proposicaoController->buscarAutores($id);
 $buscaPrincipal = $proposicaoController->buscarUltimaProposicao($id);
 $buscaTramitacoes = $proposicaoController->buscarTramitacoes($id);
+
+
 
 if (empty($buscaProposicao['dados'])) {
     header('Location: ?secao=proposicoes');
@@ -44,82 +45,58 @@ if (empty($buscaProposicao['dados'])) {
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1">Detalhes</div>
                 <div class="card-body p-3">
-                    <h5 class="card-title mb-0"><?php echo $buscaProposicao['dados']['siglaTipo'] . ' ' . $buscaProposicao['dados']['numero'] . '/' . $buscaProposicao['dados']['ano'] ?><?php echo ($buscaProposicao['dados']['statusProposicao']['descricaoSituacao'] == 'Arquivada') ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?>
-                        <hr class="mt-2">
+                    <h5 class="card-title mb-0">
+                        <?php echo $buscaProposicao['dados'][0]['proposicao_titulo'] ?><?php echo ($buscaProposicao['dados'][0]['proposicao_arquivada']) ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?>
                     </h5>
-                    <p class="card-text mb-2" style="font-size:1em"><?php echo $buscaProposicao['dados']['ementa']  ?>
-                        <hr>
-                    </p>
-
-                    <p class="card-text mb-0" style="font-size:1em"><i class="bi bi-dot"></i> Data de apresentação: <?php echo date('d/m', strtotime($buscaProposicao['dados']['dataApresentacao'])) ?></p>
-                    <p class="card-text mb-0" style="font-size:1em"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados']['id']  ?>" target="_blank"><i class="bi bi-dot"></i> Ver página da Câmara</a></p>
-                    <p class="card-text mb-2" style="font-size:1em"><a href="<?php echo $buscaProposicao['dados']['urlInteiroTeor']  ?>" target="_blank"><i class="bi bi-dot"></i> Ver inteiro teor</a></p>
-
-                    <?php
-
-                    if ($buscarAutores['status'] == 'success') {
-                        echo '<hr><b><i class="bi bi-people-fill"></i> Autor (es)</b>';
-                        foreach ($buscarAutores['dados'] as $autor) {
-                            echo '<p class="card-text mb-0" style="font-size:1em"> <i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' ' . $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] . '</p>';
-                        }
-                    }
-
-                    ?>
-
-                    <?php
-                    if ($buscaPrincipal['status'] == 'success') {
-                        if ($buscaPrincipal['dados']['id'] != $id) {
-                            echo '<hr><p class="card-text mb-1" style="font-size:1em"><i class="bi bi-arrow-right-short"></i> Proposição principal: </p>';
-                            echo '<p class="card-text mb-0 ms-3" style="font-size:1em"><i class="bi bi-dot"></i> <b>' . $buscaPrincipal['dados']['siglaTipo'] . ' ' . $buscaPrincipal['dados']['numero'] . '/' . $buscaPrincipal['dados']['ano'] . '</b></p>';
-                            echo '<p class="card-text mb-0 ms-3"><i class="bi bi-dot"></i> <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' . $buscaPrincipal['dados']['id'] . '" target="_blank">Ver página da Câmara</a> </p>';
-                            echo '<p class="card-text mb-0 ms-3" style="font-size:1em"><a href="' . $buscaPrincipal['dados']['urlInteiroTeor'] . '" target="_blank"><i class="bi bi-dot"></i> Ver inteiro teor</a></p>';
-                            //echo '<p class="card-text mb-2 ms-3" style="font-size:1em"><a href="?secao=proposicao&id=' . $buscaPrincipal['dados']['id'] . '"><i class="bi bi-dot"></i> Ficha de tramitação</a></p>';
-                        }
-                    }
-                    ?>
+                    <hr class="mt-3">
+                    <p class="card-text mb-0" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?></p>
 
                 </div>
             </div>
-            <div class="card shadow-sm mb-2 card-description">
+
+            <div class="card mb-2 card-description ">
+                <ul class="list-group">
+                    <li class="list-group-item"><i class="bi bi-calendar3"></i> Data de apresentação: <?php echo date('d/m/Y - H:i', strtotime($buscaProposicao['dados'][0]['proposicao_apresentacao']))  ?></li>
+                    <!--<li class="list-group-item"><a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank"><i class="bi bi-globe2"></i> Ir para página da Câmara</a></li>-->
+                    <?php
+
+                    if ($buscaProposicao['dados'][0]['proposicao_principal']) {
+                        echo '<li class="list-group-item"><i class="bi bi-info-circle"></i> Proposição ao qual foi apensada: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=' . $buscaProposicao['dados'][0]['proposicao_principal'] . '" target="_blank">' . $buscaProposicao['dados'][0]['proposicao_principal_titulo'] . '</a></li>';
+                    }
+
+                    if ($buscaPrincipal['status'] == 'success' && $buscaPrincipal['dados']['id'] != $buscaProposicao['dados'][0]['proposicao_id'] && $buscaProposicao['dados'][0]['proposicao_principal'] !== $buscaPrincipal['dados']['id']) {
+                        echo ' <li class="list-group-item"><i class="bi bi-info-circle"></i> Proposição principal: <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=' . $buscaPrincipal['dados']['id'] . '" target="_blank">' . $buscaPrincipal['dados']['siglaTipo'] . ' ' . $buscaPrincipal['dados']['numero'] . '/' . $buscaPrincipal['dados']['ano'] . '</a></li>';
+                    }
+
+                    ?>
+                </ul>
+            </div>
+
+            <div class="card mb-2 card-description ">
                 <div class="card-header bg-secondary text-white px-2 py-1">Últimas tramitações</div>
+                <div class="card-body p-0">
+                    <ul class="list-group">
+                        <?php
 
-                <div class="card-body p-2">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-striped mb-2 ">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Data</th>
-                                    <th scope="col">Despacho</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+                        if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
 
-                                if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
+                            usort($buscaTramitacoes['dados'], function ($a, $b) {
+                                return $b['sequencia'] - $a['sequencia'];
+                            });
 
-                                    usort($buscaTramitacoes['dados'], function ($a, $b) {
-                                        return $b['sequencia'] - $a['sequencia'];
-                                    });
+                            foreach (array_slice($buscaTramitacoes['dados'], 0, 10) as $tramitacoes) {
+                                $despachoResumido = mb_strimwidth($tramitacoes['despacho'], 0, 400, '...');
+                                echo '<li class="list-group-item">' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . ' | ' . $tramitacoes['siglaOrgao'] . ' - ' . $despachoResumido . (!empty($tramitacoes['url']) ? ' | <a href="' . $tramitacoes['url'] . '" target="_blank"><i class="bi bi-file-earmark-text"></i> Ver documento</a>' : '') . '</li>';
+                            }
+                        } else {
+                            echo '<li class="list-group-item">Erro ao buscar tramitações</li>';
+                        }
 
-                                    foreach (array_slice($buscaTramitacoes['dados'], 0, 10) as $tramitacoes) {
-                                        echo '<tr>';
-                                        echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
-                                        echo '<td>' . (!empty($tramitacoes['url'])
-                                            ? '<a href="' . $tramitacoes['url'] . '" target="_blank">' . $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho'] . ' <i class="bi bi-box-arrow-up-right"></i></a>'
-                                            : $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho']) . '</td>';
-                                        echo '</tr>';
-                                    }
-                                } else {
-                                    echo '<tr><td colspan="6">Erro interno do servidor</td></tr>';
-                                }
-
-                                ?>
-                            </tbody>
-                        </table>
-                        <small>* Essas informações são extraídas da base de dados da CD.</small>
-                    </div>
+                        ?>
+                    </ul>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
