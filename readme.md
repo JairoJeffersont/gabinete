@@ -27,10 +27,11 @@ Antes de executar a aplicação, configure as variáveis de ambiente editando o 
 ],
 
 'master_user' => [
-    'master_name' => 'Administrador', // Nome do usuário administrativo
-    'master_email' => 'admin@admin.com', // Email do usuário administrativo
-    'master_pass' => 'senha_adm', // Senha do usuário administrativo
+    'master_name' => 'Administrador', // Nome do usuário principal (recomenda-se personalizar para maior segurança)
+    'master_email' => 'admin@admin.com', // Email do administrador (troque por um email único e seguro)
+    'master_pass' => 'senha_adm', // Senha do administrador (utilize uma senha forte e exclusiva)
 ],
+
 
 'deputado' => [
     'id' => '0000000',                  // ID do deputado (encontrado em https://www.camara.leg.br/deputados/quem-sao ou na API: https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome)
