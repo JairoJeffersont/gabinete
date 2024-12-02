@@ -32,7 +32,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=imprimir-proposicoes&pagina=1&ano=<?php echo $ano ?>&tipo=<?php echo $tipo ?>&arquivada=<?php echo $arquivada ?>&termo=<?php echo $termo ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
-                    <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-relatorio" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir relatório</a>
+                    <a class="btn btn-secondary btn-sm custom-nav card-description imprimir-relatorio" href="?secao=imprimir-relatorio" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir relatório</a>
                 </div>
             </div>
             <div class="card mb-2 card-description ">
@@ -160,3 +160,18 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.imprimir-relatorio').on('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+            const userConfirmed = confirm("Deseja realmente imprimir o relatório? A geração do relatório pode levar vários minutos.");
+
+            if (userConfirmed) {
+                // Redireciona para o link se o usuário confirmar
+                const link = $(this).attr('href');
+                window.open(link, '_blank');
+            }
+        });
+    });
+</script>
