@@ -5,9 +5,11 @@ include '../src/Views/includes/verificaLogado.php';
 require_once '../autoloader.php';
 $config = require '../src/Configs/config.php';
 
+use GabineteDigital\Controllers\NotaTecnicaController;
 use GabineteDigital\Controllers\ProposicaoController;
 
 $proposicaoController = new ProposicaoController();
+$notaController = new NotaTecnicaController();
 
 $itens = isset($_GET['itens']) ? $_GET['itens'] : 10;
 $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
@@ -17,6 +19,8 @@ $termo = isset($_GET['termo']) ? $_GET['termo'] : '';
 $ano = isset($_GET['ano']) ? $_GET['ano'] : date('Y');
 $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'PL';
 $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_VALIDATE_BOOLEAN) : false;
+
+$notas = $notaController->listarNotasTecnicas();
 
 ?>
 
@@ -106,17 +110,37 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                     foreach ($busca['dados'] as $proposicao) {
                                         if ($proposicao['proposicao_tipo'] == 'PL') {
                                             echo '<tr>';
+
                                             echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                            echo '<td>' . $proposicao['proposicao_ementa'];
+
+                                            if ($notas['status'] == 'success') {
+                                                foreach ($notas['dados'] as $nota) {
+                                                    if ($nota['nota_proposicao'] == $proposicao['proposicao_id']) {
+                                                        echo '<td><b>' . $nota['nota_titulo'] . '</b><br>' . $proposicao['proposicao_ementa'];
+                                                    } else {
+                                                        echo '<td>' . $proposicao['proposicao_ementa'];
+                                                    }
+                                                }
+                                            }
+
+
                                             if (!empty($proposicao['proposicao_principal_titulo'])) {
-                                                echo '<br><b><em><small>Esse projeto foi apensado ao: ' . $proposicao['proposicao_principal_titulo'] . '</small></em></b>';
+                                                echo '<br><em><small>Esse projeto foi apensado ao: ' . $proposicao['proposicao_principal_titulo'] . '</small></em>';
                                             }
                                             echo '</td>';
                                             echo '</tr>';
                                         } else {
                                             echo '<tr>';
                                             echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                            echo '<td>' . $proposicao['proposicao_ementa'];
+                                            if ($notas['status'] == 'success') {
+                                                foreach ($notas['dados'] as $nota) {
+                                                    if ($nota['nota_proposicao'] == $proposicao['proposicao_id']) {
+                                                        echo '<td><b>' . $nota['nota_titulo'] . '</b><br>' . $proposicao['proposicao_ementa'];
+                                                    } else {
+                                                        echo '<td>' . $proposicao['proposicao_ementa'];
+                                                    }
+                                                }
+                                            }
                                             if (!empty($proposicao['proposicao_principal_titulo'])) {
                                                 echo '<br><b><em><small>Proposição relacionada: ' . $proposicao['proposicao_principal_titulo'] . '</small></em></b>';
                                             }

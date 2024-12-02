@@ -38,6 +38,7 @@ $rotas = [
     'clippings' => '../src/Views/clipping/clippings.php'
 
 
+
 ];
 
 if (array_key_exists($pagina, $rotas)) {

@@ -5,9 +5,11 @@ include '../src/Views/includes/verificaLogado.php';
 require_once '../autoloader.php';
 $config = require '../src/Configs/config.php';
 
+use GabineteDigital\Controllers\NotaTecnicaController;
 use GabineteDigital\Controllers\ProposicaoController;
 
 $proposicaoController = new ProposicaoController();
+$notaController = new NotaTecnicaController();
 
 $id = $_GET['id'];
 
@@ -15,6 +17,7 @@ $buscaProposicao = $proposicaoController->buscarProposicao($id);
 $buscaPrincipal = $proposicaoController->buscarUltimaProposicao($id);
 $buscaTramitacoes = $proposicaoController->buscarTramitacoes($id);
 
+$notas = $notaController->buscarNotaTecnica('nota_proposicao', $id);
 
 
 if (empty($buscaProposicao['dados'])) {
@@ -48,7 +51,8 @@ if (empty($buscaProposicao['dados'])) {
                     <h5 class="card-title mb-0">
                         <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank"><?php echo $buscaProposicao['dados'][0]['proposicao_titulo'] ?></a><?php echo ($buscaProposicao['dados'][0]['proposicao_arquivada']) ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?></a>
                     </h5>
-                    <hr class="mt-3">
+                    <p class="card-text mb-0 mt-2"></p>
+                    <hr class="mt-2">
                     <p class="card-text mb-0" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?></p>
 
                 </div>
