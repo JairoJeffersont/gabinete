@@ -62,65 +62,65 @@ $relatorio = $proposicaoController->gerarRelatorio();
 <div class="card mb-2 border-0  no-break">
     <div class="card-body p-2">
         <div class="table-responsive">
-        <table class="table table-hover table-bordered table-striped mb-0 custom-table">
-    
-    <tbody>
-        <?php
-        $busca = $proposicaoController->gerarRelatorio();
+            <table class="table table-hover table-bordered table-striped mb-0 custom-table">
 
-        if ($busca['status'] == 'success') {
-            // Agrupar proposições por ano e por tipo
-            $grupos = [];
-            foreach ($busca['dados'] as $proposicao) {
-                $grupos[$proposicao['proposicao_ano']][$proposicao['proposicao_tipo']][] = $proposicao;
-            }
+                <tbody>
+                    <?php
+                    $busca = $proposicaoController->gerarRelatorio();
 
-            // Ordenar proposições em cada grupo por 'proposicao_numero' em ordem decrescente
-            foreach ($grupos as $ano => &$tipos) { // Referência para alterar diretamente o array
-                foreach ($tipos as $tipo => &$proposicoes) {
-                    usort($proposicoes, function ($a, $b) {
-                        return $b['proposicao_numero'] <=> $a['proposicao_numero'];
-                    });
-                }
-            }
-            unset($tipos, $proposicoes); // Prevenir alterações após o loop
-
-            // Renderizar as tabelas agrupadas por ano e tipo
-            foreach ($grupos as $ano => $tipos) {
-                echo "<tr><th colspan='2' class='bg-success text-white'><b>Ano: {$ano}</b></th></tr>";
-                foreach ($tipos as $tipo => $proposicoes) {
-                    echo "<tr><th colspan='2' class='bg-primary text-white'>Tipo: {$tipo}</th></tr>";
-                    foreach ($proposicoes as $proposicao) {
-                        echo '<tr>';
-                        echo '<td style="white-space: nowrap;">';
-                        echo '<a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">';
-                        echo $proposicao['proposicao_titulo'];
-                        echo '</a>';
-                        echo '</td>';
-
-                        $nota = $notaController->buscarNotaTecnica('nota_proposicao', $proposicao['proposicao_id']);
-
-                        if ($nota['status'] == 'success') {
-                            echo '<td><b>' . $nota['dados'][0]['nota_titulo'] . '</b><br>' . $nota['dados'][0]['nota_resumo'];
-                        } else {
-                            echo '<td>' . $proposicao['proposicao_ementa'];
+                    if ($busca['status'] == 'success') {
+                        // Agrupar proposições por ano e por tipo
+                        $grupos = [];
+                        foreach ($busca['dados'] as $proposicao) {
+                            $grupos[$proposicao['proposicao_ano']][$proposicao['proposicao_tipo']][] = $proposicao;
                         }
 
-                        if (!empty($proposicao['proposicao_principal_titulo'])) {
-                            echo '<p class="mb-0 mt-1"><em><small><i class="bi bi-info-circle"></i> Esse projeto foi apensado ao: <b>' . $proposicao['proposicao_principal_titulo'] . '</b></small></p>';
+                        // Ordenar proposições em cada grupo por 'proposicao_numero' em ordem decrescente
+                        foreach ($grupos as $ano => &$tipos) { // Referência para alterar diretamente o array
+                            foreach ($tipos as $tipo => &$proposicoes) {
+                                usort($proposicoes, function ($a, $b) {
+                                    return $b['proposicao_numero'] <=> $a['proposicao_numero'];
+                                });
+                            }
                         }
+                        unset($tipos, $proposicoes); // Prevenir alterações após o loop
 
-                        echo '</td>';
-                        echo '</tr>';
+                        // Renderizar as tabelas agrupadas por ano e tipo
+                        foreach ($grupos as $ano => $tipos) {
+                            echo "<tr><th colspan='2' class='bg-success text-white p-3'><b>Ano: {$ano}</b></th></tr>";
+                            foreach ($tipos as $tipo => $proposicoes) {
+                                echo "<tr><th colspan='2' class='bg-secondary text-white p-2'>Tipo: {$tipo}</th></tr>";
+                                foreach ($proposicoes as $proposicao) {
+                                    echo '<tr>';
+                                    echo '<td style="white-space: nowrap;">';
+                                    echo '<a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">';
+                                    echo $proposicao['proposicao_titulo'];
+                                    echo '</a>';
+                                    echo '</td>';
+
+                                    $nota = $notaController->buscarNotaTecnica('nota_proposicao', $proposicao['proposicao_id']);
+
+                                    if ($nota['status'] == 'success') {
+                                        echo '<td><b>' . $nota['dados'][0]['nota_titulo'] . '</b><br>' . $nota['dados'][0]['nota_resumo'];
+                                    } else {
+                                        echo '<td>' . $proposicao['proposicao_ementa'];
+                                    }
+
+                                    if (!empty($proposicao['proposicao_principal_titulo'])) {
+                                        echo '<p class="mb-0 mt-1"><em><small><i class="bi bi-info-circle"></i> Esse projeto foi apensado ao: <b>' . $proposicao['proposicao_principal_titulo'] . '</b></small></p>';
+                                    }
+
+                                    echo '</td>';
+                                    echo '</tr>';
+                                }
+                            }
+                        }
+                    } elseif (in_array($busca['status'], ['empty', 'error'])) {
+                        echo '<tr><td colspan="6">' . $busca['message'] . '</td></tr>';
                     }
-                }
-            }
-        } elseif (in_array($busca['status'], ['empty', 'error'])) {
-            echo '<tr><td colspan="6">' . $busca['message'] . '</td></tr>';
-        }
-        ?>
-    </tbody>
-</table>
+                    ?>
+                </tbody>
+            </table>
 
         </div>
 
