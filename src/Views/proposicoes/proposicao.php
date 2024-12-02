@@ -46,7 +46,7 @@ if (empty($buscaProposicao['dados'])) {
                 <div class="card-header bg-primary text-white px-2 py-1">Detalhes</div>
                 <div class="card-body p-3">
                     <h5 class="card-title mb-0">
-                        <?php echo $buscaProposicao['dados'][0]['proposicao_titulo'] ?><?php echo ($buscaProposicao['dados'][0]['proposicao_arquivada']) ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?>
+                        <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank"><?php echo $buscaProposicao['dados'][0]['proposicao_titulo'] ?></a><?php echo ($buscaProposicao['dados'][0]['proposicao_arquivada']) ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?></a>
                     </h5>
                     <hr class="mt-3">
                     <p class="card-text mb-0" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?></p>
