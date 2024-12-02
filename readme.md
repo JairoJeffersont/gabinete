@@ -70,15 +70,23 @@ meu_dominio.com.br/gabinete/?secao=cadastro
 
 Peça para que os interessados preencham todos os campos. **Atenção**: as novas contas criadas ficarão desativadas e precisarão ser ativadas por um administrador.
 
-## Para carregar as proposições da CD no banco, edite o arquivo /python/.env com as configurações do banco de dado (as mesmas do aplicativo), e siga as instruções na tela.
 
-```
-DB_HOST=localhost
-DB_NAME=gabinete_digital
-DB_USER=root
-DB_PASS=root
-DB_PORT=3306
-```
+## Instruções para Carregar as Proposições no Banco de Dados
+
+Para carregar as proposições da Câmara dos Deputados no banco de dados, siga os passos abaixo:
+
+1. Edite o arquivo `/python/.env` com as configurações do banco de dados, utilizando as mesmas credenciais do seu aplicativo:
+    ```ini
+    DB_HOST=localhost
+    DB_NAME=gabinete_digital
+    DB_USER=root
+    DB_PASS=root
+    DB_PORT=3306
+    ```
+
+2. Execute o arquivo `main.py`.
+
+3. Siga as instruções exibidas na tela para concluir o processo.
 
 
 ---
