@@ -35,11 +35,11 @@ if (empty($buscaProposicao['dados'])) {
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=proposicoes" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
                     <?php
-                        if($notas['status'] == 'success'){
-                            echo '<a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicao&id='.$id.'" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>';
-                        }else{
-                            echo '<a class="btn btn-secondary btn-sm custom-nav card-description disabled" href="#" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>';
-                        }
+                    if ($notas['status'] == 'success') {
+                        echo '<a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicao&id=' . $id . '" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>';
+                    } else {
+                        echo '<a class="btn btn-secondary btn-sm custom-nav card-description disabled" href="#" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>';
+                    }
                     ?>
                 </div>
             </div>
