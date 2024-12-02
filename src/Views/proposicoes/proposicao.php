@@ -51,9 +51,15 @@ if (empty($buscaProposicao['dados'])) {
                     <h5 class="card-title mb-0">
                         <a href="https://www.camara.leg.br/proposicoesWeb/fichadetramitacao/?idProposicao=<?php echo $buscaProposicao['dados'][0]['proposicao_id'] ?>" target="_blank"><?php echo $buscaProposicao['dados'][0]['proposicao_titulo'] ?></a><?php echo ($buscaProposicao['dados'][0]['proposicao_arquivada']) ? ' | <small>Arquivado</small>' : ' | <small>Em tramitação</small>' ?></a>
                     </h5>
-                    <p class="card-text mb-0 mt-2"></p>
-                    <hr class="mt-2">
-                    <p class="card-text mb-0" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?></p>
+
+                    <?php
+                    if ($notas['status'] == 'success') {
+                        echo '<p class="card-text mb-0 mt-2" style="font-size:1.1em"><b>' . $notas['dados'][0]['nota_titulo'] . '</b></p>';
+                        echo '<p class="card-text mb-3" style="font-size:1em">' . $notas['dados'][0]['nota_resumo'] . '</p>';
+                    }
+                    ?>
+
+                    <em><p class="card-text mt-2" style="font-size:1em"><?php echo $buscaProposicao['dados'][0]['proposicao_ementa']  ?></em>
 
                 </div>
             </div>
