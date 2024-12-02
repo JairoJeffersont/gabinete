@@ -72,28 +72,44 @@ if (empty($buscaProposicao['dados'])) {
                 </ul>
             </div>
 
-            <div class="card mb-2 card-description ">
+            <div class="card shadow-sm mb-2 card-description">
                 <div class="card-header bg-secondary text-white px-2 py-1">Últimas tramitações</div>
-                <div class="card-body p-0">
-                    <ul class="list-group">
-                        <?php
 
-                        if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
+                <div class="card-body p-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped mb-2 ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Despacho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
 
-                            usort($buscaTramitacoes['dados'], function ($a, $b) {
-                                return $b['sequencia'] - $a['sequencia'];
-                            });
+                                if (isset($buscaTramitacoes['dados']) && !empty($buscaTramitacoes['dados'])) {
 
-                            foreach (array_slice($buscaTramitacoes['dados'], 0, 10) as $tramitacoes) {
-                                $despachoResumido = mb_strimwidth($tramitacoes['despacho'], 0, 400, '...');
-                                echo '<li class="list-group-item">' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . ' | ' . $tramitacoes['siglaOrgao'] . ' - ' . $despachoResumido . (!empty($tramitacoes['url']) ? ' | <a href="' . $tramitacoes['url'] . '" target="_blank"><i class="bi bi-file-earmark-text"></i> Ver documento</a>' : '') . '</li>';
-                            }
-                        } else {
-                            echo '<li class="list-group-item">Erro ao buscar tramitações</li>';
-                        }
+                                    usort($buscaTramitacoes['dados'], function ($a, $b) {
+                                        return $b['sequencia'] - $a['sequencia'];
+                                    });
 
-                        ?>
-                    </ul>
+                                    foreach (array_slice($buscaTramitacoes['dados'], 0, 10) as $tramitacoes) {
+                                        echo '<tr>';
+                                        echo '<td>' . date('d/m/y', strtotime($tramitacoes['dataHora'])) . '</td>';
+                                        echo '<td>' . (!empty($tramitacoes['url'])
+                                            ? '<a href="' . $tramitacoes['url'] . '" target="_blank">' . $tramitacoes['siglaOrgao'] . ' | ' . mb_strimwidth($tramitacoes['despacho'], 0, 100, '...') . ' <i class="bi bi-box-arrow-up-right"></i></a>'
+                                            : $tramitacoes['siglaOrgao'] . ' | ' . $tramitacoes['despacho']) . '</td>';
+                                        echo '</tr>';
+                                    }
+                                } else {
+                                    echo '<tr><td colspan="6">Erro interno do servidor</td></tr>';
+                                }
+
+                                ?>
+                            </tbody>
+                        </table>
+                        <small>* Essas informações são extraídas da base de dados da CD.</small>
+                    </div>
                 </div>
             </div>
 
