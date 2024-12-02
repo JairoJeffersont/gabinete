@@ -32,7 +32,6 @@ Antes de executar a aplicação, configure as variáveis de ambiente editando o 
     'master_pass' => 'senha_adm', // Senha do administrador (utilize uma senha forte e exclusiva)
 ],
 
-
 'deputado' => [
     'id' => '0000000',                  // ID do deputado (encontrado em https://www.camara.leg.br/deputados/quem-sao ou na API: https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome)
     'nome' => 'Nome do Deputado',       // Nome parlamentar do deputado
