@@ -34,7 +34,13 @@ if (empty($buscaProposicao['dados'])) {
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                     <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=proposicoes" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
-                    <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicao&id=<?php echo $id ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
+                    <?php
+                        if($notas['status'] == 'success'){
+                            echo '<a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicao&id='.$id.'" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>';
+                        }else{
+                            echo '<a class="btn btn-secondary btn-sm custom-nav card-description disabled" href="#" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>';
+                        }
+                    ?>
                 </div>
             </div>
             <div class="card mb-2 card-description ">
@@ -145,7 +151,7 @@ if (empty($buscaProposicao['dados'])) {
                             echo '<script>
                                     setTimeout(function(){
                                         window.location.href = "?secao=proposicao&id=' . $id . '";
-                                    }, 1000);</script>';
+                                    }, 300);</script>';
                         } else if ($result['status'] == 'bad_request') {
                             echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                         } else if ($result['status'] == 'error') {
@@ -169,7 +175,7 @@ if (empty($buscaProposicao['dados'])) {
                             echo '<script>
                             setTimeout(function(){
                                  window.location.href = "?secao=proposicao&id=' . $id . '";
-                            }, 1000);</script>';
+                            }, 300);</script>';
                         } else if ($result['status'] == 'bad_request') {
                             echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                         } else if ($result['status'] == 'error') {
@@ -185,7 +191,7 @@ if (empty($buscaProposicao['dados'])) {
                             echo '<script>
                                 setTimeout(function(){
                                    window.location.href = "?secao=proposicao&id=' . $id . '";
-                                }, 1000);</script>';
+                                }, 300);</script>';
                         } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request' || $result['status'] == 'invalid_email') {
                             echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                         } else if ($result['status'] == 'error') {
