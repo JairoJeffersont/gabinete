@@ -90,7 +90,7 @@ class NotaTecnicaController {
 
     public function apagarNotaTecnica($nota_id) {
         try {
-            $result = $this->buscarNotaTecnica('nota_id', $nota_id);
+            $result = $this->buscarNotaTecnica('nota_proposicao', $nota_id);
 
             if ($result['status'] === 'not_found') {
                 return ['status' => 'not_found', 'message' => 'Nota técnica não encontrada.'];

@@ -36,7 +36,7 @@ class NotaTecnica {
                       nota_titulo = :nota_titulo, 
                       nota_resumo = :nota_resumo, 
                       nota_texto = :nota_texto
-                  WHERE nota_id = :nota_id";
+                  WHERE nota_proposicao = :nota_proposicao";
 
         $stmt = $this->conn->prepare($query);
 
@@ -68,11 +68,11 @@ class NotaTecnica {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function apagar($nota_id) {
-        $query = "DELETE FROM notas_tecnicas WHERE nota_id = :nota_id";
+    public function apagar($nota_proposicao) {
+        $query = "DELETE FROM notas_tecnicas WHERE nota_proposicao = :nota_proposicao";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':nota_id', $nota_id, PDO::PARAM_INT);
+        $stmt->bindParam(':nota_proposicao', $nota_proposicao, PDO::PARAM_INT);
 
         return $stmt->execute();
     }

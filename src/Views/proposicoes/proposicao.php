@@ -34,7 +34,7 @@ if (empty($buscaProposicao['dados'])) {
             <div class="card mb-2 ">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
-                    <a class="btn btn-success btn-sm custom-nav card-description" href="#" onclick="history.back(-1)" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
+                    <a class="btn btn-success btn-sm custom-nav card-description" href="?secao=proposicoes" role="button"><i class="bi bi-arrow-left"></i> Voltar</a>
                     <a class="btn btn-secondary btn-sm custom-nav card-description" href="?secao=imprimir-ficha-proposicoes&id=<?php echo $id ?>" target="_blank" role="button"><i class="bi bi-printer-fill"></i> Imprimir</a>
                 </div>
             </div>
@@ -127,15 +127,85 @@ if (empty($buscaProposicao['dados'])) {
             <div class="card shadow-sm mb-2 card-description">
                 <div class="card-header bg-success text-white px-2 py-1">Criar nota técnica</div>
                 <div class="card-body p-2">
+
+
+                    <?php
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_salvar'])) {
+
+                        $dados = [
+                            'nota_proposicao' => $id,
+                            'nota_titulo' => htmlspecialchars($_POST['nota_titulo'], ENT_QUOTES, 'UTF-8'),
+                            'nota_resumo' => htmlspecialchars($_POST['nota_resumo'], ENT_QUOTES, 'UTF-8'),
+                            'nota_texto' => htmlspecialchars($_POST['nota_texto'], ENT_QUOTES, 'UTF-8')
+                        ];
+
+                        $result = $notaController->criarNotaTecnica($dados);
+
+                        if ($result['status'] == 'success') {
+                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
+                            echo '<script>
+                                    setTimeout(function(){
+                                        window.location.href = "?secao=proposicao&id=' . $id . '";
+                                    }, 1000);</script>';
+                        } else if ($result['status'] == 'bad_request') {
+                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        } else if ($result['status'] == 'error') {
+                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        }
+                    }
+
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_atualizar'])) {
+                        $dados = [
+                            'nota_proposicao' => $id,
+                            'nota_titulo' => htmlspecialchars($_POST['nota_titulo'], ENT_QUOTES, 'UTF-8'),
+                            'nota_resumo' => htmlspecialchars($_POST['nota_resumo'], ENT_QUOTES, 'UTF-8'),
+                            'nota_texto' => htmlspecialchars($_POST['nota_texto'], ENT_QUOTES, 'UTF-8')
+                        ];
+
+                        $result = $notaController->atualizarNotaTecnica($id, $dados);
+
+                        if ($result['status'] == 'success') {
+                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
+                            echo '<script>
+                            setTimeout(function(){
+                                 window.location.href = "?secao=proposicao&id=' . $id . '";
+                            }, 1000);</script>';
+                        } else if ($result['status'] == 'bad_request') {
+                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        } else if ($result['status'] == 'error') {
+                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        }
+                    }
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_apagar'])) {
+                        $result = $notaController->apagarNotaTecnica($id);
+
+                        if ($result['status'] == 'success') {
+                            echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '. Aguarde...</div>';
+                            echo '<script>
+                                setTimeout(function(){
+                                   window.location.href = "?secao=proposicao&id=' . $id . '";
+                                }, 1000);</script>';
+                        } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request' || $result['status'] == 'invalid_email') {
+                            echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
+                        } else if ($result['status'] == 'error') {
+                            echo '<div class="alert alert-danger px-2 py-1 mb-2 custom-alert" data-timeout="0" role="alert">' . $result['message'] . '</div>';
+                        }
+                    }
+
+                    ?>
+
                     <form class="row g-2 form_custom" method="POST">
                         <div class="col-md-6 col-12">
-                            <input type="text" class="form-control" name="nota_titulo" placeholder="Título" value="<?php echo ($notas['dados'][0]['nota_titulo']) ? $notas['dados'][0]['nota_titulo'] : '' ?>" required>
+                            <input type="text" class="form-control" name="nota_titulo" placeholder="Título" value="<?php echo ($notas['status'] == 'success') ? $notas['dados'][0]['nota_titulo'] : '' ?>" required>
                         </div>
                         <div class="col-md-4 col-12">
-                            <input type="text" class="form-control" name="nota_resumo" placeholder="Resumo" value="<?php echo ($notas['dados'][0]['nota_resumo']) ? $notas['dados'][0]['nota_resumo'] : '' ?>" required>
+                            <input type="text" class="form-control" name="nota_resumo" placeholder="Resumo" value="<?php echo ($notas['status'] == 'success') ? $notas['dados'][0]['nota_resumo'] : '' ?>" required>
                         </div>
                         <div class="col-md-2 col-12">
-                            <input type="text" class="form-control" disabled value="<?php echo ($notas['dados'][0]['usuario_nome']) ? $notas['dados'][0]['usuario_nome'] : '' ?>" required>
+                            <input type="text" class="form-control" disabled value="<?php echo ($notas['status'] == 'success') ? $notas['dados'][0]['usuario_nome'] : '' ?>" required>
                         </div>
                         <div class="col-md-12 col-12">
                             <script>
@@ -153,7 +223,7 @@ if (empty($buscaProposicao['dados'])) {
                                     }
                                 });
                             </script>
-                            <textarea class="form-control form-control-sm" name="nota_texto" placeholder="Texto" rows="10"><?php echo ($notas['dados'][0]['nota_texto']) ? $notas['dados'][0]['nota_texto'] : '' ?></textarea>
+                            <textarea class="form-control form-control-sm" name="nota_texto" placeholder="Texto" rows="10"><?php echo ($notas['status'] == 'success') ? $notas['dados'][0]['nota_texto'] : '' ?></textarea>
                         </div>
                         <div class="col-md-6 col-12">
                             <?php
