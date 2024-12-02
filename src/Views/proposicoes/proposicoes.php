@@ -108,6 +108,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                 $busca = $proposicaoController->proposicoesGabinete($itens, $pagina, $ordenarPor, $ordem, $tipo, $ano, $termo, $arquivada);
                                 if ($busca['status'] == 'success') {
                                     foreach ($busca['dados'] as $proposicao) {
+
                                         echo '<tr>';
                                         echo '<td style="white-space: nowrap;">';
                                         echo '<a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">';
@@ -124,7 +125,7 @@ $arquivada = isset($_GET['arquivada']) ? filter_var($_GET['arquivada'], FILTER_V
                                         }
 
                                         if (!empty($proposicao['proposicao_principal_titulo'])) {
-                                            echo '<br><em><small><i class="bi bi-info-circle"></i> Esse projeto foi apensado ao: <b>' . $proposicao['proposicao_principal_titulo'] . '</b></small></em>';
+                                            echo '<p class="mb-0 mt-1"><em><small><i class="bi bi-info-circle"></i> Esse projeto foi apensado ao: <b>' . $proposicao['proposicao_principal_titulo'] . '</b></small></p>';
                                         }
 
                                         echo '</td>';

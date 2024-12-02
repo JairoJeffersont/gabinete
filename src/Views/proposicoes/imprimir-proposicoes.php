@@ -87,43 +87,29 @@ $notas = $notaController->listarNotasTecnicas();
 
                     if ($busca['status'] == 'success') {
                         foreach ($busca['dados'] as $proposicao) {
-                            if ($proposicao['proposicao_tipo'] == 'PL') {
-                                echo '<tr>';
-                                echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                if ($notas['status'] == 'success') {
-                                    foreach ($notas['dados'] as $nota) {
-                                        if ($nota['nota_proposicao'] == $proposicao['proposicao_id']) {
-                                            echo '<td><b>' . $nota['nota_titulo'] . '</b><br>' . $proposicao['proposicao_ementa'];
-                                        } else {
-                                            echo '<td>' . $proposicao['proposicao_ementa'];
-                                        }
-                                    }
-                                }
-                                if (!empty($proposicao['proposicao_principal_titulo'])) {
-                                    echo '<br><b><em><small>Esse projeto foi apensado ao: ' . $proposicao['proposicao_principal_titulo'] . '</small></em></b>';
-                                }
-                                echo '</td>';
-                                echo '</tr>';
+                            echo '<tr>';
+                            echo '<td style="white-space: nowrap;">';
+                            echo '<a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">';
+                            echo $proposicao['proposicao_titulo'];
+                            echo '</a>';
+                            echo '</td>';
+
+                            $nota = $notaController->buscarNotaTecnica('nota_proposicao', $proposicao['proposicao_id']);
+
+                            if ($nota['status'] == 'success') {
+                                echo '<td><b>' . $nota['dados'][0]['nota_titulo'] . '</b><br>' . $nota['dados'][0]['nota_resumo'];
                             } else {
-                                echo '<tr>';
-                                echo '<td style="white-space: nowrap;"><a href="?secao=proposicao&id=' . $proposicao['proposicao_id'] . '">' . $proposicao['proposicao_titulo'] . '</a></td>';
-                                if ($notas['status'] == 'success') {
-                                    foreach ($notas['dados'] as $nota) {
-                                        if ($nota['nota_proposicao'] == $proposicao['proposicao_id']) {
-                                            echo '<td><b>' . $nota['nota_titulo'] . '</b><br>' . $proposicao['proposicao_ementa'];
-                                        } else {
-                                            echo '<td>' . $proposicao['proposicao_ementa'];
-                                        }
-                                    }
-                                }
-                                if (!empty($proposicao['proposicao_principal_titulo'])) {
-                                    echo '<br><b><em><small>Proposição relacionada: ' . $proposicao['proposicao_principal_titulo'] . '</small></em></b>';
-                                }
-                                echo '</td>';
-                                echo '</tr>';
+                                echo '<td>' . $proposicao['proposicao_ementa'];
                             }
+
+                            if (!empty($proposicao['proposicao_principal_titulo'])) {
+                                echo '<p class="mb-0 mt-1"><em><small><i class="bi bi-info-circle"></i> Esse projeto foi apensado ao: <b>' . $proposicao['proposicao_principal_titulo'] . '</b></small></p>';
+                            }
+
+                            echo '</td>';
+                            echo '</tr>';
                         }
-                    } else if ($busca['status'] == 'empty' || $busca['status'] == 'error') {
+                    } elseif (in_array($busca['status'], ['empty', 'error'])) {
                         echo '<tr><td colspan="6">' . $busca['message'] . '</td></tr>';
                     }
 
