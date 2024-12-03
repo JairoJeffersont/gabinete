@@ -37,7 +37,8 @@ $rotas = [
     'clipping-tipo' => '../src/Views/clipping/editar-clipping-tipo.php',
     'clippings' => '../src/Views/clipping/clippings.php',
     'imprimir-ficha-proposicao' => '../src/Views/proposicoes/imprimir-ficha.php',
-    'imprimir-relatorio' => '../src/Views/proposicoes/imprimir-relatorio.php'
+    'imprimir-relatorio' => '../src/Views/proposicoes/imprimir-relatorio.php',
+    'reunioes' => '../src/Views/reunioes/reunioes.php'
 ];
 
 if (array_key_exists($pagina, $rotas)) {
