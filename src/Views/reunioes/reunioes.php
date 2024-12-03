@@ -110,7 +110,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                             echo '<div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" style="font-size:12px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $id . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $id . '">
-                                    ' . ($situacao == 'Em Andamento' ? '<span style="color:green; font-weight:600">' . $sigla . ' ' . $nome . '</span>' : ($situacao == 'Encerrada' || $situacao == 'Cancelada' || $situacao == 'Encerrada (Termo)' || $situacao == 'Encerrada (Final)' ? '<span style="color:red; font-weight:600"">' . $sigla . ' | ' . $nome . '</span>' : ($situacao == 'Convocada' ? '<span style="color:blue">' . $sigla . ' | ' . $nome . '</span>' :
+                                    ' . ($situacao == 'Em Andamento' ? '<span style="color:green; font-weight:600">' . $sigla . ' ' . $nome . '</span>' : ($situacao == 'Encerrada' || $situacao == 'Cancelada' || $situacao == 'Encerrada (Termo)' || $situacao == 'Encerrada (Final)'  || $situacao == 'Suspensa' ? '<span style="color:red; font-weight:600"">' . $sigla . ' | ' . $nome . '</span>' : ($situacao == 'Convocada' ? '<span style="color:blue">' . $sigla . ' | ' . $nome . '</span>' :
                                 $sigla . ' ' . $nome))) . '
                                 </button>
                             </h2>
