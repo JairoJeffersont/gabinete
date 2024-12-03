@@ -20,9 +20,6 @@ class ReunioesController {
 
         $reunioesJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/eventos?dataInicio=' . $data . '&dataFim=' . $data . '&itens=100&ordem=ASC&ordenarPor=dataHoraInicio');
 
-        //print_r($reunioesJson);
-
-
         if (isset($reunioesJson['error'])) {
             $this->logger->novoLog('reunioes_error', $reunioesJson['error']);
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
@@ -35,6 +32,26 @@ class ReunioesController {
         }
 
 
-        return $reunioesJson;
+        
+    }
+
+
+    public function buscarPauta($id) {
+
+        $pautaJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/eventos/'.$id.'/pauta');
+
+        if (isset($pautaJson['error'])) {
+            $this->logger->novoLog('reunioes_error', $pautaJson['error']);
+            return ['status' => 'error', 'message' => 'Erro interno do servidor'];
+        }
+
+        if (count($pautaJson['dados']) > 0) {
+            return ['status' => 'success', 'message' => 'Ok','dados' => $pautaJson['dados']];
+        } else {
+            return ['status' => 'empty', 'message' => 'Sem reuniões para a data selecionada.', 'dados' => []];
+        }
+
+
+        
     }
 }
