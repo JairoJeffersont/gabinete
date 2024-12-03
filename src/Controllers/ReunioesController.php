@@ -45,7 +45,7 @@ class ReunioesController {
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
 
-        if (count($pautaJson['dados']) > 0) {
+        if (isset($pautaJson['dados']) && count($pautaJson['dados']) > 0) {
             return ['status' => 'success', 'message' => 'Ok','dados' => $pautaJson['dados']];
         } else {
             return ['status' => 'empty', 'message' => 'Sem reuniões para a data selecionada.', 'dados' => []];

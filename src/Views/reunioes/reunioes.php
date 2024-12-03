@@ -123,7 +123,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
 
                             if ($tipo == 'Reunião Deliberativa') {
 
-                                echo '<a href="/secao=pauta&reuniao=' . $comissao['id'] . '" type="button" class="btn btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</a>';
+                                echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" type="button" class="btn btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</a>';
                             } else {
                                 echo '<button type="button" class="btn disabled btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</button>';
                             }
