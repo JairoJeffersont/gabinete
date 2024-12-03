@@ -12,11 +12,7 @@ $proposicaoController = new ProposicaoController();
 
 $reuniaoId = $_GET['reuniao'];
 
-$buscaReunioes = $reunioesController->buscarPauta($reuniaoId);
-
-//if ($buscaReunioes['status'] == 'empty' || $buscaReunioes['status'] == 'error') {
-//    header('Location: ?secao=reunioes');/
-//}
+$buscaPauta = $reunioesController->buscarPauta($reuniaoId);
 
 ?>
 
@@ -40,59 +36,63 @@ $buscaReunioes = $reunioesController->buscarPauta($reuniaoId);
             </div>
 
             <div class="card mb-2 card-description ">
-
                 <div class="card-body p-2">
                     <div class="accordion" id="accordionPanelsStayOpenExample">
                         <?php
-                        $ordensExibidas = [];
 
-                        if ($buscaReunioes['status'] == 'empty' || $buscaReunioes['status'] == 'error') {
+                        if ($buscaPauta['status'] == 'empty' || $buscaPauta['status'] == 'error') {
                             echo ' <p class="card-text mb-0">Reunião sem pauta</p>';
                         }
 
-                        foreach ($buscaReunioes['dados'] as $proposicaoPauta) {
-                            if (!in_array($proposicaoPauta['ordem'], $ordensExibidas)) {
+                        foreach ($buscaPauta['dados'] as $proposicaoPauta) {
 
-                                $buscaProposicao = $proposicaoController->buscarProposicao('proposicao_titulo', preg_match('/^[^\/]+\/\d{4}/', $proposicaoPauta['titulo'], $matches) ? $matches[0] : '');
-                                $buscarAutores = $proposicaoController->buscarAutores($buscaProposicao['dados'][0]['proposicao_id']);
-                                
-                                $ordensExibidas[] = $proposicaoPauta['ordem'];
+                            $buscaProposicaoDB = $proposicaoController->buscarProposicao('proposicao_titulo', preg_match('/^[^\/]+\/\d{4}/', $proposicaoPauta['titulo'], $matches) ? $matches[0] : '');
+                            $buscarAutores = $proposicaoController->buscarAutores($buscaProposicaoDB['dados'][0]['proposicao_id'])['dados'];
 
-                                echo '<div class="accordion-item">
+                            $id = $buscaProposicaoDB['dados'][0]['proposicao_id'];
+                            $titulo = $proposicaoPauta['ordem'] . ' - ' . $proposicaoPauta['titulo'];
+                            $ementa = $buscaProposicaoDB['dados'][0]['proposicao_ementa'];
+                            $regime = $proposicaoPauta['regime'];
+
+
+                            if (isset($proposicaoPauta['relator']['nome'])) {
+                                $relator = $proposicaoPauta['relator']['nome'] . ' - ' . $proposicaoPauta['relator']['siglaPartido'] . '/' . $proposicaoPauta['relator']['siglaUf'];
+                            }
+
+
+                            echo '<div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" style="font-size:12px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $proposicaoPauta['ordem'] . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $proposicaoPauta['ordem'] . '">
-                                            ' . $proposicaoPauta['ordem'] . ' - ' . $proposicaoPauta['titulo'] . '
+                                        <button class="accordion-button collapsed" style="font-size:13px" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $id . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $id . '">
+                                        ' . $titulo . '
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapse' . $proposicaoPauta['ordem'] . '" class="accordion-collapse collapse">
+                                    <div id="panelsStayOpen-collapse' . $id . '" class="accordion-collapse collapse">
                                         <div class="accordion-body">
-                                            <p class="mb-2"><em>' . $buscaProposicao['dados'][0]['proposicao_ementa'] . '</em></p>
-                                            <p class="mb-4"></i>Regime de tramitação: <b>' . $proposicaoPauta['regime'] . '</b></p>';
+                                            <p class="card-text"><em>' . $ementa . '</em></p><hr>
+                                            <p class="card-text mb-1">Autoria:</p>';
 
-                                foreach ($buscarAutores['dados'] as $autor) {
-                                    if ($autor['proposicao_autor_proponente'] == 1 && $autor['proposicao_autor_proponente'] == 1) {
-                                        echo '<p class="mb-0"><i class="bi bi-person"></i> Autor(es): <b>' . $autor['proposicao_autor_nome'] . ' - ' . $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] . '</b></p>';
-                                    }
-                                }
+                                            foreach ($buscarAutores as $autor) {
+                                                if ($autor['proposicao_autor_proponente'] == 1 && $autor['proposicao_autor_assinatura'] == 1) {
+                                                    echo '<p class="card-text mb-0"><i class="bi bi-person"></i> <b>' . $autor['proposicao_autor_nome'] . ' - ' . $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] . '</b></p>';
+                                                }
+                                            }
 
-                                if (isset($proposicaoPauta['relator']['nome'])) {
-                                    echo '<p class="mb-2 mt-0"><i class="bi bi-person"></i> Relator(a): <b>' . $proposicaoPauta['relator']['nome'] . ' - ' . $proposicaoPauta['relator']['siglaPartido'] . '/' . $proposicaoPauta['relator']['siglaUf'] . '</b></p>';
-                                }
+                                            echo '<hr>';
 
-                                if (isset($proposicaoPauta['textoParecer'])) {
-                                    echo '<p class="mb-0"><i class="bi bi-file-earmark-text"></i> ' . $proposicaoPauta['textoParecer'] . '</p>';
-                                }
+                                            if (isset($proposicaoPauta['relator']['nome'])) {
+                                                echo '<p class="mb-1 mt-0"><i class="bi bi-person"></i> Relator(a): <b>' . $proposicaoPauta['relator']['nome'] . ' - ' . $proposicaoPauta['relator']['siglaPartido'] . '/' . $proposicaoPauta['relator']['siglaUf'] . '</b></p>';
+                                            }
 
-                                echo '<hr>';
+                                            if (isset($proposicaoPauta['textoParecer'])) {
+                                                echo '<p class="mb-0"><i class="bi bi-file-earmark-text"></i> ' . $proposicaoPauta['textoParecer'] . '</p>';
+                                            }
 
-
-
-
-                                echo '</div>
+                            echo '</div>
                                     </div>
                                 </div>';
-                            }
                         }
+
+
                         ?>
 
                     </div>
