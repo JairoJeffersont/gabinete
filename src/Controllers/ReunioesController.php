@@ -20,6 +20,9 @@ class ReunioesController {
 
         $reunioesJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/eventos?dataInicio=' . $data . '&dataFim=' . $data . '&itens=100&ordem=ASC&ordenarPor=dataHoraInicio');
 
+        //print_r($reunioesJson);
+
+
         if (isset($reunioesJson['error'])) {
             $this->logger->novoLog('reunioes_error', $reunioesJson['error']);
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];

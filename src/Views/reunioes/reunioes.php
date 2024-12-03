@@ -13,8 +13,6 @@ $tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
 
 $buscaReunioes = $reunioesController->buscarReunioes($data);
 
-
-
 ?>
 
 
@@ -39,7 +37,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                 <div class="card-body p-2">
                     <form class="row g-2 form_custom mb-0" method="GET" enctype="application/x-www-form-urlencoded">
                         <input type="hidden" name="secao" value="reunioes" />
-                        <div class="col-md-1 col-10">
+                        <div class="col-md-1 col-4">
                             <input type="date" class="form-control form-control-sm" name="data" value="<?php echo $data ?>">
                         </div>
                         <div class="col-md-2 col-6">
@@ -61,6 +59,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                                         $selected = ($descricaoTipo == $tipo) ? 'selected' : '';
                                         echo '<option value="' . $descricaoTipo . '" ' . $selected . '>' . $descricaoTipo . '</option>';
                                     }
+                                    
                                 } else {
                                     echo '<option value="Reunião Deliberativa">Não disponível</option>';
                                 }
@@ -98,7 +97,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
 
                 foreach ($horarios as $horario) {
                     echo '<div class="card mb-2">
-                            <div class="card-header bg-secondary text-white px-2 py-1"><b>' . date('H:i', strtotime($horario)) . '</b></div>
+                            <div class="card-header bg-secondary text-white px-2 py-1"><i class="bi bi-alarm-fill"></i> <b>' . date('H:i', strtotime($horario)) . '</b></div>
                             <div class="card-body p-2">
                             <div class="accordion" id="accordionPanelsStayOpenExample">';
 
