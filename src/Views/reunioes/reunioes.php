@@ -7,10 +7,11 @@ require_once '../autoloader.php';
 
 $reunioesController = new ReunioesController();
 
-$buscaReunioes = $reunioesController->buscarReunioes('2024-12-03');
+$data = $_GET['data'] ?? date('Y-m-d');
 
 $tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
 
+$buscaReunioes = $reunioesController->buscarReunioes($data);
 
 ?>
 
@@ -36,7 +37,9 @@ $tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
                 <div class="card-body p-2">
                     <form class="row g-2 form_custom mb-0" method="GET" enctype="application/x-www-form-urlencoded">
                         <input type="hidden" name="secao" value="reunioes" />
-
+                        <div class="col-md-1 col-10">
+                            <input type="date" class="form-control form-control-sm" name="data" value="<?php echo $data ?>">
+                        </div>
                         <div class="col-md-2 col-6">
                             <select class="form-select form-select-sm" name="tipo" required>
                                 <?php
@@ -52,15 +55,18 @@ $tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
                                     }
                                 }
 
-                                foreach ($reunioesFiltradasPorTipo as $tipo_select) {
-                                    if ($tipo_select['descricaoTipo'] == $tipo) {
-                                        echo '<option value="' . $tipo_select['descricaoTipo'] . '" selected>' . $tipo_select['descricaoTipo'] . '</option>';
-                                    }else{
-                                        echo '<option value="' . $tipo_select['descricaoTipo'] . '" >'.$tipo_select['descricaoTipo'].'</option>';
-
+                                if (count($reunioesFiltradasPorTipo) > 0) {
+                                    foreach ($reunioesFiltradasPorTipo as $tipo_select) {
+                                        if ($tipo_select['descricaoTipo'] == $tipo) {
+                                            echo '<option value="' . $tipo_select['descricaoTipo'] . '" selected>' . $tipo_select['descricaoTipo'] . '</option>';
+                                        } else {
+                                            echo '<option value="' . $tipo_select['descricaoTipo'] . '" >' . $tipo_select['descricaoTipo'] . '</option>';
+                                        }
                                     }
+                                } else {
+                                    echo '<option>Nenhum tipo disponível</option>';
                                 }
-                                
+
                                 ?>
                             </select>
                         </div>
@@ -109,10 +115,8 @@ $tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
                         echo '<div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" style="font-size:12px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $id . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $id . '">
-                                '.($situacao == 'Em Andamento' ? '<span style="color:green; font-weight:600">'.$sigla.' '.$nome.'</span>' :
-                                  ($situacao == 'Encerrada' || $situacao == 'Cancelada' || $situacao == 'Encerrada (Termo)' || $situacao == 'Encerrada (Final)' ? '<span style="color:red; font-weight:600"">'.$sigla.' | '.$nome.'</span>' :
-                                  ($situacao == 'Convocada' ? '<span style="color:blue">'.$sigla.' | '.$nome.'</span>' :
-                                  $sigla.' '.$nome))).'
+                                ' . ($situacao == 'Em Andamento' ? '<span style="color:green; font-weight:600">' . $sigla . ' ' . $nome . '</span>' : ($situacao == 'Encerrada' || $situacao == 'Cancelada' || $situacao == 'Encerrada (Termo)' || $situacao == 'Encerrada (Final)' ? '<span style="color:red; font-weight:600"">' . $sigla . ' | ' . $nome . '</span>' : ($situacao == 'Convocada' ? '<span style="color:blue">' . $sigla . ' | ' . $nome . '</span>' :
+                            $sigla . ' ' . $nome))) . '
                             </button>
                         </h2>
 
