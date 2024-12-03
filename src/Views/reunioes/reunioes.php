@@ -8,7 +8,6 @@ require_once '../autoloader.php';
 $reunioesController = new ReunioesController();
 
 $data = $_GET['data'] ?? date('Y-m-d');
-
 $tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
 
 $buscaReunioes = $reunioesController->buscarReunioes($data);
@@ -29,7 +28,8 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-calendar3"></i> Reuniões e sessões do dia</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-0">Consulte todas as reuniões sessões da Câmara </p>
+                    <p class="card-text mb-1">Consulte todas as reuniões sessões da Câmara </p>
+                    <p class="card-text mb-0"><i class="bi bi-info-circle-fill"></i> Os dados são atualizados em tempo real. Se nenhuma resposta for exibida, tente clicar em <b>"Buscar"</b> novamente.</p>
                 </div>
             </div>
 
@@ -43,7 +43,6 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                         <div class="col-md-2 col-6">
                             <select class="form-select form-select-sm" name="tipo" required>
                                 <?php
-
 
                                 if ($buscaReunioes['status'] == 'success') {
                                     $tiposReunioes = [];
@@ -59,7 +58,6 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                                         $selected = ($descricaoTipo == $tipo) ? 'selected' : '';
                                         echo '<option value="' . $descricaoTipo . '" ' . $selected . '>' . $descricaoTipo . '</option>';
                                     }
-
                                 } else {
                                     echo '<option value="Reunião Deliberativa">Não disponível</option>';
                                 }
