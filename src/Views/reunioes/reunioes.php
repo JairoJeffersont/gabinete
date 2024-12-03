@@ -27,7 +27,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                 </div>
             </div>
             <div class="card mb-2 card-description ">
-                <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-file-earmark-text-fill"></i> Reuniões e sessões do dia</div>
+                <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-calendar3"></i> Reuniões e sessões do dia</div>
                 <div class="card-body p-2">
                     <p class="card-text mb-0">Consulte todas as reuniões sessões da Câmara </p>
                 </div>
@@ -59,7 +59,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                                         $selected = ($descricaoTipo == $tipo) ? 'selected' : '';
                                         echo '<option value="' . $descricaoTipo . '" ' . $selected . '>' . $descricaoTipo . '</option>';
                                     }
-                                    
+
                                 } else {
                                     echo '<option value="Reunião Deliberativa">Não disponível</option>';
                                 }
