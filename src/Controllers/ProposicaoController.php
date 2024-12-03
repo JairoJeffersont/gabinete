@@ -129,9 +129,9 @@ class ProposicaoController {
         }
     }
 
-    public function buscarProposicao($id) {
+    public function buscarProposicao($coluna, $id) {
         try {
-            $autores = $this->proposicaoModel->buscarProposicao($id);
+            $autores = $this->proposicaoModel->buscarProposicao($coluna, $id);
 
             if (empty($autores)) {
                 return ['status' => 'empty',  'message' => 'Proposição não encontrada'];

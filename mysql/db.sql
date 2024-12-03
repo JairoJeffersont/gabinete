@@ -301,7 +301,8 @@ CREATE TABLE proposicoes (
     proposicao_arquivada TINYINT(1) NOT NULL DEFAULT 0,
     proposicao_aprovada TINYINT(1) NOT NULL DEFAULT 0,
     proposicao_principal INT DEFAULT NULL,
-    PRIMARY KEY (proposicao_id)
+    PRIMARY KEY (proposicao_id),
+    INDEX (proposicao_titulo)
 ) ENGINE=InnoDB 
   DEFAULT CHARSET=utf8mb4 
   COLLATE=utf8mb4_general_ci;

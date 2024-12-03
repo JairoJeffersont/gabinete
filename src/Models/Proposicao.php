@@ -71,11 +71,11 @@ class Proposicao {
         return true;
     }
 
-    public function buscarProposicao($id) {
+    public function buscarProposicao($coluna, $id) {
 
-        $query = 'SELECT * FROM view_proposicoes_completa WHERE proposicao_id = :id';
+        $query = 'SELECT * FROM view_proposicoes_completa WHERE '.$coluna.' = :id';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

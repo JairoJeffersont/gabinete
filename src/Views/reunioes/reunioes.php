@@ -121,7 +121,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                                         <p class="mb-3"><i class="bi bi-info-circle"></i> ' . $situacao . '</p>
                                         <p class="mb-3">' . mb_strimwidth($comissao['descricao'], 0, 800, '...') . '</p>';
 
-                            if ($tipo == 'Reunião Deliberativa') {
+                            if ($tipo == 'Reunião Deliberativa' || $tipo == 'Sessão Deliberativa') {
 
                                 echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" type="button" class="btn btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</a>';
                             } else {
