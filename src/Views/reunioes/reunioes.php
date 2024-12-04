@@ -8,9 +8,10 @@ require_once '../autoloader.php';
 $reunioesController = new ReunioesController();
 
 $data = $_GET['data'] ?? date('Y-m-d');
-$tipo = $_GET['tipo'] ?? 'Reunião Deliberativa';
+$tipo = $_GET['tipo'] ?? 112;
+$situacao = $_GET['situacao'] ?? 3;
 
-$buscaReunioes = $reunioesController->buscarReunioes($data);
+$buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
 
 ?>
 
@@ -20,16 +21,17 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
     <div id="page-content-wrapper">
         <?php include '../src/Views/includes/top_menu.php'; ?>
         <div class="container-fluid p-2">
+
             <div class="card mb-2 ">
                 <div class="card-body p-1">
                     <a class="btn btn-primary btn-sm custom-nav card-description" href="?secao=home" role="button"><i class="bi bi-house-door-fill"></i> Início</a>
                 </div>
             </div>
+
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-calendar3"></i> Reuniões e sessões do dia</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-1">Consulte todas as reuniões sessões da Câmara </p>
-                    <p class="card-text mb-0"><i class="bi bi-info-circle-fill"></i> Os dados são atualizados em tempo real. Se nenhuma resposta for exibida, tente clicar em <b>"Buscar"</b> novamente.</p>
+                    <p class="card-text mb-0">Consulte todas as reuniões sessões da Câmara </p>
                 </div>
             </div>
 
@@ -40,29 +42,38 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                         <div class="col-md-1 col-4">
                             <input type="date" class="form-control form-control-sm" name="data" value="<?php echo $data ?>">
                         </div>
-                        <div class="col-md-2 col-6">
+                        <div class="col-md-2 col-8">
                             <select class="form-select form-select-sm" name="tipo" required>
                                 <?php
-
-                                if ($buscaReunioes['status'] == 'success') {
-                                    $tiposReunioes = [];
-
-                                    foreach ($buscaReunioes['dados'] as $reuniao) {
-                                        $descricaoTipo = $reuniao['descricaoTipo'];
-                                        $tiposReunioes[$descricaoTipo] = true;
+                                $buscaTipos = $reunioesController->buscarTipos();
+                                if ($buscaTipos['status'] == 'success') {
+                                    foreach ($buscaTipos['dados'] as $tipoOption) {
+                                        if ($tipoOption['cod'] == $tipo) {
+                                            echo '<option value="' . $tipoOption['cod'] . '" selected>' . $tipoOption['nome'] . '</option>';
+                                        } else {
+                                            echo '<option value="' . $tipoOption['cod'] . '">' . $tipoOption['nome'] . '</option>';
+                                        }
                                     }
-
-                                    ksort($tiposReunioes);
-
-                                    foreach ($tiposReunioes as $descricaoTipo => $_) {
-                                        $selected = ($descricaoTipo == $tipo) ? 'selected' : '';
-                                        echo '<option value="' . $descricaoTipo . '" ' . $selected . '>' . $descricaoTipo . '</option>';
-                                    }
-                                } else {
-                                    echo '<option value="Reunião Deliberativa">Não disponível</option>';
                                 }
                                 ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-10">
+                            <select class="form-select form-select-sm" name="situacao" required>
+                                <option value="0" <?php echo ($situacao == 0) ? 'selected' : ''; ?>>Todas</option>
 
+                                <?php
+                                $buscaSituacoes = $reunioesController->buscarSituacoes();
+                                if ($buscaSituacoes['status'] == 'success') {
+                                    foreach ($buscaSituacoes['dados'] as $situacaoOption) {
+                                        if ($situacaoOption['cod'] == $situacao) {
+                                            echo '<option value="' . $situacaoOption['cod'] . '" selected>' . $situacaoOption['nome'] . '</option>';
+                                        } else {
+                                            echo '<option value="' . $situacaoOption['cod'] . '">' . $situacaoOption['nome'] . '</option>';
+                                        }
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
 
@@ -72,87 +83,61 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                     </form>
                 </div>
             </div>
-            <?php
+            <div class="card mb-2 card-description ">
+                <div class="card-body p-2">
+                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                        <?php
 
-            if ($buscaReunioes['status'] == 'success') {
+                        if ($buscaReunioes['status'] == 'success') {
+                            foreach ($buscaReunioes['dados'] as $index => $reuniao) {
+                                echo '<div class="accordion-item">';
+                                echo '<h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" style="font-size:14px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
+                                            ' . date('H:i', strtotime($index)) . ' | &nbsp;<small>' . $reuniao[0]['situacao'] . '</small>
+                                        </button>
+                                      </h2>';
+                                echo '<div id="panelsStayOpen-collapse' . $index . '" class="accordion-collapse collapse">';
+                                echo '<div class="accordion-body p-2">';
+                                foreach ($reuniao as $comissao) {
+                                    echo '<div class="card mb-2 shadow-sm">';
+                                    echo '<div class="card-body">';
+                                    echo '<div class="card-text mb-0"><b>' . $comissao['orgaos'][0]['sigla'] . ' | ' . $comissao['orgaos'][0]['nomePublicacao'] . '</b><hr>';
+                                    echo '<div class="card-text mb-0">' . $comissao['descricao'] . '</div><hr>';
+                                    echo '<div class="card-text mb-0"><i class="bi bi-house-fill"></i> ' . $comissao['localCamara']['nome'] . '</div><hr>';
+                                    echo '<div class="btn-group" role="group" aria-label="Basic example">';
 
-                usort($buscaReunioes['dados'], function ($a, $b) {
-                    return strtotime($a['dataHoraInicio']) - strtotime($b['dataHoraInicio']);
-                });
+                                    if (!empty($comissao['urlRegistro'])) {
+                                        echo '<a href="' . $comissao['urlRegistro'] . '" type="button" target="_blank" class="btn btn-danger btn-sm" style="font-size: 0.9em"><i class="bi bi-youtube"></i> Youtube</a>';
+                                    } else {
+                                        echo '<button type="button" class="btn btn-danger btn-sm disabled" style="font-size: 0.9em"><i class="bi bi-youtube"></i> Youtube</button>';
+                                    }
 
-                $horarios = [];
-                $reunioesFiltradas = [];
+                                    echo '<a href="https://www.camara.leg.br/evento-legislativo/' . $comissao['id'] . '" target="_blank" type="button" class="btn btn-success btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Página da CD</a>';
 
-                foreach ($buscaReunioes['dados'] as $hora) {
-                    if ($hora['descricaoTipo'] == $tipo) {
-                        $dataHoraInicio = $hora['dataHoraInicio'];
-                        if (!in_array($dataHoraInicio, $horarios)) {
-                            $horarios[] = $dataHoraInicio;
-                            $reunioesFiltradas[] = $hora;
-                        }
-                    }
-                }
+                                    if ($tipo == 112 || $tipo == 110) {
+                                        echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" type="button" class="btn btn-secondary btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Ver Pauta</a>';
+                                    } else {
+                                        echo '<button type="button" class="btn btn-primary disabled btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Ver Pauta</button>';
+                                    }
 
-                foreach ($horarios as $horario) {
-                    echo '<div class="card mb-2">
-                            <div class="card-header bg-light text-primary px-2 py-1" style="font-size:12px"><i class="bi bi-alarm-fill"></i> <b>' . date('H:i', strtotime($horario)) . '</b></div>
-                            <div class="card-body p-2">
-                            <div class="accordion" id="accordionPanelsStayOpenExample">';
-
-                    foreach ($buscaReunioes['dados'] as $comissao) {
-                        if ($comissao['dataHoraInicio'] == $horario && $comissao['descricaoTipo'] == $tipo) {
-                            $sigla = $comissao['orgaos'][0]['sigla'];
-                            $nome = $comissao['orgaos'][0]['nomePublicacao'];
-                            $local = $comissao['localCamara']['nome'];
-                            $situacao = $comissao['situacao'];
-                            $id = $comissao['id'];
-
-                            echo '<div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" style="font-size:12px; font-weight:600" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $id . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $id . '">'.$sigla . ' ' . $nome.'</button>
-                            </h2>
-    
-                                <div id="panelsStayOpen-collapse' . $id . '" class="accordion-collapse collapse">
-                                    <div class="accordion-body" style="font-size:12px">
-                                        <p class="mb-1"><i class="bi bi-house-door"></i> ' . $local . '</p>
-                                        <p class="mb-3"><i class="bi bi-info-circle"></i> ' . $situacao . '</p>
-                                        <p class="mb-3">' . mb_strimwidth($comissao['descricao'], 0, 800, '...') . '</p>';
-
-                            if ($tipo == 'Reunião Deliberativa' || $tipo == 'Sessão Deliberativa') {
-
-                                echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" onclick="return confirmarRedirecionamento();" type="button" class="btn btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</a>';
-                              
-                            } else {
-                                echo '<button type="button" class="btn disabled btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</button>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                }
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
                             }
-
-                            echo '&nbsp;<a href="https://www.camara.leg.br/evento-legislativo/' . $comissao['id'] . '" target="_blank" type="button" class="btn btn-secondary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Página da Câmara</a>';
-
-                            echo '&nbsp;<a href="' . (!empty($comissao['urlRegistro']) ? $comissao['urlRegistro'] : '#') . '" target="_blank" type="button" class="btn ' . (empty($comissao['urlRegistro']) ? 'disabled' : '') . ' btn-danger btn-sm" style="font-size:0.8em"><i class="bi bi-youtube"></i> Youtube</a>';
-
-                            echo '</div>
-                                </div>
-                            </div>';
+                        } else {
+                            echo '<div class="card-text">' . $buscaReunioes['message'] . '</div>';
                         }
-                    }
-                    echo '</div></div></div>';
-                }
-            } else if ($buscaReunioes['status'] == 'empty' || $buscaReunioes['status'] == 'error') {
-                echo '<div class="card shadow-sm mb-2"><div class="card-body p-2">' . $buscaReunioes['message'] . '</div></div>';
-            }
 
+                        ?>
 
-            ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<script>
-    function confirmarRedirecionamento() {
-        var resposta = confirm("A pauta pode ser extensa e levar alguns minutos para carregar. Deseja continuar aguardando?");
-        if (resposta) {
-            return true; // O link será acessado
-        } else {
-            return false; // O redirecionamento é cancelado
-        }
-    }
-</script>
