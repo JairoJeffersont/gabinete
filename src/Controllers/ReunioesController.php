@@ -20,31 +20,50 @@ class ReunioesController {
 
         if ($situacao == 0) {
             $reunioesJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/eventos?codTipoEvento=' . $tipo . '&dataInicio=' . $data . '&dataFim=' . $data . '&itens=100&ordem=ASC&ordenarPor=dataHoraInicio');
-
         } else {
             $reunioesJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/eventos?codTipoEvento=' . $tipo . '&codSituacao=' . $situacao . '&dataInicio=' . $data . '&dataFim=' . $data . '&itens=100&ordem=ASC&ordenarPor=dataHoraInicio');
         }
-
-
+    
         if (isset($reunioesJson['error'])) {
             $this->logger->novoLog('reunioes_error', $reunioesJson['error']);
             return ['status' => 'error', 'message' => 'Erro interno do servidor'];
         }
-
+    
         if (count($reunioesJson['dados']) > 0) {
             $reunioesAgrupadas = [];
-
+    
             foreach ($reunioesJson['dados'] as $reuniao) {
-                $horaInicio = substr($reuniao['dataHoraInicio'], 0, 16);
-
-                if (!isset($reunioesAgrupadas[$horaInicio])) {
-                    $reunioesAgrupadas[$horaInicio] = [];
+                // Verifica se o índice 'orgaos' existe e se é um array
+                if (isset($reuniao['orgaos']) && is_array($reuniao['orgaos'])) {
+                    foreach ($reuniao['orgaos'] as $orgao) {
+                        if (isset($orgao['sigla'])) {
+                            $siglaOrgao = $orgao['sigla'];
+    
+                            if (!isset($reunioesAgrupadas[$siglaOrgao])) {
+                                $reunioesAgrupadas[$siglaOrgao] = [];
+                            }
+                            $reunioesAgrupadas[$siglaOrgao][] = $reuniao;
+                        }
+                    }
+                } else {
+                    // Caso a reunião não tenha órgãos associados
+                    if (!isset($reunioesAgrupadas['Sem Orgao'])) {
+                        $reunioesAgrupadas['Sem Orgao'] = [];
+                    }
+                    $reunioesAgrupadas['Sem Orgao'][] = $reuniao;
                 }
-                $reunioesAgrupadas[$horaInicio][] = $reuniao;
             }
-
+    
+            // Ordena as reuniões por dataHoraInicio em cada grupo
+            foreach ($reunioesAgrupadas as $sigla => &$reunioes) {
+                usort($reunioes, function ($a, $b) {
+                    return strtotime($a['dataHoraInicio']) - strtotime($b['dataHoraInicio']);
+                });
+            }
+            unset($reunioes); // Evita problemas com referências
+    
             ksort($reunioesAgrupadas);
-
+    
             return [
                 'status' => 'success',
                 'message' => 'Ok',
@@ -54,6 +73,8 @@ class ReunioesController {
             return ['status' => 'empty', 'message' => 'Sem reuniões para a data selecionada.', 'dados' => []];
         }
     }
+    
+    
 
 
     public function buscarTipos() {

@@ -13,6 +13,8 @@ $situacao = $_GET['situacao'] ?? 3;
 
 $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
 
+//print_r($buscaReunioes);
+
 ?>
 
 
@@ -89,38 +91,42 @@ $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
                         <?php
 
                         if ($buscaReunioes['status'] == 'success') {
-                            foreach ($buscaReunioes['dados'] as $index => $reuniao) {
+                            foreach ($buscaReunioes['dados'] as $index => $comissao) {
                                 echo '<div class="accordion-item">';
                                 echo '<h2 class="accordion-header shadow-sm">
-                                        <button class="accordion-button collapsed bg-light" type="button" style="font-size:14px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
-                                            ' . date('H:i', strtotime($index)) . ' | &nbsp;<small>' . $reuniao[0]['situacao'] . '</small>
+                                        <button class="accordion-button collapsed" type="button" style="font-size:14px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
+                                            ' . $index . ' | ' . $comissao[0]['orgaos'][0]['nomePublicacao'] . '
                                         </button>
                                       </h2>';
-                                echo '<div id="panelsStayOpen-collapse' . $index . '" class="accordion-collapse collapse show">';
+                                echo '<div id="panelsStayOpen-collapse' . $index . '" class="accordion-collapse collapse">';
                                 echo '<div class="accordion-body p-2 shadow-sm">';
-                                foreach ($reuniao as $comissao) {
+
+                                foreach ($comissao as $reuniao) {
                                     echo '<div class="card mb-2 shadow-sm">';
                                     echo '<div class="card-body">';
-                                    echo '<div class="card-text mb-0"><b>' . $comissao['orgaos'][0]['sigla'] . ' | ' . $comissao['orgaos'][0]['nomePublicacao'] . '</b><hr>';
-                                    echo '<div class="card-text mb-0">' . $comissao['descricao'] . '</div><hr>';
-                                    echo '<div class="card-text mb-0"><i class="bi bi-house-fill"></i> ' . $comissao['localCamara']['nome'] . '</div><hr>';
+                                    echo '<div class="card-text mb-0">' . $reuniao['descricao'] . '</div><hr>';
+                                    echo '<div class="card-text mb-2"><i class="bi bi-house-fill"></i> ' . $reuniao['localCamara']['nome'] . ' </div>';
+                                    echo '<div class="card-text mb-2"><i class="bi bi-exclamation-circle-fill"></i> <b>' . $reuniao['situacao'] . ' </b></div>';
+                                    echo '<div class="card-text mb-0"><i class="bi bi-alarm"></i> Hora início: <b>' . date('H:i', strtotime($reuniao['dataHoraInicio'])) . '</b></div>';
+                                    if (!empty($reuniao['dataHoraFim'])) {
+                                        echo '<div class="card-text mb-0"><i class="bi bi-alarm"></i> Hora fim: <b>' . date('H:i', strtotime($reuniao['dataHoraFim'])) . '</b></div><hr>';
+                                    } else {
+                                        echo '<hr>';
+                                    }
                                     echo '<div class="btn-group" role="group" aria-label="Basic example">';
-
-                                    if (!empty($comissao['urlRegistro'])) {
-                                        echo '<a href="' . $comissao['urlRegistro'] . '" type="button" target="_blank" class="btn btn-danger btn-sm" style="font-size: 0.9em"><i class="bi bi-youtube"></i> Youtube</a>';
+                                    if (!empty($reuniao['urlRegistro'])) {
+                                        echo '<a href="' . $reuniao['urlRegistro'] . '" type="button" target="_blank" class="btn btn-danger btn-sm" style="font-size: 0.9em"><i class="bi bi-youtube"></i> Youtube</a>';
                                     } else {
                                         echo '<button type="button" class="btn btn-danger btn-sm disabled" style="font-size: 0.9em"><i class="bi bi-youtube"></i> Youtube</button>';
                                     }
 
-                                    echo '<a href="https://www.camara.leg.br/evento-legislativo/' . $comissao['id'] . '" target="_blank" type="button" class="btn btn-success btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Página da CD</a>';
+                                    echo '<a href="https://www.camara.leg.br/evento-legislativo/' . $reuniao['id'] . '" target="_blank" type="button" class="btn btn-success btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Página da CD</a>';
 
                                     if ($tipo == 112 || $tipo == 110) {
-                                        echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" type="button" class="btn btn-secondary btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Ver Pauta</a>';
+                                        echo '<a href="?secao=pauta&reuniao=' . $reuniao['id'] . '" type="button" class="btn btn-secondary btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Ver Pauta</a>';
                                     } else {
                                         echo '<button type="button" class="btn btn-primary disabled btn-sm" style="font-size: 0.9em"><i class="bi bi-file-earmark-text-fill"></i> Ver Pauta</button>';
                                     }
-
-                                    echo '</div>';
                                     echo '</div>';
                                     echo '</div>';
                                     echo '</div>';
@@ -134,7 +140,6 @@ $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
                         }
 
                         ?>
-
                     </div>
                 </div>
             </div>
