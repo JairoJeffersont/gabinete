@@ -91,13 +91,13 @@ $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
                         if ($buscaReunioes['status'] == 'success') {
                             foreach ($buscaReunioes['dados'] as $index => $reuniao) {
                                 echo '<div class="accordion-item">';
-                                echo '<h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" style="font-size:14px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
+                                echo '<h2 class="accordion-header shadow-sm">
+                                        <button class="accordion-button collapsed bg-light" type="button" style="font-size:14px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
                                             ' . date('H:i', strtotime($index)) . ' | &nbsp;<small>' . $reuniao[0]['situacao'] . '</small>
                                         </button>
                                       </h2>';
-                                echo '<div id="panelsStayOpen-collapse' . $index . '" class="accordion-collapse collapse">';
-                                echo '<div class="accordion-body p-2">';
+                                echo '<div id="panelsStayOpen-collapse' . $index . '" class="accordion-collapse collapse show">';
+                                echo '<div class="accordion-body p-2 shadow-sm">';
                                 foreach ($reuniao as $comissao) {
                                     echo '<div class="card mb-2 shadow-sm">';
                                     echo '<div class="card-body">';
