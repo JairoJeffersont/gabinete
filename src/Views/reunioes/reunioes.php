@@ -13,8 +13,6 @@ $situacao = $_GET['situacao'] ?? 3;
 
 $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
 
-//print_r($buscaReunioes);
-
 ?>
 
 
@@ -94,7 +92,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
                             foreach ($buscaReunioes['dados'] as $index => $comissao) {
                                 echo '<div class="accordion-item">';
                                 echo '<h2 class="accordion-header shadow-sm">
-                                        <button class="accordion-button collapsed" type="button" style="font-size:14px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
+                                        <button class="accordion-button collapsed" type="button" style="font-size:12px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $index . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $index . '">
                                             ' . $index . ' | ' . $comissao[0]['orgaos'][0]['nomePublicacao'] . '
                                         </button>
                                       </h2>';

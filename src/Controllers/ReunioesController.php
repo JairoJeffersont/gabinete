@@ -62,7 +62,7 @@ class ReunioesController {
             }
             unset($reunioes); // Evita problemas com referências
     
-            ksort($reunioesAgrupadas);
+            //ksort($reunioesAgrupadas);
     
             return [
                 'status' => 'success',
