@@ -123,7 +123,8 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
 
                             if ($tipo == 'Reunião Deliberativa' || $tipo == 'Sessão Deliberativa') {
 
-                                echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" type="button" class="btn btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</a>';
+                                echo '<a href="?secao=pauta&reuniao=' . $comissao['id'] . '" onclick="return confirmarRedirecionamento();" type="button" class="btn btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</a>';
+                              
                             } else {
                                 echo '<button type="button" class="btn disabled btn-primary btn-sm" style="font-size:0.8em"><i class="bi bi-file-earmark-text-fill"></i> Ver pauta</button>';
                             }
@@ -148,3 +149,13 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
         </div>
     </div>
 </div>
+<script>
+    function confirmarRedirecionamento() {
+        var resposta = confirm("A pauta pode ser extensa e levar alguns minutos para carregar. Deseja continuar aguardando?");
+        if (resposta) {
+            return true; // O link será acessado
+        } else {
+            return false; // O redirecionamento é cancelado
+        }
+    }
+</script>
