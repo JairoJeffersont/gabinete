@@ -16,6 +16,7 @@ $reuniaoId = $_GET['reuniao'];
 $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
 
 
+
 ?>
 
 <div class="d-flex" id="wrapper">
@@ -42,10 +43,21 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
                     <div class="accordion" id="accordionPanelsStayOpenExample">
                         <?php
                         foreach ($buscaPauta['dados'] as $proposicaoPauta) {
-                            
+
                             $buscaProposicaoDB = $proposicaoController->buscarProposicao('proposicao_titulo', preg_match('/^[^\/]+\/\d{4}/', $proposicaoPauta['titulo'], $matches) ? $matches[0] : '');
                             $buscaAutores = $proposicaoController->buscarAutores($buscaProposicaoDB['dados'][0]['proposicao_id']);
                             $buscaRelacionadas = $proposicaoController->buscarRelacionadas($buscaProposicaoDB['dados'][0]['proposicao_id']);
+                            $flag = false;
+
+                            foreach ($buscaAutores['dados'] as $autor) {
+                                if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
+                                    $flag = true;
+                                } 
+                            }
+
+                            if (!empty($proposicaoPauta['relator']['nome']) && $proposicaoPauta['relator']['nome'] == $config['deputado']['id']) {
+                                $flag = true;
+                            }
 
                             $buscaAutoresRelacionada = [];
                             if ($buscaRelacionadas['status'] == 'success') {
@@ -54,6 +66,7 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
                                     if ($autores['status'] == 'success') {
                                         foreach ($autores['dados'] as $autor) {
                                             if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
+                                                $flag = true;
                                                 $buscaAutoresRelacionada[] = [
                                                     'proposicao' => $relacionada,
                                                     'autor' => $autor
@@ -70,7 +83,7 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
                         ?>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" style="font-size: 13px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?= $proposicaoPauta['ordem'] ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?= $proposicaoPauta['ordem'] ?>">
+                                    <button class="accordion-button collapsed <?= ($flag) ? 'bg-success text-white' : '' ?>" style="font-size: 13px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?= $proposicaoPauta['ordem'] ?>" aria-expanded="false" aria-controls="panelsStayOpen-collapse<?= $proposicaoPauta['ordem'] ?>">
                                         <?= $titulo ?>
                                     </button>
                                 </h2>
@@ -84,7 +97,7 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
 
                                         <?php
                                         foreach ($buscaAutores['dados'] as $autor) {
-                                            if ($autor['proposicao_autor_nome'] == 'Acácio Favacho') {
+                                            if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
                                                 echo '<p class="card-text mb-2"><i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . (!empty($autor['proposicao_autor_partido']) ? $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] : '') . '</p>';
                                             } else if ($autor['proposicao_autor_proponente'] == 1 && $autor['proposicao_autor_assinatura'] == 1) {
                                                 echo '<p class="card-text mb-2"><i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . (!empty($autor['proposicao_autor_partido']) ? $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] : '') . '</p>';
@@ -108,7 +121,7 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
 
                                         <?php
                                         if (!empty($buscaAutoresRelacionada)) {
-                                            echo '<p class="card-text mb-0 mt-2"><b><i class="bi bi-dot"></i> Apensados do deputado: </b></p>';
+                                            echo '<p class="card-text mb-0 mt-2"><b><i class="bi bi-dot"></i> Apensados do deputado '.$config['deputado']['nome'].': </b></p>';
                                             echo '<p class="card-text mb-0"><i class="bi bi-dot"></i> ' . $buscaAutoresRelacionada[0]['proposicao']['siglaTipo'] . ' ' . $buscaAutoresRelacionada[0]['proposicao']['numero'] . '/' . $buscaAutoresRelacionada[0]['proposicao']['ano'] . '</p>';
                                             echo '<p class="card-text mb-0"><i class="bi bi-dot"></i> <em>' . $buscaAutoresRelacionada[0]['proposicao']['ementa'] . '</em></p>';
                                         }
