@@ -95,7 +95,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
 
                 foreach ($horarios as $horario) {
                     echo '<div class="card mb-2">
-                            <div class="card-header bg-secondary text-white px-2 py-1"><i class="bi bi-alarm-fill"></i> <b>' . date('H:i', strtotime($horario)) . '</b></div>
+                            <div class="card-header bg-secondary text-white px-2 py-1" style="font-size:12px"><i class="bi bi-alarm-fill"></i> <b>' . date('H:i', strtotime($horario)) . '</b></div>
                             <div class="card-body p-2">
                             <div class="accordion" id="accordionPanelsStayOpenExample">';
 
@@ -110,7 +110,7 @@ $buscaReunioes = $reunioesController->buscarReunioes($data);
                             echo '<div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" style="font-size:12px" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse' . $id . '" aria-expanded="false" aria-controls="panelsStayOpen-collapse' . $id . '">
-                                    ' . ($situacao == 'Em Andamento' ? '<span style="color:green; font-weight:600">' . $sigla . ' ' . $nome . '</span>' : ($situacao == 'Encerrada' || $situacao == 'Cancelada' || $situacao == 'Encerrada (Termo)' || $situacao == 'Encerrada (Final)'  || $situacao == 'Suspensa' ? '<span style="color:red; font-weight:600"">' . $sigla . ' | ' . $nome . '</span>' : ($situacao == 'Convocada' ? '<span style="color:blue">' . $sigla . ' | ' . $nome . '</span>' :
+                                    ' . ($situacao == 'Em Andamento' ? '<span style="color:green; font-weight:500">' . $sigla . ' ' . $nome . '</span>' : ($situacao == 'Encerrada' || $situacao == 'Cancelada' || $situacao == 'Encerrada (Termo)' || $situacao == 'Encerrada (Final)'  || $situacao == 'Suspensa' ? '<span style="color:red; font-weight:500"">' . $sigla . ' | ' . $nome . '</span>' : ($situacao == 'Convocada' ? '<span style="color:blue">' . $sigla . ' | ' . $nome . '</span>' :
                                 $sigla . ' ' . $nome))) . '
                                 </button>
                             </h2>
