@@ -73,15 +73,17 @@ $buscaPauta['dados'] = $resultadoUnico;
                             $buscaAutoresRelacionada = [];
                             if ($buscaRelacionadas['status'] == 'success') {
                                 foreach ($buscaRelacionadas['dados'] as $relacionada) {
-                                    $autores = $proposicaoController->buscarAutores(basename($relacionada['uri']));
-                                    if ($autores['status'] == 'success') {
-                                        foreach ($autores['dados'] as $autor) {
-                                            if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
-                                                $flag = true;
-                                                $buscaAutoresRelacionada[] = [
-                                                    'proposicao' => $relacionada,
-                                                    'autor' => $autor
-                                                ];
+                                    if ($relacionada['siglaTipo'] == 'PL') {
+                                        $autores = $proposicaoController->buscarAutores(basename($relacionada['uri']));
+                                        if ($autores['status'] == 'success') {
+                                            foreach ($autores['dados'] as $autor) {
+                                                if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
+                                                    $flag = true;
+                                                    $buscaAutoresRelacionada[] = [
+                                                        'proposicao' => $relacionada,
+                                                        'autor' => $autor
+                                                    ];
+                                                }
                                             }
                                         }
                                     }
@@ -109,9 +111,9 @@ $buscaPauta['dados'] = $resultadoUnico;
                                         <?php
                                         foreach ($buscaAutores['dados'] as $autor) {
                                             if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
-                                                echo '<p class="card-text mb-2"><i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . (!empty($autor['proposicao_autor_partido']) ? $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] : '') . '</p>';
+                                                echo '<p class="card-text mb-0"><i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . (!empty($autor['proposicao_autor_partido']) ? $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] : '') . '</p>';
                                             } else if ($autor['proposicao_autor_proponente'] == 1 && $autor['proposicao_autor_assinatura'] == 1) {
-                                                echo '<p class="card-text mb-2"><i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . (!empty($autor['proposicao_autor_partido']) ? $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] : '') . '</p>';
+                                                echo '<p class="card-text mb-0"><i class="bi bi-dot"></i> ' . $autor['proposicao_autor_nome'] . ' - ' . (!empty($autor['proposicao_autor_partido']) ? $autor['proposicao_autor_partido'] . '/' . $autor['proposicao_autor_estado'] : '') . '</p>';
                                             }
                                         }
                                         ?>

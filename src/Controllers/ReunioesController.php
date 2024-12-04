@@ -74,9 +74,6 @@ class ReunioesController {
         }
     }
     
-    
-
-
     public function buscarTipos() {
 
         $pautaJson = $this->getjson->getJson('https://dadosabertos.camara.leg.br/api/v2/referencias/tiposEvento');
@@ -108,7 +105,6 @@ class ReunioesController {
             return ['status' => 'empty', 'message' => 'Sem situações', 'dados' => []];
         }
     }
-
 
     public function buscarPauta($id) {
 
