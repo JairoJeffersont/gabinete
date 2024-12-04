@@ -39,7 +39,8 @@ $rotas = [
     'imprimir-ficha-proposicao' => '../src/Views/proposicoes/imprimir-ficha.php',
     'imprimir-relatorio' => '../src/Views/proposicoes/imprimir-relatorio.php',
     'reunioes' => '../src/Views/reunioes/reunioes.php',
-    'pauta' => '../src/Views/reunioes/pauta.php'
+    'pauta' => '../src/Views/reunioes/pauta.php',
+    
 ];
 
 if (array_key_exists($pagina, $rotas)) {

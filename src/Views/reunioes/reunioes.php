@@ -9,7 +9,7 @@ $reunioesController = new ReunioesController();
 
 $data = $_GET['data'] ?? date('Y-m-d');
 $tipo = $_GET['tipo'] ?? 112;
-$situacao = $_GET['situacao'] ?? 3;
+$situacao = $_GET['situacao'] ?? 0;
 
 $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
 
