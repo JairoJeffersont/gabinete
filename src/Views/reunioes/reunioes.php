@@ -61,7 +61,6 @@ $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
                         <div class="col-md-2 col-10">
                             <select class="form-select form-select-sm" name="situacao" required>
                                 <option value="0" <?php echo ($situacao == 0) ? 'selected' : ''; ?>>Todas</option>
-
                                 <?php
                                 $buscaSituacoes = $reunioesController->buscarSituacoes();
                                 if ($buscaSituacoes['status'] == 'success') {
@@ -76,7 +75,6 @@ $buscaReunioes = $reunioesController->buscarReunioes($data, $tipo, $situacao);
                                 ?>
                             </select>
                         </div>
-
                         <div class="col-md-1 col-2">
                             <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-search"></i></button>
                         </div>
