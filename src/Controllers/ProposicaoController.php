@@ -165,4 +165,14 @@ class ProposicaoController {
             return ['status' => 'success', 'dados' => []];
         }
     }
+
+    public function buscarRelacionadas($id) {
+        $url = 'https://dadosabertos.camara.leg.br/api/v2/proposicoes/' . $id . '/relacionadas';
+        $resposta = $this->getjson->getJson($url);
+        if (!empty($resposta['dados'])) {
+            return ['status' => 'success', 'dados' => $resposta['dados']];
+        } else {
+            return ['status' => 'success', 'dados' => []];
+        }
+    }
 }

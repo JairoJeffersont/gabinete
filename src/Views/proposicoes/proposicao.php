@@ -13,7 +13,7 @@ $notaController = new NotaTecnicaController();
 
 $id = $_GET['id'];
 
-$buscaProposicao = $proposicaoController->buscarProposicao($id);
+$buscaProposicao = $proposicaoController->buscarProposicao('proposicao_id', $id);
 $buscaPrincipal = $proposicaoController->buscarUltimaProposicao($id);
 $buscaTramitacoes = $proposicaoController->buscarTramitacoes($id);
 
