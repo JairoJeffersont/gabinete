@@ -11,11 +11,8 @@ $config = require '../src/Configs/config.php';
 $reunioesController = new ReunioesController();
 $proposicaoController = new ProposicaoController();
 
-
 $reuniaoId = $_GET['reuniao'];
 $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
-
-
 
 ?>
 
