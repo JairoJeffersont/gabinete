@@ -14,6 +14,18 @@ $proposicaoController = new ProposicaoController();
 $reuniaoId = $_GET['reuniao'];
 $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
 
+$titulosVistos = [];
+$resultadoUnico = [];
+
+foreach ($buscaPauta['dados'] as $item) {
+    if (!in_array($item['titulo'], $titulosVistos)) {
+        $resultadoUnico[] = $item;
+        $titulosVistos[] = $item['titulo'];
+    }
+}
+$buscaPauta['dados'] = $resultadoUnico;
+
+
 ?>
 
 <div class="d-flex" id="wrapper">
@@ -31,7 +43,9 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
             <div class="card mb-2 card-description ">
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-file-earmark-text"></i> Pauta da Reunião/Sessão</div>
                 <div class="card-body p-2">
-                    <p class="card-text mb-0">Consulta a pauta de votações da reunião desejada</p>
+                    <p class="card-text mb-2">Consulta a pauta de votações da reunião desejada</p>
+                    <p class="card-text mb-0">Caso algum item esteja destacado em verde, significa que ele é de autoria, relatoria ou possui algum apensado relacionado ao deputado.</p>
+
                 </div>
             </div>
 
@@ -49,7 +63,7 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
                             foreach ($buscaAutores['dados'] as $autor) {
                                 if ($autor['proposicao_autor_id'] == $config['deputado']['id']) {
                                     $flag = true;
-                                } 
+                                }
                             }
 
                             if (!empty($proposicaoPauta['relator']['nome']) && $proposicaoPauta['relator']['nome'] == $config['deputado']['id']) {
@@ -118,7 +132,7 @@ $buscaPauta = $reunioesController->buscarPauta($reuniaoId);
 
                                         <?php
                                         if (!empty($buscaAutoresRelacionada)) {
-                                            echo '<p class="card-text mb-0 mt-2"><b><i class="bi bi-dot"></i> Apensados do deputado '.$config['deputado']['nome'].': </b></p>';
+                                            echo '<p class="card-text mb-0 mt-2"><b><i class="bi bi-dot"></i> Apensados do deputado ' . $config['deputado']['nome'] . ': </b></p>';
                                             echo '<p class="card-text mb-0"><i class="bi bi-dot"></i> ' . $buscaAutoresRelacionada[0]['proposicao']['siglaTipo'] . ' ' . $buscaAutoresRelacionada[0]['proposicao']['numero'] . '/' . $buscaAutoresRelacionada[0]['proposicao']['ano'] . '</p>';
                                             echo '<p class="card-text mb-0"><i class="bi bi-dot"></i> <em>' . $buscaAutoresRelacionada[0]['proposicao']['ementa'] . '</em></p>';
                                         }
