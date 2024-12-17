@@ -18,14 +18,14 @@
 
             $resultado = $loginController->Logar($email, $senha);
 
-          
+            print_r($resultado);
 
             if ($resultado['status'] == 'success') {
                 echo '<div class="alert alert-success px-2 py-1 mb-2  rounded-5 custom-alert" data-timeout="3" role="alert">' . $resultado['message'] . '. Aguarde...</div>';
-               echo '<script>
+                /*echo '<script>
                 setTimeout(function(){
                     window.location.href = "?secao=home";
-                }, 500);</script>';
+                }, 500);</script>';*/
             } else if ($resultado['status'] == 'not_found' || $resultado['status'] == 'deactivated') {
                 echo '<div class="alert alert-info px-2 py-1 mb-2  rounded-5 custom-alert" data-timeout="3" role="alert">' . $resultado['message'] . '</div>';
             } else if ($resultado['status'] == 'wrong_password' || $resultado['status'] == 'error' || $resultado['status'] == 'deactived') {
