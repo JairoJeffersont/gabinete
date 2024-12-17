@@ -57,7 +57,7 @@ class ClienteController {
      *     - message: Mensagem detalhada sobre a operação.
      */
     public function criarCliente($dados) {
-        $camposObrigatorios = ['cliente_nome', 'cliente_email', 'cliente_telefone', 'cliente_ativo', 'cliente_assinaturas', 'cliente_deputado_id', 'cliente_deputado_nome'];
+        $camposObrigatorios = ['cliente_nome', 'cliente_email', 'cliente_telefone', 'cliente_ativo', 'cliente_assinaturas', 'cliente_deputado_id', 'cliente_deputado_nome', 'cliente_deputado_estado'];
 
         foreach ($camposObrigatorios as $campo) {
             if (!isset($dados[$campo])) {

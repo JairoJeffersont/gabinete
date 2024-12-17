@@ -43,8 +43,8 @@ class Cliente {
      * @return bool Retorna true em caso de sucesso, ou false em caso de falha.
      */
     public function criar($dados) {
-        $query = "INSERT INTO cliente (cliente_token, cliente_nome, cliente_email, cliente_telefone, cliente_ativo, cliente_assinaturas, cliente_deputado_id, cliente_deputado_nome)
-                  VALUES (:cliente_token, :cliente_nome, :cliente_email, :cliente_telefone, :cliente_ativo, :cliente_assinaturas, :cliente_deputado_id, :cliente_deputado_nome)";
+        $query = "INSERT INTO cliente (cliente_token, cliente_nome, cliente_email, cliente_telefone, cliente_ativo, cliente_assinaturas, cliente_deputado_id, cliente_deputado_nome, cliente_deputado_estado)
+                  VALUES (:cliente_token, :cliente_nome, :cliente_email, :cliente_telefone, :cliente_ativo, :cliente_assinaturas, :cliente_deputado_id, :cliente_deputado_nome, :cliente_deputado_estado)";
 
         $stmt = $this->conn->prepare($query);
         $token = uniqid();
@@ -57,6 +57,7 @@ class Cliente {
         $stmt->bindParam(':cliente_assinaturas', $dados['cliente_assinaturas'], PDO::PARAM_INT);
         $stmt->bindParam(':cliente_deputado_id', $dados['cliente_deputado_id'], PDO::PARAM_INT);
         $stmt->bindParam(':cliente_deputado_nome', $dados['cliente_deputado_nome'], PDO::PARAM_STR);
+        $stmt->bindParam(':cliente_deputado_estado', $dados['cliente_deputado_estado'], PDO::PARAM_STR);
 
         return $stmt->execute();
     }
@@ -78,7 +79,7 @@ class Cliente {
      */
     public function atualizar($cliente_id, $dados) {
         $query = "UPDATE cliente SET cliente_nome = :cliente_nome, cliente_email = :cliente_email, 
-                  cliente_telefone = :cliente_telefone, cliente_ativo = :cliente_ativo, cliente_assinaturas = :cliente_assinaturas, cliente_deputado_id = :cliente_deputado_id, cliente_deputado_nome = :cliente_deputado_nome
+                  cliente_telefone = :cliente_telefone, cliente_ativo = :cliente_ativo, cliente_assinaturas = :cliente_assinaturas, cliente_deputado_id = :cliente_deputado_id, cliente_deputado_nome = :cliente_deputado_nome, cliente_deputado_estado = :cliente_deputado_estado
                   WHERE cliente_id = :cliente_id";
 
         $stmt = $this->conn->prepare($query);
@@ -90,6 +91,7 @@ class Cliente {
         $stmt->bindParam(':cliente_assinaturas', $dados['cliente_assinaturas'], PDO::PARAM_INT);
         $stmt->bindParam(':cliente_deputado_id', $dados['cliente_deputado_id'], PDO::PARAM_INT);
         $stmt->bindParam(':cliente_deputado_nome', $dados['cliente_deputado_nome'], PDO::PARAM_STR);
+        $stmt->bindParam(':cliente_deputado_estado', $dados['cliente_deputado_estado'], PDO::PARAM_STR);
         $stmt->bindParam(':cliente_id', $cliente_id, PDO::PARAM_INT);
 
         return $stmt->execute();

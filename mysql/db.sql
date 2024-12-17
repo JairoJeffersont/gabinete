@@ -8,12 +8,13 @@ CREATE TABLE cliente (
     cliente_assinaturas int NOT NULL,
     cliente_deputado_id int NOT NULL,
     cliente_deputado_nome varchar(255) NOT NULL,
+    cliente_deputado_estado varchar(255) NOT NULL,
     cliente_criado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     cliente_atualizado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (cliente_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
-INSERT INTO cliente (cliente_id, cliente_token, cliente_nome, cliente_email, cliente_telefone, cliente_ativo, cliente_assinaturas, cliente_deputado_id, cliente_deputado_nome) VALUES (1,'sd98fsad8fsad9fsa','CLIENTE SISTEMA', 'email@email.com', '000000', 1, 2, 00000, 'deputado');
+INSERT INTO cliente (cliente_id, cliente_token, cliente_nome, cliente_email, cliente_telefone, cliente_ativo, cliente_assinaturas, cliente_deputado_id, cliente_deputado_nome, cliente_deputado_estado) VALUES (1,'sd98fsad8fsad9fsa','CLIENTE SISTEMA', 'email@email.com', '000000', 1, 2, 00000, 'deputado', 'DF');
 
 
 CREATE TABLE usuario (
@@ -46,7 +47,9 @@ CREATE TABLE orgaos_tipos (
     orgao_tipo_cliente int NOT NULL,
     orgao_tipo_atualizado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (orgao_tipo_id),
-    CONSTRAINT fk_orgao_tipo_criado_por FOREIGN KEY (orgao_tipo_criado_por) REFERENCES usuario(usuario_id)
+    CONSTRAINT fk_orgao_tipo_criado_por FOREIGN KEY (orgao_tipo_criado_por) REFERENCES usuario(usuario_id),
+    CONSTRAINT fk_orgao_tipo_cliente FOREIGN KEY (orgao_tipo_cliente) REFERENCES cliente(cliente_id)
+
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 
@@ -69,4 +72,34 @@ INSERT INTO orgaos_tipos (orgao_tipo_id, orgao_tipo_nome, orgao_tipo_descricao, 
 INSERT INTO orgaos_tipos (orgao_tipo_id, orgao_tipo_nome, orgao_tipo_descricao, orgao_tipo_criado_por, orgao_tipo_cliente) VALUES (17, 'Senado Federal', 'Senado Federal', 1, 1);
 INSERT INTO orgaos_tipos (orgao_tipo_id, orgao_tipo_nome, orgao_tipo_descricao, orgao_tipo_criado_por, orgao_tipo_cliente) VALUES (18, 'Presidência da Repúlica', 'Presidência da Repúlica', 1, 1);
 
+
+CREATE TABLE orgaos (
+    orgao_id int NOT NULL AUTO_INCREMENT,
+    orgao_nome text NOT NULL,
+    orgao_email varchar(255) NOT NULL UNIQUE,
+    orgao_telefone varchar(255) DEFAULT NULL,
+    orgao_endereco text,
+    orgao_bairro text,
+    orgao_municipio varchar(255) NOT NULL,
+    orgao_estado varchar(255) NOT NULL,
+    orgao_cep varchar(255) DEFAULT NULL,
+    orgao_tipo int NOT NULL,
+    orgao_informacoes text,
+    orgao_site text,
+    orgao_criado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    orgao_atualizado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    orgao_criado_por int NOT NULL,
+    orgao_cliente int NOT NULL,
+    PRIMARY KEY (orgao_id),
+    CONSTRAINT fk_orgao_criado_por FOREIGN KEY (orgao_criado_por) REFERENCES usuario(usuario_id),
+    CONSTRAINT fk_orgao_tipo FOREIGN KEY (orgao_tipo) REFERENCES orgaos_tipos(orgao_tipo_id),
+    CONSTRAINT fk_orgao_cliente FOREIGN KEY (orgao_cliente) REFERENCES cliente(cliente_id)
+
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+INSERT INTO orgaos (orgao_id, orgao_nome, orgao_email, orgao_municipio, orgao_estado, orgao_tipo, orgao_criado_por, orgao_cliente) VALUES (1, 'Órgão não informado', 'email@email', 'municipio', 'estado', 1, 1, 1);
+
+
+CREATE VIEW view_orgaos AS SELECT orgaos.*, orgaos_tipos.orgao_tipo_nome, usuario.usuario_nome, cliente.cliente_nome FROM orgaos INNER JOIN orgaos_tipos ON orgaos.orgao_tipo = orgaos_tipos.orgao_tipo_id INNER JOIN usuario ON orgaos.orgao_criado_por = usuario.usuario_id INNER JOIN cliente ON orgaos.orgao_cliente = cliente_id;
 CREATE VIEW view_orgaos_tipos AS SELECT orgaos_tipos.*, usuario.usuario_nome, cliente.cliente_nome FROM orgaos_tipos INNER JOIN usuario on orgaos_tipos.orgao_tipo_criado_por = usuario.usuario_id INNER JOIN cliente ON orgaos_tipos.orgao_tipo_cliente = cliente.cliente_id;

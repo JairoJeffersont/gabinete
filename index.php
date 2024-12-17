@@ -37,9 +37,9 @@
     <?php
 
     if (isset($_SESSION['cliente_nome'])) {
-        echo '<footer class="bg-white border-top p-1 fixed-bottom">
-                <p class="mb-0 text-end me-2" style="font-size: 0.850em;"><i class="bi bi-person-fill"></i> Cliente: ' . $_SESSION['cliente_nome'] . '</p>
-            </footer>';
+       // echo '<footer class="bg-white border-top p-1 fixed-bottom">
+       //         <p class="mb-0 text-end me-2" style="font-size: 0.850em;"><i class="bi bi-person-fill"></i> Cliente: ' . $_SESSION['cliente_nome'] . '</p>
+       //     </footer>';
     }
 
 

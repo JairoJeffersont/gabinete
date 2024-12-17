@@ -12,6 +12,8 @@ $rotas = [
     'cadastro' => './src/Views/cadastro/cadastro.php',
     'orgaos-tipos' => './src/Views/orgaos/orgaos-tipos.php',
     'orgao-tipo' => './src/Views/orgaos/editar-orgao-tipo.php',
+    'orgaos' => './src/Views/orgaos/orgaos.php',
+
 
     
 ];

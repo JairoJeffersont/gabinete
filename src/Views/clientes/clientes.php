@@ -47,6 +47,7 @@ $getJson = new GetJson();
                             'cliente_ativo' => htmlspecialchars($_POST['cliente_ativo'], ENT_QUOTES, 'UTF-8'),
                             'cliente_deputado_nome' => htmlspecialchars($_POST['cliente_deputado_nome'], ENT_QUOTES, 'UTF-8'),
                             'cliente_deputado_id' => htmlspecialchars($_POST['cliente_deputado_id'], ENT_QUOTES, 'UTF-8'),
+                            'cliente_deputado_estado' => htmlspecialchars($_POST['cliente_deputado_estado'], ENT_QUOTES, 'UTF-8'),
                         ];
 
                         $result = $clienteController->criarCliente($cliente);
@@ -85,6 +86,9 @@ $getJson = new GetJson();
                         </div>
                         <div class="col-md-2 col-12">
                             <input type="text" class="form-control form-control-sm" name="cliente_deputado_id" placeholder="ID deputado do gabinete" required>
+                        </div>
+                        <div class="col-md-2 col-12">
+                            <input type="text" class="form-control form-control-sm" name="cliente_deputado_estado" placeholder="Estado deputado do gabinete" required>
                         </div>
                         <div class="col-md-2 col-12">
                             <button type="submit" class="btn btn-success btn-sm" name="btn_salvar"><i class="bi bi-floppy-fill"></i> Salvar</button>
