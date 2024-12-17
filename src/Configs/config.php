@@ -15,6 +15,7 @@ return [
     ],
     
     'app' => [
+        'session_time' => 24,
         'base_url' =>rtrim($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/', '')
     ]
 ];

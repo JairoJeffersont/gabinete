@@ -5,6 +5,10 @@ $pagina = isset($_GET['secao']) ? $_GET['secao'] :  include './src/Views/home/ho
 $rotas = [
     'home' => './src/Views/home/home.php',
     'login' => './src/Views/login/login.php',
+    'sair' => './src/Views/login/sair.php',
+    'usuarios' => './src/Views/usuarios/usuarios.php',
+
+
 ];
 
 if (array_key_exists($pagina, $rotas)) {

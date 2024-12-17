@@ -5,6 +5,8 @@
         <h2 class="login_title mb-4">Gabinete Digital</h2>
         <?php
 
+        ob_start();
+
         use GabineteDigital\Controllers\LoginController;
 
         require_once './vendor/autoload.php';
@@ -18,14 +20,9 @@
 
             $resultado = $loginController->Logar($email, $senha);
 
-            print_r($resultado);
-
             if ($resultado['status'] == 'success') {
-                echo '<div class="alert alert-success px-2 py-1 mb-2  rounded-5 custom-alert" data-timeout="3" role="alert">' . $resultado['message'] . '. Aguarde...</div>';
-                /*echo '<script>
-                setTimeout(function(){
-                    window.location.href = "?secao=home";
-                }, 500);</script>';*/
+                header('Location: ?secao=home');
+                exit;
             } else if ($resultado['status'] == 'not_found' || $resultado['status'] == 'deactivated') {
                 echo '<div class="alert alert-info px-2 py-1 mb-2  rounded-5 custom-alert" data-timeout="3" role="alert">' . $resultado['message'] . '</div>';
             } else if ($resultado['status'] == 'wrong_password' || $resultado['status'] == 'error' || $resultado['status'] == 'deactived') {

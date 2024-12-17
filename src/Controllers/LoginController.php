@@ -6,7 +6,6 @@ use GabineteDigital\Models\Usuario;
 use GabineteDigital\Middleware\Logger;
 use PDOException;
 
-
 class LoginController {
 
     private $usuarioModel;
@@ -24,7 +23,7 @@ class LoginController {
 
             if ($this->config['master_user']['master_email'] == $email && $this->config['master_user']['master_pass'] == $senha) {
                 session_start();
-                $expiracao = 24 * 60 * 60;
+                $expiracao = 1 * 60 * 60;
                 $_SESSION['expiracao'] = time() + $expiracao;
                 $_SESSION['usuario_id'] = 1;
                 $_SESSION['usuario_nome'] = $this->config['master_user']['master_name'];
@@ -36,12 +35,13 @@ class LoginController {
                 $_SESSION['cliente_deputado_nome'] = 'DEPUTADO_SISTEMA';
                 $_SESSION['cliente_deputado_estado'] = 'BR';
                 $_SESSION['cliente_assinaturas'] = 1;
+                $_SESSION['cliente_token'] = uniqid();
                 $this->logger->novoLog('login_access', ' - ' . $this->config['master_user']['master_name']);
-                return ['status' => 'success', 'status_code' => 200, 'message' => 'Usuário verificado com sucesso.'];
+                return ['status' => 'success', 'message' => 'Usuário verificado com sucesso.'];
             }
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                return ['status' => 'invalid_email', 'status_code' => 400, 'message' => 'Email inválido.'];
+                return ['status' => 'invalid_email',  'message' => 'Email inválido.'];
             }
 
             $result = $this->usuarioModel->buscar('usuario_email', $email);
@@ -56,7 +56,7 @@ class LoginController {
 
             if (password_verify($senha, $result[0]['usuario_senha'])) {
                 session_start();
-                $expiracao = 24 * 60 * 60;
+                $expiracao = $this->config['app']['session_time'] * 60 * 60;
                 $_SESSION['expiracao'] = time() + $expiracao;
                 $_SESSION['usuario_id'] = $result[0]['usuario_id'];
                 $_SESSION['usuario_nome'] = $result[0]['usuario_nome'];
@@ -68,15 +68,16 @@ class LoginController {
                 $_SESSION['cliente_deputado_nome'] = $result[0]['cliente_deputado_nome'];
                 $_SESSION['cliente_deputado_estado'] = $result[0]['cliente_deputado_estado'];
                 $_SESSION['cliente_assinaturas'] = $result[0]['cliente_assinaturas'];
+                $_SESSION['cliente_token'] = $result[0]['cliente_token'];
                 $this->logger->novoLog('login_access', ' - ' . $result[0]['usuario_nome']);
                 return ['status' => 'success', 'status_code' => 200, 'message' => 'Usuário verificado com sucesso.'];
             } else {
-                return ['status' => 'wrong_password', 'status_code' => 401, 'message' => 'Senha incorreta.'];
+                return ['status' => 'wrong_password', 'message' => 'Senha incorreta.'];
             }
         } catch (PDOException $e) {
             $erro_id = uniqid();
             $this->logger->novoLog('login_error', 'ID do erro: ' . $erro_id . ' | ' . $e->getMessage());
-            return ['status' => 'error', 'status_code' => 500, 'message' => 'Erro interno do servidor', 'error_id' => $erro_id];
+            return ['status' => 'error', 'message' => 'Erro interno do servidor', 'error_id' => $erro_id];
         }
     }
 }
