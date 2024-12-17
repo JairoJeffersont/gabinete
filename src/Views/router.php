@@ -10,6 +10,8 @@ $rotas = [
     'usuarios' => './src/Views/usuarios/usuarios.php',
     'usuario' => './src/Views/usuarios/editar-usuario.php',
     'cadastro' => './src/Views/cadastro/cadastro.php',
+    'orgaos-tipos' => './src/Views/orgaos/orgaos-tipos.php',
+    'orgao-tipo' => './src/Views/orgaos/editar-orgao-tipo.php',
 
     
 ];
