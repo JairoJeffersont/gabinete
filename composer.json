@@ -13,13 +13,5 @@
             "email": "jairojeffersont@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
-    "require": {
-        "firebase/php-jwt": "^6.10"
-    },
-    "config": {
-        "allow-plugins": {
-            "symfony/flex": true
-        }
-    }
+    "minimum-stability": "stable"
 }

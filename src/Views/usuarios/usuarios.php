@@ -11,7 +11,8 @@ $config = require_once './src/Configs/config.php';
 $usuarioController = new UsuarioController();
 
 $busca = $usuarioController->listarUsuarios($_SESSION['usuario_cliente']);
-$clienteAssinaturas = $_SESSION['cliente_assinaturas'];
+
+
 
 ?>
 
@@ -36,8 +37,8 @@ $clienteAssinaturas = $_SESSION['cliente_assinaturas'];
             <div class="card mb-2 card-description ">
                 <div class="card-body p-2">
                     <h6 class="card-title"><?php echo $_SESSION['cliente_nome'] . ' - ' . $_SESSION['cliente_deputado_estado'] ?></h6>
-                    <p class="card-text mb-0">Acessos permitido: <?php echo $clienteAssinaturas ?></p>
-                    <p class="card-text mb-0">ID do cliente: <?php echo $_SESSION['cliente_token'] ?></p>
+                    <p class="card-text mb-0">Acessos permitido: <?php echo $_SESSION['cliente_assinaturas'] ?></p>
+                    <p class="card-text mb-0">ID do cliente: <span id="link_id"><?php echo $_SESSION['cliente_token'] ?></span> | <a href="#" onclick="copiarLink()">Copiar link de cadastro <i class="bi bi-clipboard-fill"></i></a></p>
                 </div>
             </div>
 
@@ -65,6 +66,7 @@ $clienteAssinaturas = $_SESSION['cliente_assinaturas'];
                             $result = $usuarioController->criarUsuario($usuario);
 
                             if ($result['status'] == 'success') {
+                                $busca = $usuarioController->listarUsuarios($_SESSION['usuario_cliente']);
                                 echo '<div class="alert alert-success px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
                             } else if ($result['status'] == 'duplicated' || $result['status'] == 'bad_request' || $result['status'] == 'invalid_email') {
                                 echo '<div class="alert alert-info px-2 py-1 mb-2 custom-alert" data-timeout="3" role="alert">' . $result['message'] . '</div>';
@@ -174,3 +176,16 @@ $clienteAssinaturas = $_SESSION['cliente_assinaturas'];
         </div>
     </div>
 </div>
+<script>
+    function copiarLink() {
+        var link = document.getElementById('link_id');
+        var areaDeTexto = document.createElement('textarea');
+        areaDeTexto.value = "<?php echo $config['app']['base_url'] ?>?secao=cadastro&token=" + (link.textContent || link.innerText);
+        document.body.appendChild(areaDeTexto);
+        areaDeTexto.select();
+        areaDeTexto.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        document.body.removeChild(areaDeTexto);
+        alert('URL para cadastro copiada com sucesso!');
+    }
+</script>

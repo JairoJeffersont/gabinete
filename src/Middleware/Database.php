@@ -48,9 +48,7 @@ class Database {
             header('Content-Type: application/json');
             http_response_code(500);
 
-            $response = ['status' => 'db_not_connected', 'status_code' => 500, 'message' => "Banco de dados não conectado"];
-
-            echo json_encode($response);
+            header('Location: ?secao=fatal_error');
             exit;
         }
     }

@@ -7,6 +7,8 @@ $rotas = [
     'login' => './src/Views/login/login.php',
     'sair' => './src/Views/login/sair.php',
     'usuarios' => './src/Views/usuarios/usuarios.php',
+    'usuario' => './src/Views/usuarios/editar-usuario.php',
+
 
 
 ];
