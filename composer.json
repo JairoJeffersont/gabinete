@@ -1,0 +1,25 @@
+{
+    "name": "jairo/gabinete_cliente",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "GabineteDigital\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jairo Jefferson Teixeira Dos Santos",
+            "email": "jairojeffersont@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true
+        }
+    }
+}
