@@ -37,8 +37,8 @@ $busca = $usuarioController->listarUsuarios($_SESSION['usuario_cliente']);
             <div class="card mb-2 card-description ">
                 <div class="card-body p-2">
                     <h6 class="card-title"><?php echo $_SESSION['cliente_nome'] . ' - ' . $_SESSION['cliente_deputado_estado'] ?></h6>
-                    <p class="card-text mb-0">Acessos permitido: <?php echo $_SESSION['cliente_assinaturas'] ?></p>
-                    <p class="card-text mb-0">ID do cliente: <span id="link_id"><?php echo $_SESSION['cliente_token'] ?></span> | <a href="#" onclick="copiarLink()">Copiar link de cadastro <i class="bi bi-clipboard-fill"></i></a></p>
+                    <p class="card-text mb-0">Usuários permitidos: <?php echo $_SESSION['cliente_assinaturas'] ?></p>
+                    <!--<p class="card-text mb-0">ID do cliente: <span id="link_id"><?php echo $_SESSION['cliente_token'] ?></span> | <a href="#" onclick="copiarLink()">Copiar link de cadastro <i class="bi bi-clipboard-fill"></i></a></p>-->
                 </div>
             </div>
 

@@ -4,6 +4,7 @@ namespace GabineteDigital\Controllers;
 
 use GabineteDigital\Middleware\Logger;
 use GabineteDigital\Models\Cliente;
+
 use PDOException;
 
 class ClienteController {
