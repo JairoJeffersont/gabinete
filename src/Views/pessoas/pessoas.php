@@ -119,7 +119,7 @@ $estado = (isset($_GET['estado']) && $_GET['estado'] !== 'null') ? $_GET['estado
                             <input type="text" class="form-control form-control-sm" name="aniversario" placeholder="Aniversário (dd/mm)" data-mask="00/00" required>
                         </div>
                         <div class="col-md-2 col-6">
-                            <input type="text" class="form-control form-control-sm" name="telefone" placeholder="Telefone (Somente números)" maxlength="11" data-mask="(00) 00000-0000">
+                            <input type="text" class="form-control form-control-sm" name="telefone" placeholder="Telefone (Somente números)" maxlength="15" data-mask="(00) 00000-0000">
                         </div>
                         <div class="col-md-5 col-12">
                             <input type="text" class="form-control form-control-sm" name="endereco" placeholder="Endereço ">
@@ -258,7 +258,7 @@ $estado = (isset($_GET['estado']) && $_GET['estado'] !== 'null') ? $_GET['estado
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-10">
-                                    <input type="text" class="form-control form-control-sm" name="termo" placeholder="Buscar..." value="<?php echo $termo?>">
+                                    <input type="text" class="form-control form-control-sm" name="termo" placeholder="Buscar..." value="<?php echo $termo ?>">
                                 </div>
                                 <div class="col-md-1 col-2">
                                     <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-search"></i></button>
@@ -317,7 +317,7 @@ $estado = (isset($_GET['estado']) && $_GET['estado'] !== 'null') ? $_GET['estado
                     </div>
 
                     <?php
-                     if (isset($busca['total_paginas'])) {
+                    if (isset($busca['total_paginas'])) {
                         $totalPagina = $busca['total_paginas'];
                     } else {
                         $totalPagina = 0;

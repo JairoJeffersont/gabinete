@@ -122,23 +122,29 @@ class PessoaController {
         }
     }
 
+
     public function apagarPessoa($pessoa_id) {
         try {
+
             $result = $this->buscarPessoa('pessoa_id', $pessoa_id);
 
             if ($result['status'] == 'not_found') {
                 return $result;
             }
 
+            if ($result['dados'][0]['pessoa_foto'] != null) {
+                unlink($result['dados'][0]['pessoa_foto']);
+            }
+
             $this->pessoaModel->apagar($pessoa_id);
             return ['status' => 'success', 'message' => 'Pessoa apagada com sucesso.'];
         } catch (PDOException $e) {
             if (strpos($e->getMessage(), 'FOREIGN KEY') !== false) {
-                return ['status' => 'error', 'message' => 'Erro: Não é possível apagar a pessoa. Existem registros dependentes.'];
+                return ['status' => 'error', 'message' => 'Não é possível apagar a pessoa. Existem registros dependentes.'];
             }
 
             $erro_id = uniqid();
-            $this->logger->novoLog('pessoa_error', 'ID do erro: ' . $erro_id . ' | ' . $e->getMessage());
+            $this->logger->novoLog('user_error', 'ID do erro: ' . $erro_id . ' | ' . $e->getMessage());
             return ['status' => 'error', 'message' => 'Erro interno do servidor', 'id_erro' => $erro_id];
         }
     }
