@@ -18,9 +18,9 @@ $rotas = [
     'profissao' => './src/Views/pessoas/editar-profissao.php',
     'pessoas' => './src/Views/pessoas/pessoas.php',
     'pessoa' => './src/Views/pessoas/editar-pessoa.php',
-
-
-
+    'clientes' => './src/Views/clientes/clientes.php',
+    'cadastro' => './src/Views/cadastro/cadastro.php',
+    'novo-cliente' => './src/Views/cadastro/novo-cliente.php',
 
 
 ];

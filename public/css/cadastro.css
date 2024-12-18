@@ -25,6 +25,19 @@ input[type="text"] {
     font-weight: 500;
 }
 
+.form_dep {
+    border-radius: 20px;
+    /* Aqui você define o nível de arredondamento */
+    padding: 15px;
+    padding-left: 25px;
+    margin-bottom: 0;
+    border: 1px solid #ccc;
+    color: gray;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+
 button[type="submit"] {
     background-color: #272775;
     color: white;

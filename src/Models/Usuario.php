@@ -62,8 +62,12 @@ class Usuario {
     }
 
 
-    public function listar($cliente) {
-        $query = "SELECT * FROM view_usuarios WHERE usuario_cliente =:usuario_cliente ORDER BY usuario_nome ASC";
+    public function listar($cliente = null) {
+        if ($cliente == null) {
+            $query = "SELECT * FROM view_usuarios ORDER BY usuario_nome ASC";
+        } else {
+            $query = "SELECT * FROM view_usuarios WHERE usuario_cliente =:usuario_cliente ORDER BY usuario_nome ASC";
+        }
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':usuario_cliente', $cliente);

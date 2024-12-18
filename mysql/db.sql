@@ -5,8 +5,11 @@ CREATE TABLE cliente (
     cliente_email varchar(255) NOT NULL UNIQUE,
     cliente_telefone varchar(20) NOT NULL,        
     cliente_ativo tinyint(1) NOT NULL,
+    cliente_endereco varchar(255) DEFAULT NULL,
+    cliente_cep varchar(255) DEFAULT NULL,
+    cliente_cpf_cnpj varchar(255) NOT NULL,
     cliente_assinaturas int NOT NULL,
-    cliente_deputado_id int NOT NULL,
+    cliente_deputado_id int NOT NULL UNIQUE,
     cliente_deputado_nome varchar(255) NOT NULL,
     cliente_deputado_estado varchar(255) NOT NULL,
     cliente_criado_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -14,7 +17,7 @@ CREATE TABLE cliente (
     PRIMARY KEY (cliente_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
-INSERT INTO cliente (cliente_id, cliente_token, cliente_nome, cliente_email, cliente_telefone, cliente_ativo, cliente_assinaturas, cliente_deputado_id, cliente_deputado_nome, cliente_deputado_estado) VALUES (1,'sd98fsad8fsad9fsa','CLIENTE SISTEMA', 'email@email.com', '000000', 1, 2, 00000, 'deputado', 'DF');
+INSERT INTO cliente (cliente_id, cliente_token, cliente_nome, cliente_email, cliente_telefone, cliente_ativo, cliente_endereco, cliente_cep, cliente_cpf_cnpj, cliente_assinaturas, cliente_deputado_id, cliente_deputado_nome, cliente_deputado_estado) VALUES (1,'sd98fsad8fsad9fsa','CLIENTE SISTEMA', 'email@email.com', '000000', 1, 'Sem enreceo',00,00, 2, 00000, 'deputado', 'DF');
 
 
 CREATE TABLE usuario (
@@ -226,9 +229,10 @@ CREATE TABLE pessoas (
     CONSTRAINT fk_pessoa_cliente FOREIGN KEY (pessoa_cliente) REFERENCES cliente(cliente_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
+CREATE VIEW view_pessoas_profissoes AS SELECT pessoas_profissoes.*, usuario.usuario_nome, cliente.cliente_nome FROM pessoas_profissoes INNER JOIN usuario ON pessoas_profissoes.pessoas_profissoes_criado_por = usuario.usuario_id INNER JOIN cliente ON pessoas_profissoes.pessoas_profissoes_cliente = cliente.cliente_id;
+CREATE VIEW view_pessoas_tipos AS SELECT pessoas_tipos.*, usuario.usuario_nome, cliente.cliente_nome FROM pessoas_tipos INNER JOIN usuario ON pessoa_tipo_criado_por = usuario.usuario_id INNER JOIN cliente ON pessoas_tipos.pessoa_tipo_cliente = cliente.cliente_id;
 CREATE VIEW view_pessoas AS SELECT pessoas.*, usuario.usuario_nome, cliente.cliente_nome, pessoas_tipos.pessoa_tipo_nome, pessoas_profissoes.pessoas_profissoes_nome, orgaos.orgao_nome FROM pessoas INNER JOIN usuario ON pessoas.pessoa_criada_por = usuario.usuario_id INNER JOIN cliente ON pessoas.pessoa_cliente = cliente.cliente_id INNER JOIN pessoas_tipos ON pessoas.pessoa_tipo = pessoas_tipos.pessoa_tipo_id INNER JOIN pessoas_profissoes ON pessoas.pessoa_profissao = pessoas_profissoes.pessoas_profissoes_id INNER JOIN orgaos ON pessoas.pessoa_orgao = orgaos.orgao_id;
-CREATE VIEW view_pessoas_profissoes AS SELECT pessoas_profissoes.*, usuario.usuario_nome, cliente.cliente_nome FROM pessoas_profissoes INNER JOIN usuario ON pessoas_profissoes.pessoas_profissoes_criado_por = usuario.usuario_id INNER JOIN cliente ON pessoas_profissoes.pessoas_profissoes_cliente = cliente.cliente_id
-CREATE VIEW view_pessoas_tipos AS SELECT pessoas_tipos.*, usuario.usuario_nome, cliente.cliente_nome FROM pessoas_tipos INNER JOIN usuario ON pessoa_tipo_criado_por = usuario.usuario_id INNER JOIN cliente ON pessoas_tipos.pessoa_tipo_cliente = cliente.cliente_id
+
 CREATE VIEW view_usuarios AS SELECT * FROM usuario INNER JOIN cliente ON usuario.usuario_cliente = cliente.cliente_id;
 CREATE VIEW view_orgaos AS SELECT orgaos.*, orgaos_tipos.orgao_tipo_nome, usuario.usuario_nome, cliente.cliente_nome FROM orgaos INNER JOIN orgaos_tipos ON orgaos.orgao_tipo = orgaos_tipos.orgao_tipo_id INNER JOIN usuario ON orgaos.orgao_criado_por = usuario.usuario_id INNER JOIN cliente ON orgaos.orgao_cliente = cliente_id;
 CREATE VIEW view_orgaos_tipos AS SELECT orgaos_tipos.*, usuario.usuario_nome, cliente.cliente_nome FROM orgaos_tipos INNER JOIN usuario on orgaos_tipos.orgao_tipo_criado_por = usuario.usuario_id INNER JOIN cliente ON orgaos_tipos.orgao_tipo_cliente = cliente.cliente_id;
