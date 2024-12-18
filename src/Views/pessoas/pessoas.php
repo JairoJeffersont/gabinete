@@ -10,7 +10,6 @@ use GabineteDigital\Controllers\PessoaTipoController;
 use GabineteDigital\Controllers\ProfissaoController;
 use GabineteDigital\Controllers\PessoaController;
 
-
 $orgaoController = new OrgaoController();
 $pessoaController = new PessoaController();
 $pessoaTipoController = new PessoaTipoController();
@@ -43,7 +42,7 @@ $estado = (isset($_GET['estado']) && $_GET['estado'] !== 'null') ? $_GET['estado
                 <div class="card-header bg-primary text-white px-2 py-1 card-background"><i class="bi bi-people-fill"></i> Pessoas</div>
                 <div class="card-body p-2">
                     <p class="card-text mb-2">Nesta seção, é possível adicionar e editar pessoas de interesso do mandato., garantindo a organização correta dessas informações no sistema.</p>
-                    <p class="card-text mb-0">Os campos <b>Nome</b>, <b>email</b>, <b>estado</b> e <b>município</b> são <b>obrigatórios</b></p>
+                    <p class="card-text mb-0">Os campos <b>Nome</b>, <b>email</b>, <b>aniversário</b>, <b>estado</b> e <b>município</b> são <b>obrigatórios</b></p>
                 </div>
             </div>
             <div class="card shadow-sm mb-2 ">
