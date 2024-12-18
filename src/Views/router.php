@@ -11,6 +11,10 @@ $rotas = [
     'orgaos-tipos' => './src/Views/orgaos/orgaos-tipos.php',
     'orgao-tipo' => './src/Views/orgaos/editar-orgao-tipo.php',
     'orgaos' => './src/Views/orgaos/orgaos.php',
+    'orgao' => './src/Views/orgaos/editar-orgao.php',
+    'pessoas-tipos' => './src/Views/pessoas/pessoas-tipos.php',
+    'pessoa-tipo' => './src/Views/pessoas/editar-pessoa-tipo.php',
+
 
 
 

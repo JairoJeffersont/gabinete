@@ -101,7 +101,7 @@ class OrgaoTipoController {
             return ['status' => 'success', 'status_code' => 200, 'message' => 'Tipo de órgão apagado com sucesso.'];
         } catch (PDOException $e) {
             if (strpos($e->getMessage(), 'FOREIGN KEY') !== false) {
-                return ['status' => 'error', 'status_code' => 400, 'message' => 'Erro: Não é possível apagar o tipo de órgão. Existem registros dependentes.'];
+                return ['status' => 'error', 'status_code' => 400, 'message' => 'Não é possível apagar o tipo de órgão. Existem registros dependentes.'];
             }
 
             $erro_id = uniqid();
