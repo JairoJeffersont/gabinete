@@ -8,26 +8,13 @@ use PDO;
 use PDOException;
 
 
-/**
- * Classe responsável por gerenciar a conexão com o banco de dados.
- */
+
 class Database {
-    /**
-     * @var PDO|null Armazena a conexão com o banco de dados.
-     */
+  
     private $connection;
-
-    /**
-     * @var Logger Instância do gerenciador de logs.
-     */
+  
     private $logger;
-
-    /**
-     * Construtor da classe.
-     *
-     * Configura a conexão com o banco de dados usando as informações do arquivo de configuração.
-     * Caso ocorra um erro na conexão, registra o log e retorna uma resposta de erro.
-     */
+   
     public function __construct() {
         $config = require dirname(__DIR__, 2) . '/src/Configs/config.php';
 
@@ -45,19 +32,12 @@ class Database {
             $this->connection->exec("SET NAMES 'utf8mb4'");
         } catch (PDOException $e) {
             $this->logger->novoLog('db_error', $e->getMessage());
-            header('Content-Type: application/json');
-            http_response_code(500);
-
             header('Location: ?secao=fatal_error');
             exit;
         }
     }
 
-    /**
-     * Retorna a conexão com o banco de dados.
-     *
-     * @return PDO|null Retorna a instância do PDO ou null caso não esteja conectado.
-     */
+ 
     public function getConnection() {
         return $this->connection;
     }
