@@ -8,6 +8,10 @@ $rotas = [
     'sair' => './src/Views/login/sair.php',
     'usuarios' => './src/Views/usuarios/usuarios.php',
     'usuario' => './src/Views/usuarios/editar-usuario.php',
+    'orgaos-tipos' => './src/Views/orgaos/orgaos-tipos.php',
+    'orgao-tipo' => './src/Views/orgaos/editar-orgao-tipo.php',
+    'orgaos' => './src/Views/orgaos/orgaos.php',
+
 
 
 
