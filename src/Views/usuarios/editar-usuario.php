@@ -107,8 +107,6 @@ if ($buscaUsuario['status'] == 'not_found' || is_integer($usuarioGet) || $buscaU
                         <div class="col-md-4 col-12">
                             <div class="file-upload">
                                 <input type="file" id="file-input" name="foto" style="display: none;" />
-
-
                                 <?php
                                 if ($_SESSION['usuario_nivel'] == 2) {
                                     echo '<button id="file-button" type="button" class="btn btn-primary btn-sm disabled"><i class="bi bi-camera-fill"></i> Escolher Foto</button>&nbsp;';
