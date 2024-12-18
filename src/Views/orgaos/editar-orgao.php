@@ -103,7 +103,7 @@ if ($busca['status'] == 'not_found' || is_integer($orgaoGet) || $busca['status']
                         }
                     }
                     ?>
-                    
+
                     <form class="row g-2 form_custom " id="form_novo" method="POST" enctype="application/x-www-form-urlencoded">
                         <div class="col-md-5 col-12">
                             <input type="text" class="form-control form-control-sm" name="nome" value="<?php echo $busca['dados'][0]['orgao_nome'] ?>" placeholder="Nome " required>

@@ -166,7 +166,7 @@ if ($buscaPessoa['status'] == 'not_found' || is_integer($pessoaGet) || $buscaPes
                         </div>
                         <div class="col-md-2 col-12">
                             <select class="form-select form-select-sm" id="orgao" name="orgao">
-                                <option value="1000" selected>Órgão não informado</option>
+                                <option value="1" selected>Órgão não informado</option>
                                 <?php
 
                                 $buscaOrgao = $orgaoController->listarOrgaos(1000, 1, 'ASC', 'orgao_nome', null, null, $_SESSION['usuario_cliente']);
@@ -187,7 +187,7 @@ if ($buscaPessoa['status'] == 'not_found' || is_integer($pessoaGet) || $buscaPes
                         </div>
                         <div class="col-md-2 col-12">
                             <select class="form-select form-select-sm" id="tipo" name="tipo" required>
-                                <option value="1000" selected>Sem tipo definido</option>
+                                <option value="1" selected>Sem tipo definido</option>
                                 <?php
                                 $buscaTipo = $pessoaTipoController->listarPessoasTipos($_SESSION['usuario_cliente']);
                                 if ($buscaTipo['status'] === 'success') {
@@ -205,7 +205,7 @@ if ($buscaPessoa['status'] == 'not_found' || is_integer($pessoaGet) || $buscaPes
                         </div>
                         <div class="col-md-3 col-12">
                             <select class="form-select form-select-sm" id="profissao" name="profissao" required>
-                                <option value="1000" selected>Profissão não informada</option>
+                                <option value="1" selected>Profissão não informada</option>
                                 <?php
                                 $buscaProfissao = $pessoaProfissaoController->listarPessoasProfissoes($_SESSION['usuario_cliente']);
                                 if ($buscaProfissao['status'] === 'success') {
