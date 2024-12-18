@@ -117,15 +117,15 @@ CREATE TABLE pessoas_tipos (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1000, 'Sem tipo definido', 'Sem tipo definido', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1002, 'Familiares', 'Familiares do deputado', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1003, 'Empresários', 'Donos de empresa', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1004, 'Eleitores', 'Eleitores em geral', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1005, 'Imprensa', 'Jornalistas, diretores de jornais, assessoria', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1006, 'Site', 'Pessoas registradas no site', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1007, 'Amigos', 'Amigos pessoais do deputado', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1008, 'Deputado Federal', 'Deputado Federal', 1, 1);
-INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1009, 'Senador', 'Senador', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (1, 'Sem tipo definido', 'Sem tipo definido', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (2, 'Familiares', 'Familiares do deputado', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (3, 'Empresários', 'Donos de empresa', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (4, 'Eleitores', 'Eleitores em geral', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (5, 'Imprensa', 'Jornalistas, diretores de jornais, assessoria', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (6, 'Site', 'Pessoas registradas no site', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (7, 'Amigos', 'Amigos pessoais do deputado', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (8, 'Deputado Federal', 'Deputado Federal', 1, 1);
+INSERT INTO pessoas_tipos (pessoa_tipo_id, pessoa_tipo_nome, pessoa_tipo_descricao, pessoa_tipo_criado_por, pessoa_tipo_cliente) VALUES (9, 'Senador', 'Senador', 1, 1);
 
 
 CREATE TABLE pessoas_profissoes (
@@ -193,6 +193,40 @@ VALUES
 (41, 'Corretor de Imóveis', 'Profissional que facilita a compra, venda e aluguel de propriedades', 1, 1);
 
 
+CREATE TABLE pessoas (
+    pessoa_id int NOT NULL AUTO_INCREMENT,
+    pessoa_nome varchar(255) NOT NULL,
+    pessoa_aniversario varchar(255) NOT NULL,
+    pessoa_email varchar(255) NOT NULL UNIQUE,
+    pessoa_telefone varchar(255) DEFAULT NULL,
+    pessoa_endereco text DEFAULT NULL,
+    pessoa_bairro text,
+    pessoa_municipio varchar(255) NOT NULL,
+    pessoa_estado varchar(255) NOT NULL,
+    pessoa_cep varchar(255) DEFAULT NULL,
+    pessoa_sexo varchar(255) DEFAULT NULL,
+    pessoa_facebook varchar(255) DEFAULT NULL,
+    pessoa_instagram varchar(255) DEFAULT NULL,
+    pessoa_x varchar(255) DEFAULT NULL,
+    pessoa_informacoes text DEFAULT NULL,
+    pessoa_profissao int NOT NULL,
+    pessoa_cargo varchar(255) DEFAULT NULL,
+    pessoa_tipo int NOT NULL,
+    pessoa_orgao int NOT NULL,
+    pessoa_foto text DEFAULT NULL,
+    pessoa_criada_em timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+    pessoa_atualizada_em timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    pessoa_criada_por int NOT NULL,
+    pessoa_cliente int NOT NULL,
+    PRIMARY KEY (pessoa_id),
+    CONSTRAINT fk_pessoa_criada_por FOREIGN KEY (pessoa_criada_por) REFERENCES usuario(usuario_id),
+    CONSTRAINT fk_pessoa_tipo FOREIGN KEY (pessoa_tipo) REFERENCES pessoas_tipos(pessoa_tipo_id),
+    CONSTRAINT fk_pessoa_profissao FOREIGN KEY (pessoa_profissao) REFERENCES pessoas_profissoes(pessoas_profissoes_id),
+    CONSTRAINT fk_pessoa_orgao FOREIGN KEY (pessoa_orgao) REFERENCES orgaos(orgao_id),
+    CONSTRAINT fk_pessoa_cliente FOREIGN KEY (pessoa_cliente) REFERENCES cliente(cliente_id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+CREATE VIEW view_pessoas AS SELECT pessoas.*, usuario.usuario_nome, cliente.cliente_nome, pessoas_tipos.pessoa_tipo_nome, pessoas_profissoes.pessoas_profissoes_nome, orgaos.orgao_nome FROM pessoas INNER JOIN usuario ON pessoas.pessoa_criada_por = usuario.usuario_id INNER JOIN cliente ON pessoas.pessoa_cliente = cliente.cliente_id INNER JOIN pessoas_tipos ON pessoas.pessoa_tipo = pessoas_tipos.pessoa_tipo_id INNER JOIN pessoas_profissoes ON pessoas.pessoa_profissao = pessoas_profissoes.pessoas_profissoes_id INNER JOIN orgaos ON pessoas.pessoa_orgao = orgaos.orgao_id;
 CREATE VIEW view_pessoas_profissoes AS SELECT pessoas_profissoes.*, usuario.usuario_nome, cliente.cliente_nome FROM pessoas_profissoes INNER JOIN usuario ON pessoas_profissoes.pessoas_profissoes_criado_por = usuario.usuario_id INNER JOIN cliente ON pessoas_profissoes.pessoas_profissoes_cliente = cliente.cliente_id
 CREATE VIEW view_pessoas_tipos AS SELECT pessoas_tipos.*, usuario.usuario_nome, cliente.cliente_nome FROM pessoas_tipos INNER JOIN usuario ON pessoa_tipo_criado_por = usuario.usuario_id INNER JOIN cliente ON pessoas_tipos.pessoa_tipo_cliente = cliente.cliente_id
 CREATE VIEW view_usuarios AS SELECT * FROM usuario INNER JOIN cliente ON usuario.usuario_cliente = cliente.cliente_id;
