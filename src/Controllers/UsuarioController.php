@@ -69,7 +69,11 @@ class UsuarioController {
         } catch (PDOException $e) {
 
             if (isset($dados['usuario_foto']) && !empty($dados['usuario_foto'])) {
-                unlink($dados['usuario_foto']);
+
+                $path = dirname(__DIR__, 2) . '/' . $dados['usuario_foto'];
+                if (file_exists($path)) {
+                    unlink($path);
+                }
             }
 
             if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
@@ -170,9 +174,13 @@ class UsuarioController {
                 return $result;
             }
 
-            if ($result['dados'][0]['usuario_foto'] != null) {
-                unlink($result['dados'][0]['usuario_foto']);
+            if (!empty($result['dados'][0]['usuario_foto'])) {
+                $path = dirname(__DIR__, 2) . '/' . $result['dados'][0]['usuario_foto'];
+                if (file_exists($path)) {
+                    unlink($path);
+                }
             }
+
 
             $this->usuarioModel->apagar($usuario_id);
             return ['status' => 'success', 'message' => 'Usuário apagado com sucesso.'];

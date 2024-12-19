@@ -50,6 +50,15 @@ class PessoaController {
             $this->pessoaModel->criar($dados);
             return ['status' => 'success', 'message' => 'Pessoa inserida com sucesso.'];
         } catch (PDOException $e) {
+
+            if (isset($dados['pessoa_foto']) && !empty($dados['pessoa_foto'])) {
+
+                $path = dirname(__DIR__, 2) . '/' . $dados['pessoa_foto'];
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+
             if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
                 return ['status' => 'duplicated', 'message' => 'A pessoa já está cadastrada.'];
             } else {
@@ -132,8 +141,11 @@ class PessoaController {
                 return $result;
             }
 
-            if ($result['dados'][0]['pessoa_foto'] != null) {
-                unlink($result['dados'][0]['pessoa_foto']);
+            if (!empty($result['dados'][0]['pessoa_foto'])) {
+                $path = dirname(__DIR__, 2) . '/' . $result['dados'][0]['pessoa_foto'];
+                if (file_exists($path)) {
+                    unlink($path);
+                }
             }
 
             $this->pessoaModel->apagar($pessoa_id);

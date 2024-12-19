@@ -59,10 +59,10 @@ $getJson = new GetJson();
             <div class="col-md-6 col-12">
                 <input type="text" class="form-control form-control-sm" name="cliente_endereco" placeholder="Endereço" required>
             </div>
-            <div class="col-md-6 col-12">
+            <div class="col-md-6 col-6">
                 <input type="text" class="form-control form-control-sm" name="cliente_cep" placeholder="CEP" data-mask="00000-000" required>
             </div>
-            <div class="col-md-12 col-12">
+            <div class="col-md-12 col-6">
                 <input type="text" class="form-control form-control-sm" name="cliente_cpf_cnpj" placeholder="CPF" data-mask="000.000.000-00" required>
             </div>
             <div class="col-md-6 col-6">
